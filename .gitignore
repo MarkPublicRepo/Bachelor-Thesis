@@ -3,3 +3,9 @@
 !main.tex
 !main.bib
 !main.pdf
+!bilder/
+!bilder/**
+!kapitel/
+!kapitel/*.tex
+!quellen/
+!quellen/**

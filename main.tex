@@ -1,8 +1,10 @@
 \documentclass[11pt,a4paper,oneside]{scrbook}
 
 \usepackage[ngerman]{babel}
+%\usepackage{csquotes}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{graphicx}
 
 % Seitenrand 2,5 cm in alle Richtungen
 \usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
@@ -11,14 +13,25 @@
 \usepackage{setspace}
 \onehalfspacing
 
-\author{Mark Becher}
-\title{Bachelorarbeit PQC in DNSSEC}
 
 \begin{document}
-\maketitle
+
+\include{kapitel/titelblatt}
 
 \tableofcontents
+\newpage
+
+\chapter{Stockholm}
 \section{Schweden ist schön}
-ich habe bisher nur Stockholm gesehen, aber ich liebe es dort!
+ich habe bisher nur Stockholm gesehen, aber ich liebe es dort!\cite{freglyMerkleTreeLadder2023}
+
+\include{kapitel/einleitung}
+\include{kapitel/hauptteil}
+\include{kapitel/fazit}
+\include{kapitel/eidesstatliche-erklaerung}
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{quellen/Bachelorarbeit}
 
 \end{document}
