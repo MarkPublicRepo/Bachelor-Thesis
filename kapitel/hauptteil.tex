@@ -6,7 +6,7 @@ Das ist die Idee des MTL-Modus.
 
 Nicht jede neue Nachricht wird mit einem PQC-Algorithmus wie ML-DSA oder SLH-DSA signiert.
 Es werden Nachrichten, jeh nach deren Anzahl in einem Baum \enquote{Rung} angeordnet. Die Bäume ergeben zusammen die \enquote{Ladder}. Diese Ladder wird dann mit einem Algorithmus wie ML-DSA signiert.
-Der Baum verwendet für Nachrichten eine PQC-sichere Hashfunktion mit dieser die Knoten der Nachrichten signiert werden.
+Der Baum verwendet für Nachrichten eine PQC-sichere Hashfunktion mit dieser die Knoten der Nachrichten signiert werden.\cite{freglyMerkleTreeLadder2023}
 Die \enquote{Ladder}, die aus den einzelnen Bäumen besteht, wird dann nach einer bestimmten Anzahl an Nachrichten mit dem PQC-Algorithmus signiert.
 Insgesamt verringert das der Aufwand zum Signieren deutlich, durch das hashen und es bleibt sicher post-quanten-sicher.
 
