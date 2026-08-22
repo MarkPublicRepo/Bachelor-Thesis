@@ -1,1 +1,52 @@
 \chapter{Hauptteil}
+
+\section{Merkle Tree Ladder (MTL) Modus}
+Anstelle davon jede Nachricht einzeln zu signieren, kann man die Nachrichten auch als, fortschreitende Folge von Nachrichten betrachten.
+Das ist die Idee des MTL-Modus.
+
+Nicht jede neue Nachricht wird mit einem PQC-Algorithmus wie ML-DSA oder SLH-DSA signiert.
+Es werden Nachrichten, jeh nach deren Anzahl in einem Baum \enquote{Rung} angeordnet. Die Bäume ergeben zusammen die \enquote{Ladder}. Diese Ladder wird dann mit einem Algorithmus wie ML-DSA signiert.
+Der Baum verwendet für Nachrichten eine PQC-sichere Hashfunktion mit dieser die Knoten der Nachrichten signiert werden.
+Die \enquote{Ladder}, die aus den einzelnen Bäumen besteht, wird dann nach einer bestimmten Anzahl an Nachrichten mit dem PQC-Algorithmus signiert.
+Insgesamt verringert das der Aufwand zum Signieren deutlich, durch das hashen und es bleibt sicher post-quanten-sicher.
+
+Folgendes Beispiel behandelt den Fall, dass es sich um sieben Nachrichten handelt.
+Für sechs Nachrichten sieht es folgendermaßen aus: $7_{10} = 111_{2}$
+
+\begin{figure}[htbp]
+    \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+        \siebenErsterBaum
+        \caption{Beispielbaum}
+    \label{fig:baum}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \siebenZweiterBaum
+        \caption{secondTree}
+        \label{fig:secondBaum}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \siebenDritterBaum
+        \caption{Dritter Baum}
+        \label{thirdTree}
+    \end{subfigure}
+\end{figure}
+
+Es werden folgende Hashes für die Knoten berechnet: $H(1:2) H(3:4) H(5:6) H(7:7)$ 
+
+Wenn eine weitere Nachricht aufgenommen wird, erhöht sich die Gesammtzahl auf acht. Dann ändert sich die Baumstruktur mit $8_{10} = 1000_{2}$ folgendermaßen:
+\newpage
+
+\begin{figure}[htbp]
+    \centering
+    \achtErsterBaum
+    \caption{Binärbaum acht Nachrichten}
+    \label{achtBaum}
+\end{figure}
+
+Die Hashes müssen nicht alle neu berechnet werden, nur $H(7:8) H(5:8)$ und $H(1:8)$ sind betroffen. Die Berechnungen sind hier vereinfacht, das Prinzip ist aber dass durch zusätzliche Nachrichten nicht alles neu berechnet werden muss
+und die Berechnungen sind performanter.
