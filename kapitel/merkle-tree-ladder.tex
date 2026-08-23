@@ -36,7 +36,9 @@ for tree={
         circle, draw, minimum size=2em,
         l sep=20pt, s sep=10pt
     }
-    [7:7]
+    [7:7
+        [7]
+    ]
 \end{forest}
 }
 
@@ -69,4 +71,40 @@ for tree={
         ]
     ]
 \end{forest}
+}
+
+\newcommand{\siebenLadder}{
+\begin{tikzpicture}[
+  rung/.style={rectangle, draw, minimum width=2.2em, minimum height=1.4em, fill=gray!10},
+  rail/.style={dashed, gray}
+]
+\node[rung] (r1) {1:4};
+\node[rung, right=1.8cm of r1, right=1cm of r1] (r2) {5:6};
+\node[rung, right=1.8cm of r2, right=1cm of r2] (r3) {7:7};
+
+\draw[rail] ([yshift=3pt]r1.east) -- ([yshift=3pt]r2.west);
+\draw[rail] ([yshift=3pt]r2.east) -- ([yshift=3pt]r3.west);
+\draw[rail] ([yshift=-3pt]r1.east) -- ([yshift=-3pt]r2.west);
+\draw[rail] ([yshift=-3pt]r2.east) -- ([yshift=-3pt]r3.west);
+
+\node[left=6pt of r1] {$\Lambda_{7}$};
+\end{tikzpicture}
+}
+
+\newcommand{\achtLadder}{
+\begin{tikzpicture}[
+  rung/.style={rectangle, draw, minimum width=2.2em, minimum height=1.4em, fill=gray!10},
+  rail/.style={dashed, gray}
+]
+%\node[rung] (r1) {1:8};
+\node[rung, right=1.8cm of r1, right=1cm of r1] (r2) {1:8};
+%\node[rung, right=1.8cm of r2, right=1cm of r2] (r3) {7:7};
+
+\draw[rail] ([yshift=3pt]r1.east) -- ([yshift=3pt]r2.west);
+\draw[rail] ([yshift=3pt]r2.east) -- ([yshift=3pt]r3.west);
+\draw[rail] ([yshift=-3pt]r1.east) -- ([yshift=-3pt]r2.west);
+\draw[rail] ([yshift=-3pt]r2.east) -- ([yshift=-3pt]r3.west);
+
+\node[left=6pt of r1] {$\Lambda_{8}$};
+\end{tikzpicture}
 }

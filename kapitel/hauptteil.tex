@@ -8,14 +8,17 @@ Nicht jede neue Nachricht wird mit einem PQC-Algorithmus wie ML-DSA oder SLH-DSA
 Es werden Nachrichten, jeh nach deren Anzahl in einem Baum \enquote{Rung} angeordnet. Die Bäume ergeben zusammen die \enquote{Ladder}. Diese Ladder wird dann mit einem Algorithmus wie ML-DSA signiert.
 Der Baum verwendet für Nachrichten eine PQC-sichere Hashfunktion mit dieser die Knoten der Nachrichten signiert werden.\cite{freglyMerkleTreeLadder2023}
 Die \enquote{Ladder}, die aus den einzelnen Bäumen besteht, wird dann nach einer bestimmten Anzahl an Nachrichten mit dem PQC-Algorithmus signiert.
-Insgesamt verringert das der Aufwand zum Signieren deutlich, durch das hashen und es bleibt sicher post-quanten-sicher.
+Insgesamt verringert das der Aufwand zum Signieren deutlich, durch das hashen und es bleibt post-quanten-sicher.
 
-Folgendes Beispiel behandelt den Fall, dass es sich um sieben Nachrichten handelt.
-Für sechs Nachrichten sieht es folgendermaßen aus: $7_{10} = 111_{2}$
+Folgendes Beispiel, behandelt den Fall, dass es sich um sieben Nachrichten handelt.
+Die Anzahl der Nachrichten wird in Binär umgewandelt, die Binärstellung gibt an wie viele Bäume es sind und wie groß sie sind.
+Als Bespiel werden sieben Nachrichten in einen Baum zusammengeführt. Durch die Umwandlung in Binär lässt sich ablesen $7_{10} = 111_{2}$, es sind drei Bits gesetzt,
+demnach gibt es drei Bäume. Das Höchstwärtige Bit ist vier, demnach enthält dieser Baum vier Elemente, der nächstgrößte Baum hat zwei Elemente und das letzte Bit gibt ein Element an.
+Für sieben Nachrichten sehen die Bäume, nach eigener Darstellung, folgendermaßen aus:
 
 \begin{figure}[htbp]
     \begin{subfigure}[b]{0.3\textwidth}
-    \centering
+        \centering
         \siebenErsterBaum
         \caption{Beispielbaum}
     \label{fig:baum}
@@ -36,10 +39,24 @@ Für sechs Nachrichten sieht es folgendermaßen aus: $7_{10} = 111_{2}$
     \end{subfigure}
 \end{figure}
 
-Es werden folgende Hashes für die Knoten berechnet: $H(1:2) H(3:4) H(5:6) H(7:7)$ 
+Unterstützte Hash Funktionen sind aus der SHAKE oder SHA2 Familie.\cite{harveyMerkleTreeLadder2026}
+Es werden folgende Hashes h für die Knoten und Blätter mit der Hashfunktion H berechnet:
+\begin{align}
+&h_{1}=H(1);\ h_{2}=H(2);\ h_{3}=H(3);\ h_{4}=H(4);\ h_{5}=H(5);\ h_{6}=H(6);\ h_{7}=H(7)\\
+&h_{1:2}=H(h_{1}||h_{2});\ h_{3:4}=H(h_{3}||h_{4});\ h_{5:6}=H(h_{5}||h_{6});\ h_{7:7}=H(7)
+\end{align}
+\cite{cooperRecommendationStatefulHashBased2020a}
 
+Die Ladder $\Lambda_{7}$ sieht so aus:
+\begin{figure}[hbtp]
+    \centering
+    \siebenLadder
+    \caption{Ladder für sieben Nachrichten}
+    \label{Ladder sieben Nachrichten}
+\end{figure}
+
+Die Ladder wird dann mit einer PQC-Signatur $\sigma$ wie ML-DSA oder SLH-DSA signiert. Die Signatur $\sigma(\Lambda_{N})$ wird nach N Nachrichten ausgeführt, nicht nach jeder einzelnen, weil dann wäre keine Performance verbesserung vorhanden.
 Wenn eine weitere Nachricht aufgenommen wird, erhöht sich die Gesammtzahl auf acht. Dann ändert sich die Baumstruktur mit $8_{10} = 1000_{2}$ folgendermaßen:
-\newpage
 
 \begin{figure}[htbp]
     \centering
@@ -48,5 +65,19 @@ Wenn eine weitere Nachricht aufgenommen wird, erhöht sich die Gesammtzahl auf a
     \label{achtBaum}
 \end{figure}
 
-Die Hashes müssen nicht alle neu berechnet werden, nur $H(7:8) H(5:8)$ und $H(1:8)$ sind betroffen. Die Berechnungen sind hier vereinfacht, das Prinzip ist aber dass durch zusätzliche Nachrichten nicht alles neu berechnet werden muss
-und die Berechnungen sind performanter.
+Hashes werden berechnet:
+\begin{align}
+    &h_8=H(h_8)\\
+    &h_{7:8}=H(h_8);\ h_{5:8}=H(h_{5:6}||h_{7:8})\ h_{1:8}=H(h_{1:4}||h_{5:8})
+\end{align}
+
+Die Ladder $\Lambda_{8}$ sieht nun so aus:
+\begin{figure}[hbtp]
+    \centering
+    \achtLadder
+    \caption{Ladder für acht Nachrichten}
+    \label{achtLadder}
+\end{figure}
+
+Die Hashes müssen nicht alle neu berechnet werden, nur diejenigen die betroffen sind. Die Berechnungen der Hashes und der Signatur sind hier vereinfacht dargestellt, das Prinzip ist aber dass durch zusätzliche Nachrichten nicht alles neu berechnet werden muss
+und die Berechnungen der Hashfunktionen sind performanter als die Signatur.
