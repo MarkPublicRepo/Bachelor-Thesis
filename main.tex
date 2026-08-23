@@ -15,11 +15,11 @@
 % Seitenrand 2,5 cm in alle Richtungen
 \usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 
+\input{kapitel/hauptteil/merkle-tree-ladder.tex}
+
 % Zeilenabstand 1½
 \usepackage{setspace}
 \onehalfspacing
-
-\input{kapitel/merkle-tree-ladder.tex}
 
 \begin{document}
 
@@ -28,14 +28,21 @@
 \tableofcontents
 \newpage
 
-\chapter{Stockholm}
-\section{Schweden ist schön}
-ich habe bisher nur Stockholm gesehen, aber ich liebe es dort!\cite{freglyMerkleTreeLadder2023}
+\chapter{Einleitung}
+\input{kapitel/einleitung/einleitung}
+\input{kapitel/einleitung/Quantencomputer}
 
-\include{kapitel/einleitung}
-\include{kapitel/hauptteil}
-\include{kapitel/fazit}
-\include{kapitel/eidesstatliche-erklaerung}
+\chapter{Hauptteil}
+\input{kapitel/hauptteil/gitterbasiert}
+\input{kapitel/hauptteil/fehlerkorrigierend}
+\input{kapitel/hauptteil/hashbasiert}
+\input{kapitel/hauptteil/multivariat}
+\input{kapitel/hauptteil/merkle-tree-ladder-modus}
+\input{kapitel/fazit/fazit.tex}
+\input{kapitel/eidensstatliche-erklaerung/eidesstatliche-erklaerung.tex}
+
+\chapter{Eidesstatliche Erklärung}
+\input{kapitel/eidensstatliche-erklaerung/eidesstatliche-erklaerung.tex}
 
 \newpage
 \bibliographystyle{plain}

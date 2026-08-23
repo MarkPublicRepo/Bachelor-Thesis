@@ -1,5 +1,3 @@
-\chapter{Hauptteil}
-
 \section{Merkle Tree Ladder (MTL) Modus}
 Anstelle davon jede Nachricht einzeln zu signieren, kann man die Nachrichten auch als, fortschreitende Folge von Nachrichten betrachten.
 Das ist die Idee des MTL-Modus.
@@ -20,23 +18,25 @@ Für sieben Nachrichten sehen die Bäume, nach eigener Darstellung, folgenderma�
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
         \siebenErsterBaum
-        \caption{Beispielbaum}
+        \caption{Baum 100}
     \label{fig:baum}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
         \siebenZweiterBaum
-        \caption{secondTree}
+        \caption{Baum 010}
         \label{fig:secondBaum}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
         \siebenDritterBaum
-        \caption{Dritter Baum}
-        \label{thirdTree}
+        \caption{Baum 001}
+        \label{fig:thirdTree}
     \end{subfigure}
+    \caption{Binärbaume des Merkle-Baumes für sieben Nachrichten}
+    \label{fig:merkle-tree}
 \end{figure}
 
 Unterstützte Hash Funktionen sind aus der SHAKE oder SHA2 Familie.\cite{harveyMerkleTreeLadder2026}
@@ -61,7 +61,7 @@ Wenn eine weitere Nachricht aufgenommen wird, erhöht sich die Gesammtzahl auf a
 \begin{figure}[htbp]
     \centering
     \achtErsterBaum
-    \caption{Binärbaum acht Nachrichten}
+    \caption{Binärbaum für acht Nachrichten}
     \label{achtBaum}
 \end{figure}
 
