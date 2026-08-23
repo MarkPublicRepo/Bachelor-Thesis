@@ -5,7 +5,8 @@
 !main.pdf
 !bilder/
 !bilder/**
-!kapitel/
-!kapitel/*.tex
 !quellen/
 !quellen/**
+!kapitel/
+!kapitel/*/
+!kapitel/*/*.tex
