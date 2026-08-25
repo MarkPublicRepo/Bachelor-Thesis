@@ -1,3 +1,63 @@
+\newcommand{\alphavalue}{\sqrt{\frac{1}{8}}}
+\newcommand{\betavalue}{\sqrt{\frac{7}{8}}}
+
 \section{Quantencomputer}
 
-Hier werden oberflächlich Quantencomputer erklärt
+Quantencomputer sind keine neuen Computer, sie können in der Lage manche Ressourcenlastingen Berechnungen effizienter zu lösen als es ein traditioneller Computer könnte.
+Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day.\cite{schmehQuantencomputer2026}
+Quantencomputer sind noch weit entfernt von dem Zustand in dem sie wirklich eine Gefahr für die Moderne Kryptographie darstellen,
+als vorkehrungsmaßnahme gibt es aber bereits algorthmen die theoretisch einem solchen Angriff standhalten sollen.
+
+Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition und Quantenverschränkung.
+Anstelle von Bits werden sogenannte Qubits verwendet.
+
+\subsubsection{Qubits}
+Ein Qubit kann, mit einer Wahrscheinlichkeit, Zustände von 0 oder 1 annehmen. Um ein Qubit als Zahl darzustellen, macht man das als komplexe Zahl.
+Es gibt die Wahrscheinlichkeit für eine null, der Realteil $\alpha$ und die Wahrscheinlichkeit auf eine eins, der Imaginärteil $\beta=\betavalue$.
+Dass ein Qubit Eins oder Null gleichzeitig sein kann, bis man es observiert, ist Superposition. Wenn man es observiert, nimmt es eindeutig einen Wert an.
+Man stellt das Qubit als vektor $\psi$ da. Nehmen wir an wir haben $\alpha=\alphavalue$ und $\beta=\betavalue$.
+
+\begin{align}
+    \ket{\psi}\ =\ (\sqrt{\frac{1}{8}})\ket{0}\ +\ (\sqrt{\frac{7}{8}})\ket{1}
+\end{align}
+
+Das bedeutet wir haben die Wahrscheinlichkeiten:
+\begin{align}
+    &{\left| \alpha \right|}^2\ =\ \alphavalue^2\ =\ \frac{1}{8}\\
+    &{\left| \beta \right|}^2\ =\ \betavalue^2\ =\ \frac{7}{8}
+\end{align}
+
+Die Wahrscheinlichkeiten ergeben in der Summe $\left| \alpha \right|^2 + \left| \beta \right|^2\ =\ 1$.
+
+Wir können den Vektor der Wahrscheinlichkeiten in einem Koordinatensystem darstellen.
+\newpage
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+% Achsen
+\draw[->] (0,0) -- (5,0) node[right] {$\alpha$};
+\draw[->] (0,0) -- (0,4) node[above] {$\beta$};
+
+% Linie vom Ursprung aus
+\draw[thick, blue] (0,0) -- (3,2);
+\end{tikzpicture}
+\caption{Qubit in Koordinatensystem darstellung}
+\label{fig:koordinatensystem}
+\end{figure}
+
+Wenn wir mehr als ein Qubit haben, wie hier z.B. 128, können wir damit $2^{7}=128$ Zustände darstellen.
+
+\begin{align}
+    &\alpha_0\ket{0000000}+\alpha_1\ket{0000001}+\dots+\alpha_{127}\ket{1111111}
+\end{align}
+
+Alle Wahrscheinlichkeiten müssen zusammen wieder eins ergeben.
+\begin{align}
+    &{\left|\alpha_0\right|}^2+{\left|\alpha_1\right|}^2+\dots+{\left|\alpha_{127}\right|}^2=1
+\end{align}
+Man kann sich den Vektor als Punkt im 128-dimensionalem Koordinatensystem darstellen. Die Achse zu der die Linie am ehesten Senkrecht steht, ist die höchte Wahrscheinlichkeit.
+Durch den Grover Algorithmus lässt sich eine Annäherung machen.
+
+\subsubsection{Grover's Algorithmus}
+Ich weiß nicht was ich hier schreiben soll. Ganz ehrlich\dots
