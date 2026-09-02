@@ -1,0 +1,29 @@
+
+; <<>> DiG 9.20.26 <<>> example.com RRSIG
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 27172
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 5
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;example.com.			IN	RRSIG
+
+;; ANSWER SECTION:
+example.com.		2799	IN	RRSIG	DNSKEY 13 2 3600 20261008174644 20260808174644 2371 example.com. dpLooW0rFNvAXlISkR6EdK3oMFeUE0YRXoFUVymtTbKpYHGdQEJ6VaY0 0b0NJtgZGX08aN4DNBM/T9ttnToIng==
+example.com.		86	IN	RRSIG	AAAA 13 2 300 20260903185217 20260901165217 34505 example.com. A/rTPMpQaURDrrAqxgaMYTcYcMUefS0ncE/VMNSOZFnpJtHwuPKLL46s sCy2kg2ZRFJ/6Mb7L20anhZ/td7N1w==
+example.com.		83	IN	RRSIG	A 13 2 300 20260903185214 20260901165214 34505 example.com. 9GBMFEMeZZn/hpH+ndfHTqYleLfhHdQt9My8rho8ojlHEYWOqWttSTqW 9X32FKLdrW53aOUnxBD67YUmjpRqLw==
+example.com.		203	IN	RRSIG	HTTPS 13 2 300 20260903185414 20260901165414 34505 example.com. 23oGv3chAdhrqwc31AnivQifFCpDCxWO62JRzdTg76oKRW66xFWK1+yd Zmeij7aGHMpacm+T/Lj4KZkDb5x2DQ==
+
+;; ADDITIONAL SECTION:
+example.com.		83	IN	A	172.66.147.243
+example.com.		83	IN	A	104.20.23.154
+example.com.		86	IN	AAAA	2606:4700:10::ac42:93f3
+example.com.		86	IN	AAAA	2606:4700:10::6814:179a
+
+;; Query time: 22 msec
+;; SERVER: 192.168.178.1#53(192.168.178.1) (UDP)
+;; WHEN: Wed Sep 02 19:55:51 CEST 2026
+;; MSG SIZE  rcvd: 556
+

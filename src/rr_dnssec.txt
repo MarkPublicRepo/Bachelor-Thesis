@@ -1,0 +1,23 @@
+
+; <<>> DiG 9.20.26 <<>> @8.8.8.8 example.com A +dnssec
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 50775
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 512
+;; QUESTION SECTION:
+;example.com.			IN	A
+
+;; ANSWER SECTION:
+example.com.		300	IN	A	104.20.23.154
+example.com.		300	IN	A	172.66.147.243
+example.com.		300	IN	RRSIG	A 13 2 300 20260901205849 20260830185849 34505 example.com. +e7qLeYK43j/A0A9o9D4vuxdHSl2xAzMMB72jQXsY3ojD5pC/dWC5+nT hGZXk0meXf1SbqX9uQGdBe3zO2hKpg==
+
+;; Query time: 39 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8) (UDP)
+;; WHEN: Mon Aug 31 21:58:49 CEST 2026
+;; MSG SIZE  rcvd: 179
+

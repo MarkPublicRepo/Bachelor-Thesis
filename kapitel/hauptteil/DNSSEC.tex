@@ -1,2 +1,104 @@
-\section{DNSSEC}
-Hier wird DNSSEC erläutert
+\section{DNS und DNSSEC}
+Domain Name System oder kurz DNS ist ein dienst, der es ermöglicht über Datenbanken einen Host Namen in eine IP Adresse aufzulösen und umgekehrt.
+Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen.
+DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
+Das DNS Protokoll läuft standartmäßig auf UDP. TPC-fallback ist möglich wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit.\cite{ietf-rfc-1034}
+Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus.\cite{ietf-rfc-1034}\cite{ietf-rfc-1035}
+
+Der standart DNS Service ist aber anfällig gegen eine vielzahl von Angriffen.
+Z.B. durch manipulation der DNS Pakete lassen sich andere Zielrechner ansteuern als gedacht (Spoofing).
+Dadurch dass DNS Einträge aus dem Cache lesen kann, um Latenz zu sparen, sind sogenannte Cache Poisoning Angrifffe möglich, bei dem falsche Adressen in den Cache geladen werden, um künftige Anfragen, falsch weiter zuleiten.
+Um die Authentizität und Integrität der DNS Einträge zu gewährleisten, gibt es die DNS Security Extensions (DNSSEC).
+Es muss berücksichtigt werden, dass dadurch aber keine Vertraulichkeit der Daten gewährleistet wird und Angriffe wie DNS-Rebinding Angriffe und D(DoS) Angriffe weiterhin möglich sind.
+
+Durch die DNSSEC Erweiterung konmmen neue Ressource Record Typen dazu, diese sind:
+\begin{itemize}%{DNSSEC Ressource Record Typen}{2pt}
+    \item Resource Record Signature (RRSIG)
+    \item DNS Public Key (DNSKEY)
+    \item Delegation Signer (DS)
+    \item Next Secure (NSEC)
+\end{itemize}
+
+\subsubsection{Resource Record Signature (RRSIG)}
+Dieser RR enthält die Signaturen über ein bestimmtes RR Set.
+
+\newpage
+
+\begin{figure}[htbp]
+    \lstinputlisting{src/rr_rrsig.txt}
+    \caption{RRSIG von example.com}
+    \label{fig:rrsig}
+\end{figure}
+
+In \ref{fig:rrsig} ist der Output von \textbf{dig example.com RRSIG} zu sehen.
+
+\subsubsection{DNS Public Key (DNSKEY)}
+Der öffentliche Schlüssel für die Zone. Mit diesem RR kann der Resolver die digitalen Signaturen der Zone prüfen.
+\subsubsection{Delegation Signer (DS)}
+Verknüpft eine delegierte Kindzone mit der übergeordneten Zone.
+\subsubsection{Next Secure (NSEC)}
+NSEC ist ein Beweis der nicht-existenz einer Zone oder eines Domänennamens.
+\cite{ietf-rfc-4033,ietf-rfc-4034,ietf-rfc-4035}
+
+Durch diese Erweiterungen von DNSSEC ist eine vergrößerung der UDP Pakete (Extension Mechanisms for DNS (EDNS0)) notwendig.\cite{ietf-rfc-2671}
+von DNNSEC werden die Algorithmen aus \ref{fig:DNSSECalgos} derzeit unterstützt.\cite{roseSecureDomainName2026}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|}
+    \hline
+    Signatur Algorithmus & DNSSEC Code & Länge öffentlicher Schlüssel (in Bits) & Signatur Länge (in Bits) \\
+    \hline
+    RSA mit SHA-256 & 8 & $\ge 2048$ & $\approx2050-4100$ \\
+    \hline
+    ECDSA P-256 mit SHA-256 & 13 & 256 & 512 \\
+    \hline
+    ECDSA P-384 mit SHA-384 & 14 & 384 & 768 \\
+    \hline
+    Ed225516 & 15 & 256 & 512 \\
+    \hline
+    Ed448 & 16 & 456 & 912 \\
+    \hline
+\end{tabular}
+\caption{von DNSSEC Unterstützte Signatur Algorithmen}
+\label{fig:DNSSECalgos}
+\end{table}
+
+Wie aus \ref{fig:rrsig} anhand des DNS Code entnehmen kann wird, in diesem Paket, ECDSA P-256 mit SHA-256 als Signatur Algorithmus verwendet.
+
+\subsubsection{Upgrade auf PQC}
+Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
+Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in \ref{fig:NIST-PQC-Standarts}, die derzeitigen Algorithmen aus dem Runde 3 NIST Standartisierungverfahren für Digitale Signaturen.
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|c|}
+        \hline
+        PQC- Algorithmus & Typ & Öffentlicher Schlüssel Länge & Signatur Länge\\
+        \hline
+        CRISTALS-DILITHIUM2 & Gitterbasiert & 1312 Bytes & 2420 Bytes\\
+        \hline
+        CRISTALS-DILITHIUM3 & Gitterbasiert & 1952 Bytes & 3293 Bytes\\
+        \hline
+        CRISTALS-DILITHIUM5 & Gitterbasiert & 2592 Bytes & 4595 Bytes\\
+        \hline
+        FALCON-512 & Gitterbasiert NTRU & 897 Bytes & 666 Bytes\\
+        \hline
+        FALCON-1024 & Gitterbasiert NTRU & 1793 Bytes & 1280 Bytes\\
+        \hline
+        Rainbow Level 1 & multivariat & 157.8 kB & 528 Bit\\
+        \hline
+        Rainbow Level 3 & multivariat & 861.4 kB & 1312 Bit\\
+        \hline
+        Rainbow Level 5 & multivariat & 1885.4 kB & 1632 Bit\\
+        \hline
+        Cyclic Rainbow Level 1 & multivariat & 58.8 kB & 528 Bit\\
+        \hline
+        Cyclic Rainbow Level 3 & multivariat & 258.4 kB & 1312 Bit\\
+        \hline
+        Cyclic Rainbow Level 5 & multivariat & 523.5 kB & 1696 Bit\\
+        \hline
+    \end{tabular}
+    \caption{NIST PQC Standarts}
+    \label{fig:NIST-PQC-Standarts}
+\end{table}
+
+Wie in \ref{fig:NIST-PQC-Standarts} zu sehen ist, sprengen bereits die kleinsten Signatur- und Schlüssellängen den Rahmen von einfachen UDP Paketen.\cite{Falcon,PQCRainbow,schwabeDilithium,computersecuritydivision3SubmissionsPostQuantum2017}

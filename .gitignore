@@ -10,3 +10,5 @@
 !kapitel/
 !kapitel/*/
 !kapitel/*/*.tex
+!src/
+!src/**
