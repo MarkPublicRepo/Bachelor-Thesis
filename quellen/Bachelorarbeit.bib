@@ -242,6 +242,16 @@
   abstract = {This document is part of a family of documents that describe the DNS Security Extensions (DNSSEC). The DNS Security Extensions are a collection of new resource records and protocol modifications that add data origin authentication and data integrity to the DNS. This document describes the DNSSEC protocol modifications. This document defines the concept of a signed zone, along with the requirements for serving and resolving by using DNSSEC. These techniques allow a security-aware resolver to authenticate both DNS resource records and authoritative DNS error indications. This document obsoletes RFC 2535 and incorporates changes from all updates to RFC 2535. [STANDARDS-TRACK]}
 }
 
+@misc{LatticeSignaturesFiatShamir,
+  title = {Lattice {{Signatures}}: {{Fiat}}-{{Shamir Intuition}}},
+  shorttitle = {Lattice {{Signatures}}},
+  urldate = {2026-09-09},
+  abstract = {Explore lattice-based signatures using Fiat-Shamir with aborts, covering SVP/SIS foundations and techniques behind post-quantum schemes like Dilithium.},
+  howpublished = {https://www.nccgroup.com/research/building-intuition-for-lattice-based-signatures-part-2-fiat-shamir-with-aborts},
+  langid = {english},
+  file = {/home/Mark/Zotero/storage/FFJZJICU/building-intuition-for-lattice-based-signatures-part-2-fiat-shamir-with-aborts.html}
+}
+
 @article{muellerRetrofittingPostQuantumCryptography2020,
   title = {Retrofitting {{Post-Quantum Cryptography}} in {{Internet Protocols}}: {{A Case Study}} Of},
   author = {Mueller, Moritz and {de Jong}, Jins and {van Heesch}, Maran and {van Rijswijk-Deij}, Roland},
@@ -270,6 +280,38 @@
   file = {/home/Mark/Zotero/storage/TLW74LJI/Müller et al. - 2020 - Retrofitting post-quantum cryptography in internet protocols a case study of DNSSEC.pdf}
 }
 
+@incollection{nguyenFastFalconSignature2023,
+  title = {Fast {{Falcon Signature Generation}} and {{Verification Using ARMv8 NEON Instructions}}},
+  booktitle = {Progress in {{Cryptology}} - {{AFRICACRYPT}} 2023},
+  author = {Nguyen, Duc Tri and Gaj, Kris},
+  editor = {El Mrabet, Nadia and De Feo, Luca and Duquesne, Sylvain},
+  year = 2023,
+  volume = {14064},
+  pages = {417--441},
+  publisher = {Springer Nature Switzerland},
+  address = {Cham},
+  doi = {10.1007/978-3-031-37679-5_18},
+  urldate = {2026-09-08},
+  abstract = {We present our speed records for Falcon signature generation and verification on ARMv8-A architecture. Our implementations are benchmarked on Apple M1 'Firestorm' and Raspberry Pi 4 Cortex-A72 chips. Compared with lattice-based CRYSTALS-Dilithium, our optimized signature generation is 2\texttimes{} slower, but signature verification is 3--3.9\texttimes{} faster than the state-of-the-art CRYSTALS-Dilithium implementation on the same platforms. Compared with stateful and stateless hash-based digital signatures, XMSS and SPHINCS+, our optimized Falcon implementation has 10--950\texttimes{} faster signature generation and 23--31\texttimes{} faster signature verification. Faster signature verification may be particularly useful for the client side on constrained devices. Our Falcon implementation outperforms the previous work in both Sign and Verify operations. We achieve improvement in Falcon signature generation by supporting all possible parameters N of FFT-related functions and applying our compressed twiddle-factor table to reduce memory usage. We also demonstrate that the recently proposed signature scheme Hawk, sharing functionality with Falcon, offers 17\% smaller signature sizes, 3.3\texttimes{} faster signature generation, and 1.6--1.9\texttimes{} slower signature verification when implemented on the same ARMv8 processors as Falcon.},
+  isbn = {978-3-031-37678-8 978-3-031-37679-5},
+  langid = {english},
+  file = {/home/Mark/Zotero/storage/7T23R7IC/Nguyen and Gaj - 2023 - Fast Falcon Signature Generation and Verification Using ARMv8 NEON Instructions.pdf}
+}
+
+@book{paarKryptografieVerstaendlichLehrbuch2016,
+  title = {{Kryptografie verst\"andlich: Ein Lehrbuch f\"ur Studierende und Anwender}},
+  shorttitle = {{Kryptografie verst\"andlich}},
+  author = {Paar, Christof and Pelzl, Jan},
+  year = 2016,
+  series = {{eXamen.press}},
+  edition = {1. Aufl. 2016},
+  publisher = {Springer Berlin Heidelberg},
+  address = {Berlin, Heidelberg},
+  doi = {10.1007/978-3-662-49297-0},
+  isbn = {978-3-662-49296-3 978-3-662-49297-0},
+  langid = {german}
+}
+
 @misc{PQCRainbow,
   title = {{{PQCRainbow}}},
   urldate = {2026-09-02},
@@ -293,6 +335,40 @@
   abstract = {The Domain Name System (DNS) is an integral part of any enterprise network architecture. An attack against the DNS infrastructure of an enterprise threatens every network operation in that enterprise. DNS operations are composed of different roles that each have their own set of security considerations. This document provides DNS deployment guidelines to secure the DNS protocol and infrastructure, mitigate misuse or misconfiguration, and provide an additional layer of network security as part of a zero trust and/or defense-in-depth security risk management approach.},
   langid = {english},
   file = {/home/Mark/Zotero/storage/KWPU4HT2/Rose et al. - 2026 - Secure Domain Name System (DNS) Deployment Guide.pdf}
+}
+
+@incollection{schmehFiatShamirTransformation2026,
+  title = {{Die Fiat-Shamir-Transformation}},
+  booktitle = {{Post-Quanten-Kryptografie: Eine anschauliche Einf\"uhrung}},
+  author = {Schmeh, Klaus},
+  editor = {Schmeh, Klaus},
+  year = 2026,
+  pages = {71--76},
+  publisher = {Springer Fachmedien},
+  address = {Wiesbaden},
+  doi = {10.1007/978-3-658-50705-3_9},
+  urldate = {2026-09-08},
+  abstract = {Mit der Fiat-Shamir-Transformation kann man aus einer geeigneten Einwegfunktion ein Verfahren f\"ur die digitale Signatur konstruieren. Sofern die genutzte Einwegfunktion mit einem Quantencomputer nicht gel\"ost werden kann, ist das resultierende Verfahren quantensicher. Da es viele geeignete Einwegfunktionen gibt, spielt die Fiat-Shamir-Transformation in der Post-Quanten-Kryptografie eine wichtige Rolle und bildet die Grundlage einiger bedeutender Post-Quanten-Signaturverfahren.},
+  isbn = {978-3-658-50705-3},
+  langid = {ngerman},
+  file = {/home/Mark/Zotero/storage/M2V5TSYH/Schmeh - 2026 - Die Fiat-Shamir-Transformation.pdf}
+}
+
+@incollection{schmehGitterbasierteAlgorithmen2026,
+  title = {{Gitter-basierte Algorithmen}},
+  booktitle = {{Post-Quanten-Kryptografie: Eine anschauliche Einf\"uhrung}},
+  author = {Schmeh, Klaus},
+  editor = {Schmeh, Klaus},
+  year = 2026,
+  pages = {77--97},
+  publisher = {Springer Fachmedien},
+  address = {Wiesbaden},
+  doi = {10.1007/978-3-658-50705-3_10},
+  urldate = {2026-09-08},
+  abstract = {Gitter-basierte Algorithmen bilden die momentan wichtigste Familie von Post-Quanten-Verfahren. Sie nutzen die Tatsache, dass es in hochdimensionalen Gittern \"au\ss erst aufwendig ist, k\"urzeste Entfernungen zu suchen, sofern man nicht geeignete Zusatzinformationen besitzt. Mit CRYSTALS-Kyber (ML-KEM) f\"ur die Verschl\"usselung und CRYSTALS-Dilithium (ML-DSA) f\"ur die Signatur geh\"oren die beiden momentan bedeutendsten Post-Quanten-Algorithmen zu den Gitter-basierten Verfahren. Sie gelten als sicher und praktikabel.},
+  isbn = {978-3-658-50705-3},
+  langid = {ngerman},
+  file = {/home/Mark/Zotero/storage/QQXGNII2/Schmeh - 2026 - Gitter-basierte Algorithmen.pdf}
 }
 
 @incollection{schmehQuantencomputer2026,
@@ -340,6 +416,23 @@
   urldate = {2026-08-16},
   howpublished = {https://kea.nu/files/textbooks/humblesec/seriouscrytography.pdf},
   file = {/home/Mark/Zotero/storage/XAHMSQ5D/seriouscrytography.pdf}
+}
+
+@incollection{soniFALCON2021,
+  title = {{{FALCON}}},
+  booktitle = {Hardware {{Architectures}} for {{Post-Quantum Digital Signature Schemes}}},
+  author = {Soni, Deepraj and Basu, Kanad and Nabeel, Mohammed and Aaraj, Najwa and Manzano, Marcos and Karri, Ramesh},
+  editor = {Soni, Deepraj and Basu, Kanad and Nabeel, Mohammed and Aaraj, Najwa and Manzano, Marc and Karri, Ramesh},
+  year = 2021,
+  pages = {31--41},
+  publisher = {Springer International Publishing},
+  address = {Cham},
+  doi = {10.1007/978-3-030-57682-0_3},
+  urldate = {2026-09-08},
+  abstract = {FALCON is a lattice-based cryptographic algorithm which claims to provide a signature scheme that is unforgeable against quantum-computers; it is the second such algorithm we consider in-depth, of the eight in this book. This algorithm is divided into three components: key generation, signature generation, and signature verification. We select three variants of FALCON with distinct security strength and make these variants capable of synthesis by a High-Level Synthesis (HLS) tool. We summarize all the changes in the C code to make it capable of synthesis. Using HLS, we generate FPGA and ASIC designs for signature verification of three variants. For FALCON hardware architectures, we evaluate trade-offs in power, area, speed, and security parameters. We explore the design-space through a detailed analysis of FPGA and ASIC designs for FALCON, concluding that for the FPGA implementation, latency increases with security while for the ASIC-specific implementation, loop pipelining improves the latency without any additional memory or area cost.},
+  isbn = {978-3-030-57682-0},
+  langid = {english},
+  file = {/home/Mark/Zotero/storage/YXUNHZKT/Soni et al. - 2021 - FALCON.pdf}
 }
 
 @misc{suelaImplementingEvaluatingPostQuantum2025,

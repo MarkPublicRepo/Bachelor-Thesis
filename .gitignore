@@ -4,7 +4,7 @@
 !main.bib
 !main.pdf
 !bilder/
-!bilder/**
+!bilder/*.png
 !quellen/
 !quellen/**
 !kapitel/
