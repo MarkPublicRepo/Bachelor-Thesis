@@ -1,0 +1,47 @@
+\section{DNS}
+Domain Name System oder kurz DNS ist ein dienst, der es ermöglicht über Datenbanken einen Host Namen in eine IP Adresse aufzulösen und umgekehrt.
+Z.b. steht die IP-Adresse 172.66.147.243 für \enquote{cruz.ns.cloudflare.com.}, dies ist ein DNS-Eintrag den man mit \enquote{host} oder \enquote{dig} auflösen kann.
+Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen, da die gegenseitige kommunikation über Namen einfacher ist, als Computer immer über die IP-Adresse ansprechen zu müssen.
+DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
+Das DNS Protokoll läuft standartmäßig auf UDP. TPC-fallback ist möglich wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit\cite{ietf-rfc-1034}.
+Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus\cite{ietf-rfc-1034}\cite{ietf-rfc-1035}.
+Die Domänen werden in einer Baumstruktur angeordnet, die oberste ist: \enquote{.}, sog. root-domain, die in der ersten Ebene sind die Top-Level-Domains (TLD).
+Die Knoten darunter, die keine Blätter sind, sind weitere Domänen.
+Die Blätter werden als \enquote{labels} bezeichnet.
+Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, die Domänen-Server und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein\cite{baunComputernetzeKompaktPraxisorientierte2025}.
+
+% diese figure ist von claude generiert worden. Muss erwähnt werden!
+\begin{figure}[htbp]
+\centering
+\begin{forest}
+for tree={
+  rectangle, draw, minimum height=1.6em, minimum width=2.5em,
+  l sep=25pt, s sep=15pt
+}
+[. (Root)
+  [com
+    [example.com
+      [www.example.com]
+      [mail.example.com]
+    ]
+  ]
+  [de
+    [example.de]
+  ]
+  [org
+    [example.org]
+  ]
+]
+\end{forest}
+\caption{Beispiel der hierarchischen Struktur des DNS-Namensraums}
+\label{fig:dns-baum}
+\end{figure}
+
+In \ref{fig:dns-baum} ist eine mögliche Struktur einer hierarchischen Struktur eines DNS-Namensraumes zu sehen.
+Die Namensauflösung geschieht von rechts nach links.
+Die jeweilige Zone kann mehrere labels haben oder wiederrum subdomänen.
+Im Beispiel von \ref{fig:dns-baum} haben org und de, jeweils ein label namens example.
+Das der Name example in beiden Domänen vorkommt, führt zu keinem Konflikt.
+Trotz dass der Name der gleiche ist, kann unterschieden werden, weil dieser nicht in der selben Domäne ist.
+
+Im Fall von der com Domäne ist example wieder eine subdomäne, die die labels \enquote{www} und \enquote{mail} besitzt.

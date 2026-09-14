@@ -1,11 +1,11 @@
 \section{DNS und DNSSEC}
-Domain Name System oder kurz DNS ist ein dienst, der es ermöglicht über Datenbanken einen Host Namen in eine IP Adresse aufzulösen und umgekehrt.
-Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen.
-DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
-Das DNS Protokoll läuft standartmäßig auf UDP. TPC-fallback ist möglich wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit.\cite{ietf-rfc-1034}
-Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus.\cite{ietf-rfc-1034}\cite{ietf-rfc-1035}
-
-Der standart DNS Service ist aber anfällig gegen eine vielzahl von Angriffen.
+%Domain Name System oder kurz DNS ist ein dienst, der es ermöglicht über Datenbanken einen Host Namen in eine IP Adresse aufzulösen und umgekehrt.
+%Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen.
+%DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
+%Das DNS Protokoll läuft standartmäßig auf UDP. TPC-fallback ist möglich wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit.\cite{ietf-rfc-1034}
+%Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus.\cite{ietf-rfc-1034}\cite{ietf-rfc-1035}
+%
+Der standart DNS Service ist anfällig gegen eine vielzahl von Angriffen.
 Z.B. durch manipulation der DNS Pakete lassen sich andere Zielrechner ansteuern als gedacht (Spoofing).
 Dadurch dass DNS Einträge aus dem Cache lesen kann, um Latenz zu sparen, sind sogenannte Cache Poisoning Angrifffe möglich, bei dem falsche Adressen in den Cache geladen werden, um künftige Anfragen, falsch weiter zuleiten.
 Um die Authentizität und Integrität der DNS Einträge zu gewährleisten, gibt es die DNS Security Extensions (DNSSEC).
