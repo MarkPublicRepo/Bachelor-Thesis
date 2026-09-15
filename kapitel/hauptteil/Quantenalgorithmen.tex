@@ -1,10 +1,38 @@
 \section{Quantenalgorithmen}
+Durch die mögliche Bedrohung von Quantencomputern in der Zukunft, werden neue Kryptographische Verfahren standartisiert.
+Das NIST hat dabei fünf Sicherheitsstufen definiert als Referenz welches Niveau für die Algorithmen zu erbringen ist.
+Die Sicherheitsstufen und deren Referenz sind in Abbildung-\ref{fig:NIST-Sicherheitslevel} zu sehen\cite{soniHardwareArchitecturesPostQuantum2021}.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|>{\centering\arraybackslash}p{3.5cm}|}
+        \hline
+        Sicherheits Level & Vergleich & Angriffsverfahren & Ressistenz gegen Quantencomputer\\
+        \hline
+        1 & $\ge$ AES128 & vollständige Schlüsselsuche & schwach\\
+        \hline
+        2 & $\ge$ SHA256 & Kollisionsangriff & stark\\
+        \hline
+        3 & $\ge$ AES192 & vollständige Schlüsselsuche & stärker als Level 1 oder 2\\
+        \hline
+        4 & $\ge$ SHA384 & Kollisionsangriff & sehr stark\\
+        \hline
+        5 & $\ge$ AES256 & vollständige Schlüsselsuche & stärkste Ressistenz\\
+        \hline
+    \end{tabular}
+    \caption{NIST Sicherheitslevel für PQC-Verfahren}
+    \label{fig:NIST-Sicherheitslevel}
+\end{table}
+
 \subsection{Der Umstieg von derzeitigen Digitalen Signaturen zu PQC}
 Die heutigen Digitalen Signaturen ((EC)DSA, (EC)ElGamal) basieren auf dem diskreten Logarithmus Problem oder bei RSA auf der schwierigkeit des faktorisierens großer Semi-Primzahlen in dessen Primfaktoren.
 RSA hat den Vorteil, dass die verschlüsselung und die Signatur sich nicht stark von einander unterscheiden.\cite{paarKryptografieVerstaendlichLehrbuch2016}
 
 Die Verfahren aus dem NIST-Auswahlprozess haben längere Signaturen und nicht so einfach wie RSA.
 Der Signatur- und Verschlüsselungsalgorithmus unterscheiden sich stärker voneinander. Für DNSSEC sind nur die Signaturen interessant.
+
+\subsection{NIST Auswahlprozess für Digitale Signaturen}
+Zur Zeit dieser Arbeit befindet sich der NIST Auswahlprozess in der x-ten Runde, zur Auswahl für den Digitalen Signatur Standart, stehen momentan CRYSTALS-Dilithium, FALCON und Rainbow.
 
 \subsubsection{Crystals-Dilithium}
 Das von der NIST favorisierte Verfahren, es wurde unter anderem von Deutschen Kryptographen entwickelt und basiert auf der schwierigkeit den nächsten Gitterpunkt zu einem Punkt in einem Hochdimensionalem Gitter zu finden.
@@ -49,5 +77,5 @@ Solch ein Gleichungssystem zu lösen ist NP-schwer und lässt sich auch mit Quan
 Multivariate Kryptosysteme wurden bereits öfters gebrochen, trotz der Annahme sicher zu sein und die Berechnungen sich oft auch ressourcen lastig, auch wenn die Signaturen eher kurz sind, was dazu führt, dass der Einsatz dieser Systeme in der Praxis recht selten ist\cite{aumassonSeriousCryptographyPractical2018}.
 Das Rainbow kryptosystem wird beschrieben als eine mehrschichtige oil-and-vinegar konstruktion und dessen generalisierung\cite{dingRainbowNewMultivariable2005}.
 
-\subsubsection{weitere PQC-Signatur-Verfahren}
+\subsection{weitere PQC-Signatur-Verfahren}
 \textbf{Hash-basierte} Signaturen bauen auf der Sicherheit von Hash-Funktionen auf.

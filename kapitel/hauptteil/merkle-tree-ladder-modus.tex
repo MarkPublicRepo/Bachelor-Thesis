@@ -81,3 +81,42 @@ Die Ladder $\Lambda_{8}$ sieht nun so aus:
 
 Die Hashes müssen nicht alle neu berechnet werden, nur diejenigen die betroffen sind. Die Berechnungen der Hashes und der Signatur sind hier vereinfacht dargestellt, das Prinzip ist aber dass durch zusätzliche Nachrichten nicht alles neu berechnet werden muss
 und die Berechnungen der Hashfunktionen sind performanter als die Signatur.
+
+Die Merkle-Tree-Ladder besteht aus einem Wald von Binärbaumen, die Baume können aber nicht genau die Domänen abbilden.
+Folgend, ein Beweis durch wiederspruch, dass eine Domäne nicht immer durch einen Merkle-Tree abgebildet werden kann.
+
+\newtheorem{satz}{Satz}
+\newtheorem{bem}{Bemerkung}
+
+\begin{satz}
+Ein gültiger DNS-Domänenbaum kann immer durch einen Merkle-Tree abgebildet werden.
+\end{satz}
+
+\begin{proof}
+    Angenommen, die Aussage des Satzes gelte. Dann müsste jeder DNS-Domänenbaum einem Merkle-Tree (Rung) entsprechen.
+    Ein Baum eines Merkle-Trees, auch \enquote{Rung} genannt, ist entweder ein perfekter Binärbaum oder ein einzelnes Blatt.
+    Um ein perfekter Binärbaum zu sein, gilt ein Baum hat $\left|V\right|$ Knoten und $\left|V\right|\ =\ 2^{n+1}-1$, mit $n \in \mathbb{N}_0$ als höhe\cite{PerfectBinaryTree,luthiAlgorithmenUndDatenstrukturen}.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{forest}
+    for tree={
+    rectangle, draw, minimum height=1.6em, minimum width=2.5em,
+    l sep=25pt, s sep=15pt
+    }
+    [com, fill=gray!20
+        [example.com, fill=blue!10]
+        [google.com, fill=yellow!10]
+        [amazon.com, fill=green!10]
+    ]
+    \end{forest}
+    \caption{Gültiger DNS-Domänenbaum einer Domäne/Wurzel mit drei labels/Kindern}
+    \label{fig:DNS-Domänenbaum}
+\end{figure}
+
+Ein gültiger DNS-Domänenbaum in Abbildung-\ref{fig:DNS-Domänenbaum} mit $n=1$ und $\left|V\right| = 4$, somit $\left|V\right| \neq 2^{n+1}-1 = 3$.\\
+
+Der Baum besteht nicht aus einem einzelnen Blatt: $\left|V\right| = 4 \neq 1$.\\
+
+Somit ist der Baum in Abbildung-\ref{fig:DNS-Domänenbaum} kein gültiger Rung.
+\end{proof}

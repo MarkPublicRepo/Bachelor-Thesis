@@ -8,6 +8,16 @@
 Der standart DNS Service ist anfällig gegen eine vielzahl von Angriffen.
 Z.B. durch manipulation der DNS Pakete lassen sich andere Zielrechner ansteuern als gedacht (Spoofing).
 Dadurch dass DNS Einträge aus dem Cache lesen kann, um Latenz zu sparen, sind sogenannte Cache Poisoning Angrifffe möglich, bei dem falsche Adressen in den Cache geladen werden, um künftige Anfragen, falsch weiter zuleiten.
+Ein DNS Cache poisoning Angriff, läuft folgendermaßen ab:
+
+\begin{description}
+    \item[Angreifer schickt einen gefälschten Eintrag] Der Angreifer schickt dem DNS-Server einen vermeintlichen Eintrag für eine Website,
+    dieser Eintrag ist aber nicht die richtige Seite, sondern eine vom Angreifer kontrollierte Seite.
+    \item[Der DNS-Server nimmt diese an] Der DNS-Server hat keinen Beweis für die gütligkeit des Eintrags und nimmt diesen einfach an.
+    \item[Client fragt nach dem Eintrag] Der Client frag nach der Adresse für den gefälschten Eintrag. Der Server antwortet mit dem Eintrag aus seinem Cache.
+    \item[Erfolgreicher Angriff] Das Opfer wurde nun auf die Seite des Angreifers gelockt\cite{asudbringUebersichtUeberDNSSEC}.
+\end{description}
+
 Um die Authentizität und Integrität der DNS Einträge zu gewährleisten, gibt es die DNS Security Extensions (DNSSEC).
 Es muss berücksichtigt werden, dass dadurch aber keine Vertraulichkeit der Daten gewährleistet wird und Angriffe wie DNS-Rebinding Angriffe und D(DoS) Angriffe weiterhin möglich sind.
 
@@ -20,7 +30,7 @@ Durch die DNSSEC Erweiterung konmmen neue Ressource Record Typen dazu, diese sin
 \end{itemize}
 
 \subsubsection{Resource Record Signature (RRSIG)}
-Dieser RR enthält die Signaturen über ein bestimmtes RR Set.
+Dieser Resource Record (RR) enthält die Signaturen über ein bestimmtes RR Set.
 
 \newpage
 
@@ -40,8 +50,9 @@ Verknüpft eine delegierte Kindzone mit der übergeordneten Zone.
 NSEC ist ein Beweis der nicht-existenz einer Zone oder eines Domänennamens.
 \cite{ietf-rfc-4033,ietf-rfc-4034,ietf-rfc-4035}
 
+\subsubsection{Signatur Algorithmen für DNSSEC}
 Durch diese Erweiterungen von DNSSEC ist eine vergrößerung der UDP Pakete (Extension Mechanisms for DNS (EDNS0)) notwendig.\cite{ietf-rfc-2671}
-von DNNSEC werden die Algorithmen aus \ref{fig:DNSSECalgos} derzeit unterstützt.\cite{roseSecureDomainName2026}
+von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit unterstützt.\cite{roseSecureDomainName2026}
 \begin{table}[htbp]
 \centering
 \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|}
@@ -63,7 +74,7 @@ von DNNSEC werden die Algorithmen aus \ref{fig:DNSSECalgos} derzeit unterstützt
 \label{fig:DNSSECalgos}
 \end{table}
 
-Wie aus \ref{fig:rrsig} anhand des DNS Code entnehmen kann wird, in diesem Paket, ECDSA P-256 mit SHA-256 als Signatur Algorithmus verwendet.
+Wie aus Abbildung-\ref{fig:rrsig} anhand des DNS Code 13 entnehmen kann wird, in diesem Paket, ECDSA P-256 mit SHA-256 als Signatur Algorithmus verwendet.
 
 \subsection{Upgrade auf PQC}
 Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
