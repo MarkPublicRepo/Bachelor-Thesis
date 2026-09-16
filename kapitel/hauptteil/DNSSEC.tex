@@ -21,7 +21,16 @@ Ein DNS Cache poisoning Angriff, läuft folgendermaßen ab:
 Um die Authentizität und Integrität der DNS Einträge zu gewährleisten, gibt es die DNS Security Extensions (DNSSEC).
 Es muss berücksichtigt werden, dass dadurch aber keine Vertraulichkeit der Daten gewährleistet wird und Angriffe wie DNS-Rebinding Angriffe und D(DoS) Angriffe weiterhin möglich sind.
 
-Durch die DNSSEC Erweiterung konmmen neue Ressource Record Typen dazu, diese sind:
+Durch die DNSSEC Erweiterung kommt folgendes hinzu:
+Zwei öffentliche Schlüssel:
+\begin{itemize}
+    \item Key Signing Keys (KSK)\\
+    signieren die DNS-Einträge innerhalb einer Zone
+    \item Zone Signing Keys (ZSK)\\
+    signieren die KSK
+\end{itemize}
+
+Zudem auch neue Ressource Record Typen:
 \begin{itemize}%{DNSSEC Ressource Record Typen}{2pt}
     \item Resource Record Signature (RRSIG)
     \item DNS Public Key (DNSKEY)
@@ -31,8 +40,7 @@ Durch die DNSSEC Erweiterung konmmen neue Ressource Record Typen dazu, diese sin
 
 \subsubsection{Resource Record Signature (RRSIG)}
 Dieser Resource Record (RR) enthält die Signaturen über ein bestimmtes RR Set.
-
-\newpage
+Die Signatur, die darin gespeichert ist, ist für einen bestimmten Namen und Typ gültig.
 
 \begin{figure}[htbp]
     \lstinputlisting{src/rr_rrsig.txt}
@@ -40,15 +48,21 @@ Dieser Resource Record (RR) enthält die Signaturen über ein bestimmtes RR Set.
     \label{fig:rrsig}
 \end{figure}
 
-In \ref{fig:rrsig} ist der Output von \textbf{dig example.com RRSIG} zu sehen.
+In Abbildung-\ref{fig:rrsig} ist der Output von \textbf{dig example.com RRSIG} zu sehen. Das ist ein RRSIG Eintrag der Domäne example.com.
 
 \subsubsection{DNS Public Key (DNSKEY)}
 Der öffentliche Schlüssel für die Zone. Mit diesem RR kann der Resolver die digitalen Signaturen der Zone prüfen.
+Dieser Eintrag speichert einen Schlüssel und keine Signatur, anderst als RRSIG.
+Für untergeordnete Zonen wird dieser Eintrag als child DNSKEY (CDNSKEY) bezeichnet.
 \subsubsection{Delegation Signer (DS)}
 Verknüpft eine delegierte Kindzone mit der übergeordneten Zone.
+Es ist ein RR der zum Schützen Delegierung verwendet wird.
+Es gibt diesen RR auch für untergeordnete Delegierungssignaturgeber, sog. child delegation signer (CDS).
 \subsubsection{Next Secure (NSEC)}
 NSEC ist ein Beweis der nicht-existenz einer Zone oder eines Domänennamens.
-\cite{ietf-rfc-4033,ietf-rfc-4034,ietf-rfc-4035}
+Er verhindert einen Angriff durch Zonenaufzählungen.
+Die neuste Version des NSEC ist durch RFC 9824 \cite{ietf-rfc-9824} beschrieben
+\cite{ietf-rfc-4033,ietf-rfc-4034,ietf-rfc-4035,asudbringUebersichtUeberDNSSEC}.
 
 \subsubsection{Signatur Algorithmen für DNSSEC}
 Durch diese Erweiterungen von DNSSEC ist eine vergrößerung der UDP Pakete (Extension Mechanisms for DNS (EDNS0)) notwendig.\cite{ietf-rfc-2671}
@@ -78,7 +92,7 @@ Wie aus Abbildung-\ref{fig:rrsig} anhand des DNS Code 13 entnehmen kann wird, in
 
 \subsection{Upgrade auf PQC}
 Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
-Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in \ref{fig:NIST-PQC-Standarts}, die derzeitigen Algorithmen aus dem Runde 3 NIST Standartisierungverfahren für Digitale Signaturen.
+Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in Abbildung-\ref{fig:NIST-PQC-Standarts}, die derzeitigen Algorithmen aus dem Runde 3 NIST Standartisierungverfahren für Digitale Signaturen.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|c|}
@@ -112,4 +126,4 @@ Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich.
     \label{fig:NIST-PQC-Standarts}
 \end{table}
 
-Wie in \ref{fig:NIST-PQC-Standarts} zu sehen ist, sprengen bereits die kleinsten Signatur- und Schlüssellängen den Rahmen von einfachen UDP Paketen.\cite{Falcon,PQCRainbow,schwabeDilithium,computersecuritydivision3SubmissionsPostQuantum2017}
+Wie in Abbildung-\ref{fig:NIST-PQC-Standarts} zu sehen ist, sprengen bereits die kleinsten Signatur- und Schlüssellängen den Rahmen von einfachen UDP Paketen.\cite{Falcon,PQCRainbow,schwabeDilithium,computersecuritydivision3SubmissionsPostQuantum2017}
