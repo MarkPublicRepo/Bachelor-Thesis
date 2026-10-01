@@ -1,15 +1,25 @@
 \section{DNS}
 \label{chapter-DNS}
-Domain Name System oder kurz DNS ist ein dienst, der es ermöglicht über Datenbanken einen Host Namen in eine IP Adresse aufzulösen und umgekehrt.
+Im Internet kommunizieren Computer über IP-Adressen.
+Da es für Menschen nicht realistisch ist, sich für jeden Computer der angesprochen werden soll, sich die IP-Adresse des Computers zu merken,
+gibt es das Domain Name System (DNS).
+DNS ist ein ein System, das dazu da ist, IP-Adressen in Namen umzuwandeln die für Menschbar lesbar und umgänglich sind.
+Ebenso kann DNS auch Namen in IP-Adressen umwandeln.
+An einem praktischen Beispiel lässt sich das einfach zeigen.
 Z.B. steht die IP-Adresse 172.66.147.243 für \enquote{cruz.ns.cloudflare.com.}, dies ist ein DNS-Eintrag den man mit \enquote{host} oder \enquote{dig} auflösen kann.
-Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen, da die gegenseitige kommunikation über Namen einfacher ist, als Computer immer über die IP-Adresse ansprechen zu müssen.
+Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen, meistens ist es sogar einer der ersten Dienste die überhaupt die Kommunikation im Internet unter Computern ermöglicht.\\
+
 DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
-Das DNS Protokoll läuft standartmäßig auf UDP. TPC-fallback ist möglich wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit\cite{ietf-rfc-1034}.
+Das DNS Protokoll läuft standartmäßig auf UDP mit Port 53. TPC-fallback ist möglich wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit\cite{ietf-rfc-1034,ServiceNameTransport}.
 Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus\cite{ietf-rfc-1034}\cite{ietf-rfc-1035}.
-Die Domänen werden in einer Baumstruktur angeordnet, die oberste ist: \enquote{.}, sog. root-domain, die in der ersten Ebene sind die Top-Level-Domains (TLD).
-Die Knoten darunter, die keine Blätter sind, sind weitere Domänen.
+Die Domänen werden wie in \ref{fig:dns-baum} zu sehen ist, in einer Baumstruktur angeordnet.
+
+Der DNS Baum teilt sich anhand dessen Domänen auf. Die oberste Domäne ist die sogenannte root-Domain und wird mit einem \enquote{.} gekennzeichnet.
+Unter der root-Domain liegen die Top-Level-Domains (TLD).
+In \ref{fig:dns-baum} sind com, de und org die TLDs, es sind immer die Domänen, die unmittelbar unter der root-Domain liegen.
+Die Knoten darunter, die keine Blätter sind, sind weitere Domänen, wenn sie weitere Kinder haben, wie in \ref{fig:dns-baum}, com, de, org und auch example.com, dann werden diese als Subdomänen, aus der Sicht ihrer Kinder bezeichnet.
 Die Blätter werden als \enquote{labels} bezeichnet.
-Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, die Domänen-Server und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein\cite{baunComputernetzeKompaktPraxisorientierte2025}.
+Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, Domänen-Server sind verteilte Datenbanksysteme und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein\cite{baunComputernetzeKompaktPraxisorientierte2025}.
 
 % diese figure ist von claude generiert worden. Muss erwähnt werden!
 \begin{figure}[htbp]
