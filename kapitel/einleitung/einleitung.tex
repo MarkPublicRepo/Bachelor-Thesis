@@ -1,3 +1,36 @@
 \section{Einleitung}
 Durch die Fortschritt in der Entwicklung von Quantencomputern steigt die Notwendigkeit von kryptographischen Algorithmen,
 die auch gegen Angriffe von Quantencomputern resistent sind.
+Verfahren für digitale Signaturen wie Diffie-Hellman, DSA, oder das ElGaml Signaturverfahren bauen auf dem diskreten Logarithmusproblem von großen Zahlen auf.
+Dieses Problem ist die Schwierigkeit, den Logarithmus aus einer Zahl einer endliche Zahlenmenge zu berechnen.
+In der Praxis wird häufig die generalisierung des diskreten Logarithmusproblems verwendet, elliptische Kurven Kryptografie.
+Elliptische Kurven Kryptografie hat den Vorteil dass sie ein vergleichbares Sicherheitsniveau wie diskrete Logarithmus Varianten aufweist mit kürzeren Schlüssellängen.
+DNSSEC unterstützt auch Edwards Curve digital signature algorithm. Es ist ein elliptischer Kurven Algorithmus der dazu entwickelt wurde extra schnell zu sein.
+DNSSEC unterstüzt zudem auch RSA, obwohl dieser mit einem modulo von 4096 Bit die größten Schlüssellängen der klassischen Verfahren hat.
+DNS ist eines der wichtigsten Protokolle, die die Kommunikation im Internet ermöglichen.
+Es wurde allerdings nie mit dem Gedanken von Sicherheit gebaut.
+DNS bietet als einfaches Protokoll keine Sicherheitsfeatures, die DNS Pakete werden im Klartext übertragen und bieten keine Authentizität.
+Dadurch entstehen für klassisches DNS viele Angriffsvektoren, deshalb wurde DNSSEC entwickelt, mit Hilfe digitaler Signaturen, aus der asymmetrischen Kryptografie soll Integrität und Authentizität gewährleistet werden.
+Vertraulichkeit ist damit nicht gegeben. Wenn Vertraulichkeit notwendig ist, kann das durch DNS-over-HTTPS oder DNS-over-TLS gewährleistet werden.
+BIND9 unterstützt auch Kerberos zum austausch von DNS Daten.
+Auf das Thema Vertraulichkeit in DNS, wird in dieser Bachelorarbeit nicht weiter eingegangen.\\
+Im Januar 1996 veröffentlichte Peter Shor eine Arbeit mit dem Title \enquote{Polynomial-Time Algorithms for Prime Factorization
+and Discrete Logarithms on a Quantum Computer}, darin zeigte er, dass es theoretisch möglich wäre, mit einem Quantencomputer,
+effizient, diskrete Logarithmen zu berechnen und auch Primfaktorzerlegung, das Problem auf dem RSA basiert\cite{shorPolynomialTimeAlgorithmsPrime1997} und
+2024 wurde von dem Theoretischen Informatiker Oded Regev ein Algorithmus vorgestellt, der sogar nochmals effizienter ist als Shor's Algorithmus\cite{regevEfficientQuantumFactoring2024}.
+Dadurch entstand die Notwendigkeit für Kryptografie die auch gegen Angriffe von Qunantencomputern resistent ist.
+Die Verfahren der Post-Quanten-Kryptografie befinden sich noch im NIST-Auswahlverfahren.
+Was DNSSEC betrifft, es der wesentliche Unterschied von klassischen Verfahren und Post-Quanten-Kryptografie (PQC) dass PQC deutlich größere Schlüsselllängen haben.
+Die Schlüssellängen sind für das DNS Protokoll besonders problematisch, im Vergleich zu TLS beispielsweise, da DNS standardmäßig über UDP läuft und eine maximale größe hat, die bei PQC schnell überschritten werden kann.\\
+Wie DNSSEC mit PQC Algorithmen umgehen kann, wie das NIST dieses Problem betrachtet und wie es praktisch umgesetzt werden kann, ist die zentrale Fragestellung dieser Bachelorarbeit\cite{ietf-rfc-1034,ietf-rfc-1035}.
+
+Im ersten Kapitel \ref{chapter-DNS} wird das DNS Prokoll kurz vorgestellt und dessen Funktionalität, welche für die Arbeit relevant ist.
+Anschließend wird in \ref{section-Quantencomputer} grundlegend darauf eingegangen wie Quantencomputer funktionieren und was sie von klassischen Computern unterscheidet.
+Im Hauptteil wird in \ref{section-DNSSEC} die DNSSEC erweiterung vorgestellt und um welche, für diese Arbeit relevanten, funktionalitäten sie DNS erweitert.
+Das Kapitel \ref{section-Quantenalgorithmen} stellt einige der PQC Algorithmen vor, die zurzeit im NIST-Auswahlverfahren stehen.
+Die vorgestellten Algorithmen sind entweder interessant weil sie für DNSSEC geeignet sind, oder weil sie ein gutes Beispiel für eine Klasse von Algorithmen sind, wie z.B. Gitterbasiert (CRYSTALS-Dilithium, FALCON, \dots) oder Multivariat (Rainbow, UOV, \dots).
+Im laufe dieser Arbeit wurde ein Proof-of-Concept entwickelt, welches hier in \ref{section-poc} vorgestellt wird.
+Das Proof-of-Concept ist ein umgebauter DNS Server, der die PQC Algorithmen implementiert hat und PQC-DNSKEY nutzt, dadurch lassen sich Paketlimitierungen und TCP-Fallback veranschaulicht zeigen.
+Ebenso ist durch die Auswertung eines benchmarkings zu sehen, wie sich die verschiedenen Algorithmen in deren Performance unterscheiden.
+Es wird in folgenden Kapitel \ref{section-merkle-tree-ladder} der Merkle-Tree-Ladder mode vorgestellt, der von der NIST für die Implementierung für eine PQC Lösung für DNSSEC empfohlen wird.
+Abschließend werden in \ref{chapter-fazit} in einem Fazit die erkenntnisse aus der Arbeit zusammengefasst, eine Sicht der aktuellen Lage von Quantencomputern gegeben und welche Chancen sich durch Quantenkryptografie bieten.

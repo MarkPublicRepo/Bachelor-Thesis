@@ -1,2 +1,21 @@
 \section{Proof-of-Concept: Performance testing der PQC-Algorithmen}
-Mit der liboqs Bibliothek wurde anhand von wiederholten Messungen ein statistischer Vergleich der Performance, verschiedener POC-Algorithmen, gemessen.
+\label{section-poc}
+%Mit der liboqs Bibliothek wurde anhand von wiederholten Messungen ein statistischer Vergleich der Performance, verschiedener POC-Algorithmen, gemessen.
+Als Proof-of-Concept wurde mit der open-source Bibliothek liboqs (\url{https://github.com/open-quantum-safe/liboqs}) in den DNS Server powerDNS (\url{https://github.com/PowerDNS/pdns}), pqc integriert und dessen Performance gemessen.
+Die Signaturverfahren von DNSSEC wurden um folgende erweitert:
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Algorithmus & ID & Länge öffentlicher Schlüssel & Länge Signatur\\
+        \hline
+    \end{tabular}
+    \caption{PQC-Algorithmen im PoC}
+    \label{fig:PQC-in-PoC}
+\end{table}
+
+Das UOV-Verfahren kann nicht praktisch verwendet werden, weil die Signaturgröße den Rahmen für einen DNSKEY sprengt.
+Manche dieser Verfahren liegen, mit der göße des öffentlichen Schlüssels, noch in der größenordnung, welches UDP zulässt, wie \dots.
+Für \dots ist TCP-fallback notwendig.
+
+Durch benchmarking der einzelnen Algorithmen, eines Ressource Record, für jeweils keypair, signieren und verifizieren für 100 iterationen, haben sich die Messwerte ergeben.
