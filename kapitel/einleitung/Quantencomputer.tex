@@ -6,18 +6,40 @@
 \section{Quantencomputer}
 \label{section-Quantencomputer}
 
-Quantencomputer sind keine neuen Computer, sie können in der Lage manche Ressourcenlastingen Berechnungen effizienter zu lösen als es ein traditioneller Computer könnte.
-Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day.\cite{schmehQuantencomputer2026}
-Quantencomputer sind noch weit entfernt von dem Zustand in dem sie wirklich eine Gefahr für die Moderne Kryptographie darstellen,
-als vorkehrungsmaßnahme gibt es aber bereits algorthmen die theoretisch einem solchen Angriff standhalten sollen.
+Ein häufiges Missverständnis von Quantencomputern ist, dass als eine Art Supercomputer gesehen werden, der in der Lage ist,
+alles was ein herkömmlicher Computer kann zu machen, nur viel schneller. Auch häufig hört man die Erklärung, dass ein Quantencomputer im Gegensatz zu einem traditionellen Computer,
+nicht sequenziell rechnet, sondern alle berechnungen parallel auszuführen kann. Das ist schon eher korrekt, aber auch noch ungenau.
 
-Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition und Quantenverschränkung.
-Anstelle von Bits werden sogenannte Quantum Bits (Qubits) verwendet.
+Quantencomputer sind keine neuen Computer, sie können in der Lage manche Ressourcenlastingen Berechnungen effizienter zu lösen als es ein traditioneller Computer könnte.
+Sie sind fundamental neue rechenmodelle.
+Ein gewöhnlicher Computer funktioniert mit Bits und Bitmanipulationen durch logische Gatter, wie AND, OR, NOT, NAND, NOR, XOR und XNOR.
+Ein Quantencomputer basiert auf Qubits und benutzt Quantengatter wie das Hadamard-Gatter, zur manipulation der Qubits.
+Zudem geht ein Quantencomputer anderst vor, bei der Berechnung von Problemen.
+
+Zur Zeit dieser Arbeit, stecken Quantencomputer noch in ihren Kinderschuhen.
+Es gibt bereits Fortschritte (IBM quantum error-correction code in 2024 \cite{LandmarkIBMError,smalleyWasIstQuantencomputing2025}) aber noch ist ein praktischer Einsatz von Quantencomputern noch nicht in Sicht.
+Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day.\cite{schmehQuantencomputer2026}
+
+\subsection{Prinzipien von Quantencomputern}
+Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition, Quantenverschränkung, Interferenz und Dekohärenz.
+Um einen Quntencomputer zu betreiben, muss der Prozessor in Themperaturen nahe dem absoluten Nullpunkt betrieben werden.
+Der Prozessor, welcher das Herz des Computers ist, ist nur eine kleiner Chip, der Rest der Maschine ist vor allem dazu da, die richtigen Bedingungen zu gewährleisten.
+
+%hier soll ein Bild eines Quantencomputers hin
 
 \subsubsection{Qubits}
-Ein Qubit kann, mit einer Wahrscheinlichkeit, Zustände von 0 oder 1 annehmen. Um ein Qubit wird als komplexe Zahl dargestellt mit den Amplituden $\alpha$ und $\beta$.
-Es gibt die Wahrscheinlichkeit für eine null, hier der Realteil $\probalpha$ und die Wahrscheinlichkeit auf eine eins, $\probbeta$.
-Dass ein Qubit Eins oder Null gleichzeitig sein kann, bis man es observiert, ist Superposition. Wenn man es observiert, nimmt es eindeutig einen Wert an.\cite{aumassonSeriousCryptographyPractical2018}
+Ein klassischer Computer arbeitet mit Bits.
+Bits können einen festen Wert von null oder eins annehmen.
+Ein Qubit andererseits, kann mit einer bestimmten Wahrscheinlichkeit, Zustände von 0 oder 1 annehmen.
+Ein Qubit wird als linearkombination (siehe Gleichung-\ref{eq:qubit}) dargestellt mit den Amplituden $\alpha$ und $\beta$.
+
+\begin{equation}
+    \ket{\psi}\ =\ \alpha\ket{0}\ +\ \beta\ket{1}
+    \label{eq:qubit}
+\end{equation}
+
+Die Wahrscheinlichkeit für eine null, ist hier der $P(0)\ =\ \probalpha$ und die Wahrscheinlichkeit auf eine eins, $P(1)\ =\ \probbeta$.
+Folgend, ein Beispiel um es zu verdeutlichen.
 Man stellt das Qubit als Vektor $\psi$ in ket Notation da. Nehmen wir an wir haben für die Amplituden $\alpha=\alphavalue$ und $\beta=\betavalue$.
 
 \begin{align}
@@ -26,27 +48,27 @@ Man stellt das Qubit als Vektor $\psi$ in ket Notation da. Nehmen wir an wir hab
 
 Das bedeutet wir haben die Wahrscheinlichkeiten:
 \begin{align}
-    &{\left| \alpha \right|}^2\ =\ \alphavalue^2\ =\ \frac{1}{8}\\
-    &{\left| \beta \right|}^2\ =\ \betavalue^2\ =\ \frac{7}{8}
+    &P(0)\ =\ {\left| \alpha \right|}^2\ =\ \alphavalue^2\ =\ \frac{1}{8}\\
+    &P(1)\ =\ {\left| \beta \right|}^2\ =\ \betavalue^2\ =\ \frac{7}{8}
 \end{align}
 
-Die Wahrscheinlichkeiten ergeben in der Summe $\probalpha + \probbeta\ =\ \alphavalue^2+\betavalue^2\ =\ \frac{1}{8}+\frac{7}{8}\ =\ 1$.
+Die Wahrscheinlichkeiten ergeben in der Summe $\probalpha + \probbeta\ =\ \alphavalue^2+\betavalue^2\ =\ \frac{1}{8}+\frac{7}{8}\ =\ 1$.\\
 
-Wir können den Vektor der Wahrscheinlichkeiten in einem Koordinatensystem darstellen.
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
+%Wir können den Vektor der Wahrscheinlichkeiten in einem Koordinatensystem darstellen.
+%
+%\begin{figure}[htbp]
+%\centering
+%\begin{tikzpicture}
 % Achsen
-\draw[->] (0,0) -- (5,0) node[right] {$\alpha$};
-\draw[->] (0,0) -- (0,4) node[above] {$\beta$};
-
+%\draw[->] (0,0) -- (5,0) node[right] {$\alpha$};
+%\draw[->] (0,0) -- (0,4) node[above] {$\beta$};
+%
 % Linie vom Ursprung aus
-\draw[thick, blue] (0,0) -- (3,2);
-\end{tikzpicture}
-\caption{Qubit in Koordinatensystem darstellung}
-\label{fig:koordinatensystem}
-\end{figure}
+%\draw[thick, blue] (0,0) -- (3,2);
+%\end{tikzpicture}
+%\caption{Qubit in Koordinatensystem darstellung}
+%\label{fig:koordinatensystem}
+%\end{figure}
 
 Wenn wir mehr als ein Qubit haben, wie hier z.B. 7, können wir damit $2^{7}=128$ Zustände darstellen.
 Wenn die Zustände eines Qubits von denen eines anderen beeinfluss werden, spricht man davon, dass diese Quantenverschränkt sind.\cite{schmehQuantencomputer2026}
@@ -61,3 +83,66 @@ Alle Wahrscheinlichkeiten müssen zusammen wieder eins ergeben.
 \end{align}
 Man kann sich den Vektor als Punkt im 128-dimensionalem Koordinatensystem darstellen.
 Durch Quantengatter lassen sich die Zustände manipulieren, dadurch ist es möglich Quantenalgorithmen zu entwerfen.
+
+Eine bekannte Art ein Qubit grafisch darzustellen ist als Bloch-Kugel.
+Ein Qubit sie in Gleichung-\ref{eq:qubit} lässt sich auch in dessen Polarkoordinatendarstellung schreiben, wie in Gleichung-\ref{eq:qubit-polarkoordinaten} darstellen.
+\begin{equation}
+  |\psi\rangle =
+  \cos(\theta/2)e^{i\varphi_0}|0\rangle + \sin(\theta/2)e^{i\varphi_1}|1\rangle
+  \label{eq:qubit-polarkoordinaten}
+\end{equation}\cite{macchiavello210BlochSphere}
+
+Damit kann man ein Qubit grafisch darstellung und durch verschiedene Operationen, \enquote{ein Gefühl dafür entwickeln} was ein Qubit ist und wie es funktioniert.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/Bloch_sphere.png}
+    \caption{Grafische Darstellung eines Qubit als Bloch-Kugel. Quelle: \url{https://fi.wikipedia.org/wiki/Kubitti}\cite{Kubitti2026}}\hfill
+    \label{fig:Bloch-Kugel}
+\end{figure}
+
+\subsubsection{Überlagerung/Superposition}
+Wie das anschauliche Beispiel von Schrödingers Katze nahelegt, man kann nicht wissen ob die Katze lebendig oder tot ist,
+solange man nicht nachschaut, das gleiche Prinzip gilt auch bei Qubits.
+Qubits können einen Zustand als Teilchen oder als Welle haben, solange man diese nicht observiert, haben sie eine Wahrscheinlichkeit eine Welle zu sein und die Gegenwahrscheinlichkeit für ein Teilchen.
+
+Dieses Phänomen der Physik wird als Überlagerung oder Superposition beschrieben.
+Es macht es Quantencomputern möglich, mittels einer Anzahl $n$ an Qubits, $2^n$ Zustände abzubilden.
+
+Ein einzelnes Qubit aus Gleichung-\ref{eq:einzelnes-qubit} kann $2^1$ Zustände ${0, 1}$ annehmen.
+Wenn sich dieses Qubit in der Superposition befindet, befindet es sich mit den Amplituden $\alpha, \beta \in \mathbb{C}$ und den dazugehörigen Wahrscheinlichkeiten $\probalpha$ für eins und mit der Gegenwahrscheinlichkeit $\probbeta$ für null.
+
+\begin{equation}
+    \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
+    \label{eq:einzelnes-qubit}
+\end{equation}
+
+Der Zustand eines n-Qubit Quantencomputer lässt sich wie in Gleichung-\ref{eq:n-qubit} darstellen.
+
+\begin{equation}
+    \ket{\psi} = \sum_{k\ =\ 0}^{2^n-1}\alpha\ket{c_k}
+    \label{eq:n-qubit}
+\end{equation}
+
+mit $c\in\mathbb{C}$ als Amplitude und $k\ =\ [0, 2^n-1]$ in Binärdarstellung der Qubits.
+Ein n-Qubit Quantencomputer wie in Gleichung-\ref{eq:n-qubit} erzeugt Wellenfunktionen in einem $2^n$-dimensionalem komplexen Hilbertraum\cite{QuantumComputationComplex}.
+
+\subsubsection{Quantenverschränkung}
+Ein Qubit alleine ist nicht sonderlich nützlich, damit ein Quantencomputer sein volles Potenzial entfalten kann, ist die Quantenverschränkung unerlässlich.
+Wenn zwei (oder mehrere) Qubits verschränkt sind, bedeutet dass eine Änderung des einen, auch eine Auswirkung auf das Andere hat.
+
+Ein n-Qubit Quantencomputer wie in Gleichung-\ref{eq:n-qubit} ist nur wirklich nützlich wenn die Amplituden auch voneinander abhängig sind.
+Wenn sich die Amplitude (damit auch die Wahrscheinlichkeit) eines der n-Qubits ändert, beinflusst dies auch die Anderen.
+
+\subsubsection{Interferenz}
+Im Zusammenspiel mit Superposition und Quantenverschränkung, macht dieses Prinzip Quantencomputer zu extrem Leistungsfähigen Rechenmaschinen.
+Die Rechenpfade die entstehen lassen sich als komplexe Amplituden ausdrücken, die sich wie Wellen verhalten.
+Diese Amplituden können sich gegenseitig verstärken (konstruktive Interferenz) oder gegenseitig abschwächen (destruktive Interferenz).
+Damit können sich die Rechenpfade selbst auf den richtigen Weg lenken, die Wahrscheinlichkeit auf einen richtigen Rechenweg wird verstärkt \cite{molfettaQuantumComputingNew2026}.
+
+\subsubsection{Dekohärenz}
+Qubits sind sehr instabil, sie zerfallen leicht aus einer Superposition in einen feste Zustand.
+Dekohärenz ist der Prozess in dem ein System aus einem Quantenzustand in einen nicht-Quantenzustand zerfällt.
+Damit Quantencomputer richtig funktionieren, ist es wünschenswert, die Dekohärenz möglichst zu minimieren.
+Es kann aber auch beabsichtigt sein, z.B. wenn die Messung nach der Manipulation erfolgt, dadurch verfallen die Qubits in einen festen Zustand,
+der aussagekräftig für die Berechnung ist \cite{aumassonSeriousCryptographyPractical2018}.
