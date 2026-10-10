@@ -1,21 +1,138 @@
 \section{Proof-of-Concept: Performance testing der PQC-Algorithmen}
 \label{section-poc}
 %Mit der liboqs Bibliothek wurde anhand von wiederholten Messungen ein statistischer Vergleich der Performance, verschiedener POC-Algorithmen, gemessen.
-Als Proof-of-Concept wurde mit der open-source Bibliothek liboqs (\url{https://github.com/open-quantum-safe/liboqs}) in den DNS Server powerDNS (\url{https://github.com/PowerDNS/pdns}), pqc integriert und dessen Performance gemessen.
+Als Proof-of-Concept wurde mit der open-source Bibliothek liboqs (\url{https://github.com/open-quantum-safe/liboqs}) pqc in den DNS Server powerDNS (\url{https://github.com/PowerDNS/pdns}) integriert und dessen Performance gemessen.
+Die Implementierung dieser des PoC und des benchmarkings wurde mit Hilfe des LLM Kimi-K3 geschrieben \cite{MoonshotaiKimiK3Hugging2026}.
+Das PoC ist ein Fork des powerDNS Servers.
+Es wurde eine neue Datei \enquote{oqssigners.cc} erstellt, sie bietet ein template für die PQC-Algorithmen.
+Die Datei dnssec.hh wurde um die enum-Werte 240-245 ergäänzt.
+Die Dateien dbdnsseckeeper.cc und dnssecinfra.cc wurden angepasst, damit die Bits-default (128, NIST-Level 1) verfügbar sind.
+Noch zusätzlich wurden weitere Autotools hinzugefügt um die verwendung der neuen Algorithmen zu ermöglichen.
+
 Die Signaturverfahren von DNSSEC wurden um folgende erweitert:
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|}
         \hline
-        Algorithmus & ID & Länge öffentlicher Schlüssel & Länge Signatur\\
+        Algorithmus & ID & Security (Bit) & Länge öffentlicher Schlüssel (Byte)& Länge Signatur (Byte)\\
+        \hline
+        FALCON512 & 240 & 128 & 897 & 656\\
+        \hline
+        MAYO1 & 241 & 128 & 1456 & 464\\
+        \hline
+        SNOVAIK & 242 & 128 & 376 & 528\\
+        \hline
+        MQOM3GF16 & 243 & 128 & 64 & 3316\\
+        \hline
+        SLHDSASHA2128S & 244 & 128 & 32 & 7856\\
+        \hline
+        CROSSRSDP128 & 245 & 128 & 77 & 13152\\
         \hline
     \end{tabular}
     \caption{PQC-Algorithmen im PoC}
     \label{fig:PQC-in-PoC}
 \end{table}
 
-Das UOV-Verfahren kann nicht praktisch verwendet werden, weil die Signaturgröße den Rahmen für einen DNSKEY sprengt.
-Manche dieser Verfahren liegen, mit der göße des öffentlichen Schlüssels, noch in der größenordnung, welches UDP zulässt, wie \dots.
-Für \dots ist TCP-fallback notwendig.
+Die ID-Nummern wurden nach den freien Nummern der IANA gewählt.
+Das UOV-Verfahren kann nicht praktisch verwendet werden, weil der public key den Rahmen eines DNSKEY-Records (RDATA-Maximum: 65535 Byte) sprengt mit seinen 412KB.
+Manche dieser Verfahren liegen, mit der göße des öffentlichen Schlüssels, noch in der größenordnung, welches UDP zulässt, wie FALCON.
+Für CROSS z.B. ist TCP-fallback notwendig.
+Für das PoC wurde die minimalen Sicherheitsniveaus verwendet, die annahme ist, dass der Time-to-Live (TTL) Wert für einen DNSKEY, wie in Abbildung-\ref{fig:rrsig} von unter einer Stunde, einem Angriff standhalten sollte.
+Auch die geringste Sicherheitsstufe sollte bei einem modernen Kryptografischen Algorithmus hier standhalten.
 
 Durch benchmarking der einzelnen Algorithmen, eines Ressource Record, für jeweils keypair, signieren und verifizieren für 100 iterationen, haben sich die Messwerte ergeben.
+
+\begin{table}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/boxplot_keypair.png}
+    \caption{Auswertung von keypair im Laufzeitvergleich}
+    \label{fig:auswertung-keypair}
+\end{table}
+
+Zu beachten ist, dass wegen der starken Unterschiede in den Messergebnissen, eine logarithmische Skala erforderlich ist.
+In Abbildung-\ref{fig:auswertung-keypair} lässt sich ablesen, dass die Laufzeit für die klassischen Verfahren die deutlich längste Laufzeit für keypair haben.
+Ebenso haben sie eine signifikant höhere Standartabweichung im Gegensatz zu den PQC-Signaturverfahren.
+Die längste Laufzeit hat allerdings SLHDSASHA2128S bei Keypair/Schlüsselerzeugung, mit 71496.01 µs im Mittel $\sigma^2$ gefolgt von RSASHA512 mit 71496.01 µs.
+Was sich anhand der Boxplots gut ablesen lässt, ist das die klassischen Verfahren auch im unteren Berecih noch neben SLHDSASHA2128S die längsten Laufzeiten haben.
+Mit Abstand hat danach, hat FALCON512 die längste Laufzeit.
+Die Schnellsten Verfahren sind die Elliptische Kurven Varianten und der schnellste ist ED25519, was nicht überrascht, da dieser extra auf geschwindigkeit ausgelegt ist.
+
+\newpage
+
+\begin{table}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/boxplot_sign.png}
+    \caption{Auswertung der Signaturerstellung im Laufzeitvergleich}
+    \label{fig:auswertung-sign}
+\end{table}
+
+Auf den ersten Blick lässt sich in Abbildung-\ref{fig:auswertung-sign} die deutlich geringere Streuung im Gegensatz zu Abbildung-\ref{fig:auswertung-keypair} sehen.
+Bis auf ML-DSA44 liegt hier nur geringe Streuung vor.
+Unter den Post-quanten Verfahren sind , FALCON512, MAYO1, SNOVAIK, teilweise ML-DSA44 und MQOM3GF16 (annähern) so effizient wie die RSA Varianten.
+Ebenso wie bei der Schlüsselerzeugung, siehe Abbildung-\ref{fig:auswertung-keypair}, ist SLHDSASHA2128S, exponentiell langsamer als die restlichen Verfahren.
+
+\begin{table}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/boxplot_verify.png}
+    \caption{Auswertung der Verifikation im Laufzeitvergleich}
+    \label{fig:auswertung-verify}
+\end{table}
+
+Was Signaturverifikation angeht ist RSA weit vorne.
+Die beste Alternative ist FALCON, welches immer noch exponentiell schlechter ist, mit deutlich höherer Standartabweichung.
+Die Elliptischen Kurven Verfahren sind hier vergleichsweise deutlich langsamer als zur Schlüsselerzeugung und Signatur.
+
+Für DNSSEC speziell sind nicht alle Laufzeiten gleichwichtig.
+Einen Schlüssel muss der Herausgeber selbst erzeugen, er ist schließlich die \enquote{Person}, die dessen Identität beweisen muss.
+Ebenso ist das Signieren etwas, das durch offline signing geschehen kann.
+Was wirklich wichtig für den DNS service ist, ist dass die Signaturen effizient von DNS Dienst verfiziert werden können.
+Ebenso sind auch die Größen von privatem/öffentlichem- Schlüssel und Signatur.
+In dieser Hinsicht ist SLHDSASHA2128S in jeder Hinsicht der schlechteste Wahl, hashbasierte Verfahren haben den Vorteil dass sie auf der bekannten Sicherheit von Hashverfahren basieren\cite{aumassonSeriousCryptographyPractical2018},
+sind aber für DNSSEC der falsche Einsatz.
+
+\begin{table}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/vergleich_median.png}
+    \caption{Median der unterschiedlichen Algorithmen}
+    \label{fig:auswertung-median}
+\end{table}
+
+Trotz dass SLHDSASHA2128S konsistent in Schlüsselerzeugung, Signieren und in Verifikation ist, sind die Laufzeiten im Vergleich zu allen anderen viel schlechter,
+wenn nicht die größe der Schlüssel den Algorithmus als Wahl für DNSSEC im vornherein ausschließt.
+CROSSRSDP128 und MQOM3GF16 liegen bei der Laufzeit für Verifikation stehen sogar noch schlechter als SLHDSASHA2128S da.
+Unter berücksichtigung der Schlüssel/Signatur- größen, der priorisierung von signaturerstellung und besonders der Signaturverfikation,
+sind die Algorithmen, die noch in Frage kommen:
+\begin{itemize}
+    \item ML-DSA44
+    \item FALCON512
+    \item MAYO1
+    \item SNOVAIK
+\end{itemize}
+
+\newpage
+
+\begin{table}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/variationskoeffizient.png}
+    \caption{Variation der unterschiedlichen Algorithmen}
+    \label{fig:auswertung-variation}
+\end{table}
+
+Die Standartabweichung ist wichtig zu betrachten.
+Falls ein Algorithmus im Median effizient ist, aber dazu neigt stark auszuschlagen, kann das häufig Performance kosten verursachen.
+Das ist die einzige im PoC betrachtete Kategorie, in der SLHDSASHA2128S gute Messwerte zeigt, anhand der anderen Messwerte, ist dieser aber bereits als Kriterium ausgeschlossen.
+Die PQ-Signaturverfahren, die noch zu berücksichtigen sind, ML-DSA44, FALCON512, MAYO1 und SNOVAIK, haben folgende Ergebnisse.
+
+ML-DSA44 hat zur Signaturerstellung deutlich die höchte Abweichung, die Verfikation gehört ebenso zu den höchsten.
+Wie in Abbildung-\ref{fig:auswertung-variation} deutlich wird, hat ML-DSA44 auch deutlich die höchte Abweichung, nicht zur unter post-quanten Verfahren.
+Dennoch ist auch die maximale Abweichung noch totellierbar.
+Ebenso ist die Verfikation die höchste Standartabweichung unter den vier.
+Dennoch akzeptabel, aus Abbildung-\ref{fig:auswertung-sign} lässt sich entnehmen, dass auch der worst-case noch gut ist.
+
+FALCON512 hatdie geringste Abweichung in der Signaturerstellung und in Verfikation.
+FALCON512 ist somit nicht nur das Verfahren, welches die geringe Performance einbüsungen bringt, sondern mit Signatur- und Schlüsselgröße lässt es sich auch weiterhin über UDP nutzen.
+
+MAYO1 liegt unter den vier Verfahren zwischen ML-DSA44 und FALCON512 was Abweichung angeht.
+Mit vergleichweise kurzen Schlüssel- und Signaturlängen, ist es eine möglicherweise eine interessante alternative zu klassische Verfahren.
+
+SNOVAIK hat im Vergleich zu FALCON512, geringe Laufzeiten aber dafür mehr Abweichung, bis auf Schlüsselerzeugung, was aber für DNSSEC nicht so wichtig ist.
