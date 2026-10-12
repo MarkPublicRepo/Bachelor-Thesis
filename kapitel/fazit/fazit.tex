@@ -1,2 +1,68 @@
 \label{chapter-fazit}
-Hier steht die Zusammenfassung und das Fazit
+Laut IBM soll die Quantencomputer-Branche bis 2035 schätzungsweise ein Volumen von 1,3 Billionen US-Dollar erreichen \cite{smalleyWasIstQuantencomputing2025}.
+Michio Kaku beschreibt das kommen der Quantencomputer als ein potentiell größeres historisches Ergeignis als die Einführung der digitalen Computer \cite{bigthinkMichioKakuQuantum2023}.
+Der aktuelle Entwicklungsstand eines kryptografisch relevanten Quantencomputer ist nach BSI immer noch auf dem Stand des NISQ-Zeitalters.
+NISQ ist eine Komplexitätsklasse von Quantenalgorithmen \cite{chenComplexityNISQ2023}.
+Die Quantencomputer welche innerhalb dieser Klasse rechnen, besitzen eine mittlere Anzahl an Qubits und sind nicht fehler korrigierend.
+Längere Rechenzeiten führen zu fehlern in Berechnungen.
+Die Entwicklung derzeitige Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in \ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{bilder/Bewertungsmodell_Quantencomputer_Algorithmen.png}
+    \caption{Entwicklungsstand Quantencomputer nach BSI \cite{EntwicklungsstandQuantencomputer}}
+    \label{fig:EntwicklungsstandQuantencomputer}
+\end{figure}
+
+Zur Zeitspanne bis zu einem Kryptoanalytisch relevanten Quantencomputer schreibt das BSI, dass Zukunftsprognosen oft genau 20 Jahre vor Eintritt vorausgesagt werden und durch neue Entwicklungen im Bereich der qLDPC-Codes könnte sich der Bereich sogar noch weiter,
+auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
+
+Wenn im optimistischen Fall, von 10 Jahre bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
+Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte.
+Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden,
+also collect-now-forge-later tritt hier nicht ein,
+dennoch muss bereits jetzt eine Lösung gefunden werden, noch bevor Q-Day.
+
+\subsubsection{Erkenntnisse des PoC}
+Durch die Berücksichtigung von Schlüssel- und Signaturlängen, sowie Laufzeit und abweichungen, sind die PQC-Signaturalgorithmen aus der libqos bibliothek die noch in Frage kommen:
+\begin{enumerate}
+    \item ML-DSA44
+    \item FALCON512
+    \item MAYO1
+    \item SNOVAIK
+\end{enumerate}
+Das BSI empfiehlt als PQC-Signatur alternative für DNSSEC, ML-DSA im Merkle-Tree-Ladder Modus zu nutzen.
+Durch die Auswertung des PoC hat sich ergeben, dass ML-DSA nicht die performanteste Alternative ist.
+ML-DSA schlägt zwar SNOVAIK, manchmal in der Signaturerstellung und dessen öffentlicher Schlüssel ist 144 Byte kürzer als der von MAYO1, ansonsten hat es aber die schlechtesten Werte in jedem Fall.
+Zusätzlich ist durch ML-DSA44 auch ein TCP-fallback notwendig, siehe Abbildung-\ref{fig:rrsig-ml-dsa44}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/ml-dsa.png}
+    \caption{Screenshot, Wireshark captures eines RRSIG-Paketes mit ML-DSA44 Signatur}
+    \label{fig:rrsig-ml-dsa44}
+\end{figure}
+
+Für MAYO1, FALCON512 und SNOVAIK, ist immer noch UDP möglich.
+
+Da NIST der Merkle-Tree-Ladder Modus empfiehlt, wäre es in diesem Modus nur notwendig, hin- und wieder die Ladder selbst zu signieren, ansonsten wird gezieltes hashen verwendet.
+Wenn nur hin- und wieder die teure PQC-Signatur eingesetzt werden muss, macht das insgesamt keinen großen Unterschied welcher Algorithmus verwendet wird.
+Nach diesem Prinzip könnte sogar der SHA-DSA eingesetzt werden, falls ML-DSA kryptoanalytische Schwächen aufweisen sollte.
+
+Dennoch zeigen MAYO1, SNOVAIK und FALCON512 bessere performance und könnte alle weiterhin mit UDP-only betrieben werden.
+Warum NIST diesen dennoch bevorzugt, könnte daran liegen dass FALCON durch dessen komplexe implementierung und häufige Verwendung von Zufallszahlengeneratoren,
+eine hohe Wahrscheinlichkeit für implementierungsschwächen zeigt.
+Multivariate Verfahren wie SNOVA und MAYO haben oftmals gezeigt, trotz annahme sicher zu sein, signifikante Schwächen zu haben, wie z.B. das Verfahren \enquote{Rainbow},
+welches im Laufe des NIST Prozess vollständig gebrochen wurde \cite{beullensBreakingRainbowTakes2022}.
+
+\subsubsection{Quantenkryptografie}
+Nicht zu verwechseln mit der Post-Quanten-Kryptografie, über die bisher geschrieben wurde.
+Die Quantenkryptografie beschäftigt sich damit wie man die Gesetze der Quantenphysik benutzen kann um damit sichere Kryptografie zu bauen.
+Es ist ein besser erforschtes Feld als Quantencomputer an sich.
+Der BB84-Quantenschlüsselaustausch macht sich das Prinzip zunutze, dass man Photonen nicht observieren kann, ohne sie zu ändern.
+Was bei Qubits dazu führt dass man sie nicht verändern kann, ist hier die Sicherheit.
+Eine Nachricht wird über Photonen übertragen und wenn eine dritte Person diese Nachricht mitschneidet, wird sie verändert und es ist somit aufgefallen.
+Statt das die Sicherheit auf der Schwierigkeit eines mathematischen Problems basiert, basiert die Sicherheit hier auf den Regeln der Quantenmechanik \cite{schmehQuantencomputer2026}.
+Wegen einigen Schwächen wird aber von der NSA, von der Nutzung dieser Verfahren abgeraten, allerding entwickelt NIST dieses Feld durchgehend weiter und versucht weiterhin Rauschen zu redizieren und somit die Übertragung verlässlicher zu machen \cite{WhatQuantumCryptography2025}.
+Eventuell könnte sich dieses Feld in der Zukunft noch in der Asymmetrischen Kryptografie etablieren.
+Dadurch dass diese Verfahren auch nicht durch Angriffe Quantencomputern (wenn sicher) gebrochen werden können, haben sie auch eine Schnittmenge mit der Post-Quanten-Kryptografie.
