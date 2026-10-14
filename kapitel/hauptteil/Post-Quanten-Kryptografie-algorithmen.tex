@@ -1,10 +1,10 @@
-\section{Quantenalgorithmen}
-\label{section-Quantenalgorithmen}
+\section{Post-Quanten-Kryptografie Signatur Algorithmen}
+\label{section-Post-Quanten-Kryptografie-algorithmen}
 Durch die mögliche Bedrohung von Quantencomputern in der Zukunft, werden neue Kryptographische Verfahren standartisiert.
 Das NIST hat dabei fünf Sicherheitsstufen definiert als Referenz welches Niveau für die Algorithmen zu erbringen ist.
 Die Sicherheitsstufen und deren Referenz sind in Abbildung-\ref{fig:NIST-Sicherheitslevel} zu sehen\cite{soniHardwareArchitecturesPostQuantum2021}.
 
-\begin{table}
+\begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|c|>{\centering\arraybackslash}p{3.5cm}|}
         \hline
@@ -33,7 +33,8 @@ Die Verfahren aus dem NIST-Auswahlprozess haben längere Signaturen und nicht so
 Der Signatur- und Verschlüsselungsalgorithmus unterscheiden sich stärker voneinander. Für DNSSEC sind nur die Signaturen interessant.
 
 \subsection{NIST Auswahlprozess für Digitale Signaturen}
-Zur Zeit dieser Arbeit befindet sich der NIST Auswahlprozess in der x-ten Runde, zur Auswahl für den Digitalen Signatur Standart, stehen momentan CRYSTALS-Dilithium, FALCON und Rainbow.
+Zur Zeit dieser Arbeit befindet sich der NIST Auswahlprozess in der 4-ten Runde, nach dem Stand vom 11.März.2025.
+Als digitalen signatur Standart zugelassen sind momentan CRYSTALS-Dilithium (ML-DSA), FALCON (FN-DSA) und SPHINCS$^+$ (SLH-DSA) \cite{alagicStatusReportFourth2025}.
 
 \subsubsection{Crystals-Dilithium}
 Das von der NIST favorisierte Verfahren, es wurde unter anderem von Deutschen Kryptographen entwickelt und basiert auf der schwierigkeit den nächsten Gitterpunkt zu einem Punkt in einem Hochdimensionalem Gitter zu finden.
@@ -56,14 +57,17 @@ Von dem grünen Punkt aus soll der nächstgelegene Gitterpunkt (in blau dargeste
 Es muss ein höherdimensionales Gitter und eine schlechte Basis verwendet werden, damit das Problem schwer genug ist\cite{schmehGitterbasierteAlgorithmen2026}.
 
 \subsubsection{FALCON}
-\textbf{Fa}st-Fourier \textbf{L}attice-based \textbf{Co}mpact Signatures over \textbf{N}TRU, kurz FALCON.
+\textbf{Fa}st-Fourier \textbf{L}attice-based \textbf{Co}mpact Signatures over \textbf{N}TRU, kurz \textbf{FALCON}.
 Das einzige dieser Kryptosystem, welches mit Gleitkommzahlen rechnet.
-Es basiert auch auf dem Short Integer Solution (SIS) Problem über NTRU Gittern.
+Es basiert auch auf dem Short Integer Solution (SIS) Problem über NTRU Gittern \cite{Falcon}.
 FALCON gilt aufgrund von Gleitkommazahlen, rekursiven Funktionen und mehreren diskreten Gaussverteilungen als schwerig zu implementieren.
 FALCON hat den Vorteil, dass es kleine Signaturen und öffentliche Schlüssel hat und das es schneller im verifizieren ist.
 Unter anderem nutzt es die Fast-Fourier-Transformation mit einer Superlinearen Laufzeitkomplexität von $O(n \log n)$ anstelle der Fourier-Transformation mit einer quadratischen Laufzeitkomplexität $O(n^2)$.\cite{nguyenFastFalconSignature2023,soniFALCON2021}
 Crystals-Dilithium und FALCON nutzen zur Verifikation \enquote{Fiat-Shamir with aborts}, welches ein challenge-response Verfahren ist\cite{LatticeSignaturesFiatShamir}.
 
+\subsubsection{SPHINCS$^+$}
+
+\subsection{weitere PQC-Signatur-Verfahren}
 \subsubsection{Rainbow}
 Rainbow ist ein multivariates Polynomiales Kryptosystem, welches eine Generalisierung des Oil and Vinegar scheme (UOV) ist.
 Das unterliegende Problem ist, dass ein multivariates Gleichungssystem von Polynomen über einem endlichen Feld ein NP-schweres Problem ist.
@@ -78,5 +82,38 @@ Solch ein Gleichungssystem zu lösen ist NP-schwer und lässt sich auch mit Quan
 Multivariate Kryptosysteme wurden bereits öfters gebrochen, trotz der Annahme sicher zu sein und die Berechnungen sich oft auch ressourcen lastig, auch wenn die Signaturen eher kurz sind, was dazu führt, dass der Einsatz dieser Systeme in der Praxis recht selten ist\cite{aumassonSeriousCryptographyPractical2018}.
 Das Rainbow kryptosystem wird beschrieben als eine mehrschichtige oil-and-vinegar konstruktion und dessen generalisierung\cite{dingRainbowNewMultivariable2005}.
 
-\subsection{weitere PQC-Signatur-Verfahren}
-\textbf{Hash-basierte} Signaturen bauen auf der Sicherheit von Hash-Funktionen auf.
+\subsubsection{HAWK}
+Ebenfalls ein Algorithmus der auf dem SIS-Problem aufbaut, genauer gesagt dem Gitter isomorphismus problem, der Algorithmus basiert sogar auf FALCON.
+Hawk sein privater Schlüssel ist selbst eine Matrix und es nutzt als Signatur und zur Verifikation zusätzlich einen salt \cite{saarinenPostQuantumCryptography15th2024}.
+Das Unternehmen Anthropic hat mit einer angepassten version ihres large language models \enquote{Mythos 6} (vor offiziellem Release) einen Angriff auf dieses Kryptosystem gebaut, welches innerhalb von 60 Stunden eine signifikaten Verbesserung des bisher besten Angriffs gefunden hat.
+Um dieses Projekt durchzuführen, wurde eine Sandbox Umgebung eingerichtet mit python, Sage und Zugang zu kryptografischen Publikationen, überwacht von einem menschlichen Operator mit einem Hintergrund in Theorethischer Informatik.
+Nach 60 Stunden und Kosten von 100.000\$ in Token, hat das System dessen Ergebnisse mittels einer verfikations pipeline verfiziert und dessen Ergebnisse präsentiert.
+Die bisher angenommene Sicherheit von HAWK-256 von $2^{64}$ lies sich auf $2^{38}$ reduzieren, das Team von HAWK spricht von einer ungefähren halbierung der Blockgröße um einen equivalenten privaten Schlüssel zu berechnen.
+Nach der entdeckung des Angriffs durch Anthropic wurde HAWK vom NIST Auswahlprozess zurückgezogen, weil HAWK kein konkurent mehr ist für derzeitige Gitter-basierte Kryptosysteme, trotz dass Anthropic diesen Angriff als \enquote{unpraktisch für größere Schlüssel} beschrieben hat \cite{DiscoveringCryptographicWeaknesses2026,Hawk,straznickasHAWKnKeyRecoveryReduces}.
+
+\subsubsection{SIKE}
+Basierend auf Elliptischen Kurven und angenommen Quantensicher zu sein, wurde dieses Verfahren dem NIST Auswahlverfahren eingereicht.
+Nach kryptoanalytischer Betrachtung haben sich doch Schwächen gezeigt, sogar so fatal, dass einige Angriffe es ermöglichen das Verfahren innerhalb weniger Minuten komplett zu brechen.
+Das Verfahren in irgendeiner Sicherheitsrelevanten Sicht zu verwenden ist absolut ausgeschlossen \cite{cepelewiczPostQuantumCryptographyScheme2022,SIKESupersingularIsogeny}.
+
+\subsubsection{SNOVA}
+Ein Multivariates Kryptosystem, welches auf dem Unbalanced Oil and Vinegar (UOV) Schema aufbaut.
+Dadurch dass es über nicht-kommutativen Ringen rechnet, soll es im gegensatz zu OUV hat es kürzere Schlüssellängen haben effizienter rechnen.
+SNOVA's Schlüssellängen für den öffentlichen Schlüssel und für die Signatur sind sogar kürzer als die von FALCON \cite{SNOVAPostQuantumDigital,saarinenPostQuantumCryptography15th2024}.
+
+\subsubsection{UOV}
+Das älteste der multivariaten Verfahren aus dem NIST Auswahlprozess und die Basis für viele Verfahren dieser Art, wie SNOVA, MAYO oder Rainbow.
+Die Falltür Information dieses Verfahren basiert auf einem linearen m-dimensionalem untervektorraum, welcher als oil-space bezeichnet wird.
+Der öffentliche Schlüssel selbst besteht aus m-Matrizen \cite{saarinenPostQuantumCryptography15th2024}.
+Der öffentliche Schlüssel ist riesig mit 412kB und unbrauchbar für DNSSEC.
+
+\subsubsection{CROSS}
+Codes and Restricted Objects Signature Scheme (CROSS) baut auf Zero-Knowledge (ZK) Beweisen auf.
+Durch eine Fiat-Shamir Transformation auf einen nicht-interaktiven ZK-Beweis.
+Das unterliegende Problem ist das NP-vollständige \enquote{restricted syn-drome decoding problem}.
+Es ist ein code-basiertes Sicherheitssystem, welches intern Merkle-Trees verwendet \cite{baldiAlgorithmSpecificationsSupporting2025,saarinenPostQuantumCryptography15th2024}.
+Es wurde entworfen um schnell zu sein, für DNSSEC ist es nicht optimal durch große Schlüsselgrößen.
+
+\subsubsection{MQOM}
+
+\subsubsection{MAYO}
