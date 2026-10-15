@@ -66,6 +66,13 @@ Unter anderem nutzt es die Fast-Fourier-Transformation mit einer Superlinearen L
 Crystals-Dilithium und FALCON nutzen zur Verifikation \enquote{Fiat-Shamir with aborts}, welches ein challenge-response Verfahren ist\cite{LatticeSignaturesFiatShamir}.
 
 \subsubsection{SPHINCS$^+$}
+Ein konservatives Verfahren, welches auf der Sicherheit von Hashfunktionen aufbaut.
+Da Hashfunktionen gut erforscht sind und nicht anfällig sind durch Shor's Algorithmus und Grover's Algorithmus die Sicherheit nur bedingt beeinträchtigt, gelten sie als ziemlich sichere Alternative.
+SPHINCS$^+$ ist eine modifizierte Version von SPHINCS und ein sogenanntes \enquote{zustandloses Signaturverfahren}.
+Es unterstützt die Hashfunktionen, SHAKE und SHA, zudem in unterschiedlichen Längen und als short oder fast.
+Intern funktioniert dieses Verfahren auch mit Merkle-Trees und dem HORST-few-times Signaturverfahren,
+dabei werden auch Schlüssel zufällig gewählt.
+Hashbasierte Verfahren haben den Vorteil dass sie, wie in Abbildung-\ref{fig:NIST-PQC-Standarts} zu sehen ist, kurze öffentliche Schlüssel, aber dafür sehr lange Signaturlängen haben \cite{soniHardwareArchitecturesPostQuantum2021,aumassonSeriousCryptographyPractical2018,bernsteinSPHINCSSignatureFramework2019,fussKryptographie2025}.
 
 \subsection{weitere PQC-Signatur-Verfahren}
 \subsubsection{Rainbow}
@@ -115,5 +122,12 @@ Es ist ein code-basiertes Sicherheitssystem, welches intern Merkle-Trees verwend
 Es wurde entworfen um schnell zu sein, für DNSSEC ist es nicht optimal durch große Schlüsselgrößen.
 
 \subsubsection{MQOM}
+MQ on my Mind (MQOM).
+Wie schon im Namen steht, ist es ein Verfahren welches auf der Schwierigkeit von multivariaten Gleichungssystemen (MQ) aufbaut.
+Es baut auf Zero-Knowledge Beweisen auf und wird durch die Fiat-Shamir Transformation zu einem digitalen Signatur Verfahren umgewandelt.
+Im ist es ein MQ-Verfahren, im Gegensatz zu CROSS, welches ein code-basiertes Verfahren ist \cite{benadjilaMQMyMind2023}.
+CROSS und MQOM unterscheiden sich signifikant, auch wenn sie beiden mit ZK und Fiat-Shamir funktionieren.
 
 \subsubsection{MAYO}
+Ein Verfahren welches ebenfalls auf UOV aufbaut.
+Es wurde entworfen als ein multivariates Kryptosystem, welches nach UOV funktioniert, aber kürzere Schlüssellängen hat für den öffentlichen Schlüssel und die Signatur \cite{teamMAYO}.
