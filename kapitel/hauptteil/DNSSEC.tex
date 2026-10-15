@@ -93,7 +93,7 @@ Wie aus Abbildung-\ref{fig:rrsig} anhand des DNS Code 13 entnehmen kann wird, in
 
 \subsection{Upgrade auf PQC}
 Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
-Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in Abbildung-\ref{fig:NIST-PQC-Standarts}, die derzeitigen Algorithmen aus dem Runde 3 NIST Standartisierungverfahren für Digitale Signaturen.
+Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in Abbildung-\ref{fig:NIST-PQC-Standarts}, die aus Runde 4 standartisierten NIST-Standarts für Digitale Signaturen und deren Varianten.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|c|}
@@ -110,21 +110,23 @@ Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich.
         \hline
         FALCON-1024 & Gitterbasiert NTRU & 1793 Bytes & 1280 Bytes\\
         \hline
-        Rainbow Level 1 & multivariat & 157.8 kB & 528 Bit\\
+        SPHINCS$^+$-128s & Hashbasiert & 32 Bytes & 8\,080 Bytes \\
         \hline
-        Rainbow Level 3 & multivariat & 861.4 kB & 1312 Bit\\
+        SPHINCS$^+$-128f & Hashbasiert & 32 Bytes & 16\,976 Bytes \\
         \hline
-        Rainbow Level 5 & multivariat & 1885.4 kB & 1632 Bit\\
+        SPHINCS$^+$-192s & Hashbasiert & 48 Bytes & 17\,064 Bytes \\
         \hline
-        Cyclic Rainbow Level 1 & multivariat & 58.8 kB & 528 Bit\\
+        SPHINCS$^+$-192f & Hashbasiert & 48 Bytes & 35\,664 Bytes \\
         \hline
-        Cyclic Rainbow Level 3 & multivariat & 258.4 kB & 1312 Bit\\
+        SPHINCS$^+$-256s & Hashbasiert & 64 Bytes & 29\,792 Bytes \\
         \hline
-        Cyclic Rainbow Level 5 & multivariat & 523.5 kB & 1696 Bit\\
+        SPHINCS$^+$-256f & Hashbasiert & 64 Bytes & 49\,216 Bytes \\
         \hline
     \end{tabular}
-    \caption{NIST PQC Standarts}
+    \caption{NIST PQC-Signatur Standarts}
     \label{fig:NIST-PQC-Standarts}
 \end{table}
+%SPHINCS$^+$-SHAKE256-128s/128f/192s/192f/256s/256f-simple/robust & Hashbasiert & 32/48/64 Bytes & 8 080/16 976/17 064/35 664/29 792/49 216 Bytes\\
 
-Wie in Abbildung-\ref{fig:NIST-PQC-Standarts} zu sehen ist, sprengen bereits die kleinsten Signatur- und Schlüssellängen den Rahmen von einfachen UDP Paketen.\cite{Falcon,PQCRainbow,schwabeDilithium,computersecuritydivision3SubmissionsPostQuantum2017}
+Wie in Abbildung-\ref{fig:NIST-PQC-Standarts} zu sehen ist, sprengen bereits die kleinsten Signatur- und Schlüssellängen den Rahmen von einfachen UDP Paketen.
+Jede der SPHINCS$^+$-Varianten kann mit mit den Hashfunktionen, SHAKE oder SHA betrieben werden \cite{Falcon,PQCRainbow,schwabeDilithium,computersecuritydivision3SubmissionsPostQuantum2017,bernsteinSPHINCSSignatureFramework2019}.
