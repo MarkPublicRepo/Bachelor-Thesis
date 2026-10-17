@@ -2,16 +2,18 @@
 \label{section-merkle-tree-ladder}
 Anstelle davon jede Nachricht einzeln zu signieren, kann man die Nachrichten auch als, fortschreitende Folge von Nachrichten betrachten.
 Das ist die Idee des MTL-Modus.
+Nicht nur PQC-Signaturen wie SLH-DSA oder CROSS verwenden intern Merkle-Trees sonders wie lassen sich auch in sonstiger Software effizient einsetzen.
+Im Fall von DNSSEC, lässt sich damit ein effizientes Signatur Schema erstellen.
 
-Nicht jede neue Nachricht wird mit einem PQC-Algorithmus wie ML-DSA oder SLH-DSA signiert.
+Nicht jede neue Nachricht wird mit einem PQC-Algorithmus wie ML-DSA, FN-DSA oder SLH-DSA signiert.
 Es werden Nachrichten, jeh nach deren Anzahl in einem Baum \enquote{Rung} angeordnet. Die Bäume ergeben zusammen die \enquote{Ladder}. Diese Ladder wird dann mit einem Algorithmus wie ML-DSA signiert.
 Der Baum verwendet für Nachrichten eine PQC-sichere Hashfunktion mit dieser die Knoten der Nachrichten signiert werden.\cite{freglyMerkleTreeLadder2023}
-Die \enquote{Ladder}, die aus den einzelnen Bäumen besteht, wird dann nach einer bestimmten Anzahl an Nachrichten mit dem PQC-Algorithmus signiert.
-Insgesamt verringert das der Aufwand zum Signieren deutlich, durch das hashen und es bleibt post-quanten-sicher.
+Die \enquote{Ladder}, die aus den einzelnen Bäumen besteht, wird dann nicht nach jeder neuen Nachricht signiert, sondern nur nach einer bestimmten Anzahl an Nachrichten wird der Rung mit dem PQC-Algorithmus neu signiert.
+Insgesamt verringert das den Aufwand zum Signieren, durch das hashen deutlich und es bleibt Quantensicher.
 
 Folgendes Beispiel, behandelt den Fall, dass es sich um sieben Nachrichten handelt.
 Die Anzahl der Nachrichten wird in Binär umgewandelt, die Binärstellung gibt an wie viele Bäume es sind und wie groß sie sind.
-Als Bespiel werden sieben Nachrichten in einen Baum zusammengeführt. Durch die Umwandlung in Binär lässt sich ablesen $7_{10} = 111_{2}$, es sind drei Bits gesetzt,
+Als Beispiel werden sieben Nachrichten in einen Baum zusammengeführt. Durch die Umwandlung in Binär lässt sich ablesen $7_{10} = 111_{2}$, es sind drei Bits gesetzt,
 demnach gibt es drei Bäume. Das Höchstwärtige Bit ist vier, demnach enthält dieser Baum vier Elemente, der nächstgrößte Baum hat zwei Elemente und das letzte Bit gibt ein Element an.
 Für sieben Nachrichten sehen die Bäume, nach eigener Darstellung, folgendermaßen aus:
 
