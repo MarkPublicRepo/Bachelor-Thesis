@@ -20,11 +20,55 @@ auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
 Wenn im optimistischen Fall, von 10 Jahre bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
 Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte.
 Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden,
-also collect-now-forge-later tritt hier nicht ein,
-dennoch muss bereits jetzt eine Lösung gefunden werden, noch bevor Q-Day.
+also collect-now-forge-later tritt hier nicht ein.
+
+Das Unternehmen Gardner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
+\begin{figure}[htbp]
+\centering
+\resizebox{0.9\textwidth}{!}{\qcTacho}
+\caption{Geschäftlicher Nutzen von Quantencomputing über die Zeit. Eigene Darstellung nach \cite{WhatCIOsNeed}.}
+\label{fig:qc-nutzen}
+\end{figure}
+
+In Abbildung-\ref{fig:qc-nutzen} werden die Schritte der Entwicklung von Quantencomputern (nach Gardner) bildlich dargestellt.
+Diese Prognosen sind sehr optimistisch hinsichtlich der Entwicklung.
+Kritiker hingegen sprechen auch davon, dass es wahrscheinlich ist, dass es nie Quantencomputer geben wird.
+Um einen Kryptoanalytisch relevanten Quantencomputer zu bauen, der tatsächlich in der Lage ist, Chiffren wie RSA oder ECC-Varianten zu knacken,
+wären bis zu millionen von Qubits notwendig, ob es jemals einen Fehlerkorrigierenden Quantencomputer von dieser größe geben wird, ist noch höchst spekulativ \cite{aumassonSeriousCryptographyPractical2018}.
+
+Aus der Sicht der Theoretischen Informatik, bezeichnet man die Komplexitätsklasse der derzeitigen Quantencomputer als NISQ.
+NISQ beschreibt eine Komplexitätsklasse von Problemen, die mit klassischen Computern, mit Zugang zu rauschbehafteten Quanten-schaltkreisen gelöst werden können.
+NISQ Computer sind z.B. in der Lage, angepasste Probleme von Simon's Problem zu lösen, sie sind aber nicht in der Lage, beschleunigungen bei unstrukturierter Suche wie Grover's Algorithmus zu erreichen.
+Wenn man die Komplexitätsklassen vergleicht wie in \ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen.
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+  % BQP (äußerste Menge)
+  \draw[fill=blue!8, thick] (0,0) ellipse (5cm and 3.2cm);
+  \node[font=\large] at (0,2.5) {BQP};
+
+  % NISQ
+  \draw[fill=blue!20, thick] (0,-0.5) ellipse (3.5cm and 2.1cm);
+  \node[font=\large] at (0,0.9) {NISQ};
+
+  % BPP (innerste Menge)
+  \draw[fill=blue!35, thick] (0,-1.0) ellipse (1.9cm and 1.0cm);
+  \node[font=\large] at (0,-1.0) {BPP};
+\end{tikzpicture}
+\caption{Verhältnis der Komplexitätsklassen BPP, NISQ und BQP. Eigene Darstellung.}
+\label{fig:bpp-nisq-bqp}
+\end{figure}
+Es ist nicht bekannt, welche Probleme alle in NISQ liegen, es ist allerdings bekannt, dass nicht für alle Probleme eine Quantenbeschleunigung erreicht werden kann.
+Manche Probleme sind effizienter auf klassischen Computern zu lösen, als auf rauschbehafteten Quantencomputern.
+Keines der Fragestellungen von $\mathrm{BPP} \subsetneq \mathrm{NISQ}$, $\mathrm{NISQ} \subsetneq \mathrm{BQP}$ und $\mathrm{BPP} \subsetneq \mathrm{BQP}$ sind alle nicht bewiesen.\\
+Bekannt ist, dass gilt $\mathrm{BPP} \subseteq \mathrm{NISQ}$, weil NISQ einen klassischen Computer vollständig beinhaltet und eine NISQ Schnittstelle hat.
+Ein Fehlerkorrigierender Quantencomputer muss auch in der Lage sein, einen rauschbehafteten Quantencomputer zu simulieren, deshalb, $\mathrm{NISQ} \subseteq \mathrm{BQP}$.
+Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$.
+
+Zudem ist bewiesen, dass NISQ Computer nicht eine Beschleunigung wie Grover's Algorithmus erreichen können \cite{chenComplexityNISQ2023}.
 
 \subsubsection{Erkenntnisse des PoC}
-Durch die Berücksichtigung von Schlüssel- und Signaturlängen, sowie Laufzeit und abweichungen, sind die PQC-Signaturalgorithmen aus der libqos bibliothek die noch in Frage kommen:
+Durch die Berücksichtigung von Schlüssel- und Signaturlängen, sowie Laufzeit und abweichungen, sind die PQC-Signaturalgorithmen aus der libqos bibliothek die noch in Frage kommen, bezüglich Median und Standartabweichung:
 \begin{enumerate}
     \item ML-DSA44
     \item FALCON512
@@ -67,3 +111,27 @@ Wegen einigen Schwächen wird aber von der NSA, von der Nutzung dieser Verfahren
 Eventuell könnte sich dieses Feld in der Zukunft noch in der Asymmetrischen Kryptografie etablieren.
 Dadurch dass diese Verfahren auch nicht durch Angriffe Quantencomputern (wenn sicher) gebrochen werden können, haben sie auch eine Schnittmenge mit der Post-Quanten-Kryptografie.
 Für DNSSEC wäre allerding etwas wie \enquote{Generalized Quantum-assisted Digital Signature (GQaDS)} interessant, da digitale Signaturen benötigt werden \cite{tarableGeneralizedQuantumassistedDigital2024}.
+
+\subsubsection{Zusammenfassung}
+Quantencomputer sind noch lange nicht auf dem Stand akut eine Gefahr darszustellen.
+Es ist nicht bewusst, zu was NISQ Quantencomputer in der Lage sind, es ist aber klar, dass sie keine exponetielle Beschleunigung wie Grover's Algorihmus bringen können
+und sie sind nicht in der Lage, in mittlerer größe, tatsächlich durch Shor's Algorithmus, wirklich Kryptografie zu brechen.
+Quantenalgorithmen existieren bereits, man weiß aber auch nicht ob z.B. Regev's Algorithmus in der Realität hinsichtlich Interferenz, Dekohärenz und rauschen wirklich effizienter als der von Shor ist.
+
+Zudem basieren die Auswertungen von Ergebnissen bisher stärker aus heuristiken als tatsächlich auf mathematischen Modellen (siehe Abbildung-\ref{fig:EntwicklungsstandQuantencomputer}).
+Damit Quantencomputer praktisch relevant für Berechnungen werden, müssen verlässlicher werden oder Fortschritte in der Fehlerkorrektur erziehlen,
+um wirklich kryptoanalytisch relevant zu werden, müssen sie viel größer werden, im Bereich von millionen von Qubits.
+
+Was DNSSEC betrifft, ist die Umstellung aus PQC-Signaturverfahren zwar ein notwendiger Schritt, aber wohl nicht die akuteste Bedrohung.
+Signaturen sind nicht so stark gefärdet wie die Vertraulichkeit von Nachrichten über symmetrische Verfahren.
+Eine Signatur kann wenn sie in den kritischen zeitlichen Bereich fällt, berechnet zu werden, kann einfach eine neue angefordert werden.
+Da mit einen Quantencomputer, der in der Lage ist, mit Shor's/Regev's-  Algorithmus eine Signatur zu verfälschen, würde das immer noch Tage bis Wochen in Anspruch nehmen,
+mit einer gültigkeit der Signatur von wenigen Stunden, würde das notfalls vermutlich sogar noch ausreichen, als Notlösung.
+Andererseits für gelagerte und verschlüsselte Nachrichten, basierend auf Schlüsseln von Asymmetrischen Verfahren, sind Angriffe eine größere Gefahr.
+
+Wenn die Umstellung auf PQC geschieht, dann werden mit hoher Wahrscheinlichkeit die ersten Probleme vermehrt implementierungsfehler, zero-days, etc. sein.
+Wenn die Entwicklung von Quantencomputern voranschreitet, wird ebenso die PQC ihren Platz einnehmen.
+Wie lange das geht, ist im optimistischen Fall, aus der Sicht des Quantencomputers, von circa 10, 15 oder Jahren auszugehen.
+Eine Post-Quanten Alternative muss denoch gefunden werden, auch wenn der Fortschritt erstmals stagnieren sollte.
+Das Risiko ist noch gering, im Ernstfall ist der worst-case aber nicht akzeptabel.
+Die Lösung sollte gefunden werden, bevor das Problem eingetreten ist.
