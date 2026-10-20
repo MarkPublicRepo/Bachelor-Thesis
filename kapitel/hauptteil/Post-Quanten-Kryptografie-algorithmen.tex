@@ -35,6 +35,8 @@ Der Signatur- und Verschlüsselungsalgorithmus unterscheiden sich stärker vonei
 \subsection{NIST Auswahlprozess für Digitale Signaturen}
 Zur Zeit dieser Arbeit befindet sich der NIST Auswahlprozess in der 4-ten Runde, nach dem Stand vom 11.März.2025.
 Als digitalen signatur Standart zugelassen sind momentan CRYSTALS-Dilithium (ML-DSA), FALCON (FN-DSA) und SPHINCS$^+$ (SLH-DSA) \cite{alagicStatusReportFourth2025}.
+Zusätzliche Kandidaten für Digitale Signatur Schemas, die noch standartisiert werden sollen, sind noch in der evalution.
+Anfang der dritten Runde waren noch  FAEST, HAWK, MAYO, MQOM, QR-UOV, SDitH, SNOVA, SQIsign, und UOV vorhanden \cite{moodyStatusReportSecond2026}.
 
 \subsubsection{Crystals-Dilithium}
 Das von der NIST favorisierte Verfahren, es wurde unter anderem von Deutschen Kryptographen entwickelt und basiert auf der schwierigkeit den nächsten Gitterpunkt zu einem Punkt in einem Hochdimensionalem Gitter zu finden.
@@ -47,13 +49,13 @@ Wenn die Einwegfunktion sich auch mit Quantencomputern nicht effizient lösen l�
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=1.0\textwidth]{bilder/gitter-sis}
-    \caption{2-dimensionales Gitter mit einem Punkt und dem nächstgelegenen Gitterpunkt. Quelle: \url{https://1000children.org/lattice-cryptography-example-overview-of-lattice-based-cryptography/}}\hfill
+    \includegraphics[width=0.5\textwidth]{bilder/lattice-reduction-3867677526.png}
+    \caption{2-dimensionales Gitter mit einem Punkt und dem nächstgelegenen Gitterpunkt \cite{barakIntensiveIntroductionCryptography}.}\hfill
     \label{fig:gitter-sis}
 \end{figure}
 
 Abbildung \ref{fig:gitter-sis} zeigt das SIS-Problem in einem zweidimensionalen Gitter.
-Von dem grünen Punkt aus soll der nächstgelegene Gitterpunkt (in blau dargestellt) gefunden werden.
+Von dem Punkt $V_1$ aus soll der nächstgelegene Gitterpunkt $V_2$ gefunden werden, die Basisvektoren $(u_1,u_2)$ stellen eine schlechte Basis bereit.
 Es muss ein höherdimensionales Gitter und eine schlechte Basis verwendet werden, damit das Problem schwer genug ist\cite{schmehGitterbasierteAlgorithmen2026}.
 
 \subsubsection{FALCON}
@@ -88,6 +90,8 @@ Ein Gleichungssystem wie das folgende (aus serious cryptography\cite{aumassonSer
 Solch ein Gleichungssystem zu lösen ist NP-schwer und lässt sich auch mit Quantencomputern nicht effizient lösen.
 Multivariate Kryptosysteme wurden bereits öfters gebrochen, trotz der Annahme sicher zu sein und die Berechnungen sich oft auch ressourcen lastig, auch wenn die Signaturen eher kurz sind, was dazu führt, dass der Einsatz dieser Systeme in der Praxis recht selten ist\cite{aumassonSeriousCryptographyPractical2018}.
 Das Rainbow kryptosystem wird beschrieben als eine mehrschichtige oil-and-vinegar konstruktion und dessen generalisierung\cite{dingRainbowNewMultivariable2005}.
+Rainbow wurde im Laufe des NIST-Verfahrens vollständig gebrochen und soll nicht mehr verwendet werden.
+Es wurde gezeigt, dass sich der private Schlüssel durchschnittlich innerhalb 53 Stunden berechnen lässt \cite{beullensBreakingRainbowTakes2022}.
 
 \subsubsection{HAWK}
 Ebenfalls ein Algorithmus der auf dem SIS-Problem aufbaut, genauer gesagt dem Gitter isomorphismus problem, der Algorithmus basiert sogar auf FALCON.
