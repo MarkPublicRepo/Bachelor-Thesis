@@ -6,18 +6,22 @@
 \section{Quantencomputer}
 \label{section-Quantencomputer}
 
-Ein häufiges Missverständnis von Quantencomputern ist, dass als eine Art Supercomputer gesehen werden, der in der Lage ist,
-alles was ein herkömmlicher Computer kann zu machen, nur viel schneller. Auch häufig hört man die Erklärung, dass ein Quantencomputer im Gegensatz zu einem traditionellen Computer,
-nicht sequenziell rechnet, sondern alle berechnungen parallel auszuführen kann. Das ist schon eher korrekt, aber auch noch ungenau.
+Ein häufiges Missverständnis von Quantencomputern ist, dass sie als eine Art Supercomputer gesehen werden, die in der Lage sind
+alles was ein herkömmlicher Computer können zu machen, nur viel schneller.
+Auch häufig hört man die Erklärung, dass ein Quantencomputer im Gegensatz zu einem traditionellen Computer,
+nicht sequenziell rechnet, sondern alle berechnungen parallel auszuführen kann.
+Das ist schon eher korrekt, aber auch noch ungenau.
 
-Quantencomputer sind keine neuen Computer, sie können in der Lage manche Ressourcenlastingen Berechnungen effizienter zu lösen als es ein traditioneller Computer könnte.
+Quantencomputer sind keine neuen Computer, sie können theoretisch manche Ressourcenlastingen Berechnungen effizienter ausführen, als es ein traditioneller Computer könnte.
 Sie sind fundamental neue Rechenmodelle.
 Ein gewöhnlicher Computer funktioniert mit Bits und Bitmanipulationen durch logische Gatter, wie AND, OR, NOT, NAND, NOR, XOR und XNOR.
-Ein Quantencomputer basiert auf Qubits und benutzt Quantengatter wie das Hadamard-Gatter, zur manipulation der Qubits.
-Zudem geht ein Quantencomputer anderst vor, bei der Berechnung von Problemen.
+Ein Quantencomputer basiert auf Qubits und benutzt Quantengatter wie das Hadamard-Gatter oder CNOT zur manipulation der Qubits.
+Zudem geht ein Quantencomputer anderst vor, bei der Berechnung von Problemen und wird mit sogenannten Quantenalgorithmen programmiert.
+Quantencomputer sind nicht so weitflächig einsetzbar wie klassische Computer, die bessere Bezeichnung wäre eher Quantenprozessor oder Quantenchip.
+Allerdings hat sich der Begriff Quantencomputer durchgesetzt.
 
 Zur Zeit dieser Arbeit, stecken Quantencomputer noch in ihren Kinderschuhen.
-Es gibt bereits Fortschritte (IBM quantum error-correction code in 2024 \cite{LandmarkIBMError,smalleyWasIstQuantencomputing2025}) aber noch ist ein praktischer Einsatz von Quantencomputern noch nicht in Sicht.
+Es gibt bereits Fortschritte (IBM quantum error-correction code in 2024 \cite{LandmarkIBMError,smalleyWasIstQuantencomputing2025}) aber noch ist ein allgemeiner praktischer Einsatz von Quantencomputern noch nicht in Sicht.
 Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day.\cite{schmehQuantencomputer2026}
 
 \begin{figure}[htbp]
@@ -31,10 +35,9 @@ In Abbildung-\ref{fig:quantencomputer} ist ein analoger 10-qubit Quantencomputer
 
 \subsection{Prinzipien von Quantencomputern}
 Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition, Quantenverschränkung, Interferenz und Dekohärenz.
-Um einen Quntencomputer zu betreiben, muss der Prozessor in Themperaturen nahe dem absoluten Nullpunkt betrieben werden.
+Um einen Quantencomputer zu betreiben, muss der Prozessor in Themperaturen nahe dem absoluten Nullpunkt betrieben werden.
 Der Prozessor, welcher das Herz des Computers ist, ist nur eine kleiner Chip, der Rest der Maschine ist vor allem dazu da, die richtigen Bedingungen zu gewährleisten.
-
-%hier soll ein Bild eines Quantencomputers hin
+Andere Technologien als Photonen, wie der Ansatz von Qubits, basierend auf Ionenfallen, biergt die Hoffnung dass Qubits auch bei Zimmertemperaturen betrieben werden können. \cite{pospiechQuantencomputerCoGrundideen2021}
 
 \subsubsection{Qubits}
 Ein klassischer Computer arbeitet mit Bits.
@@ -82,26 +85,31 @@ Die Wahrscheinlichkeiten ergeben in der Summe $\probalpha + \probbeta\ =\ \alpha
 Wenn wir mehr als ein Qubit haben, wie hier z.B. 7, können wir damit $2^{7}=128$ Zustände darstellen.
 Wenn die Zustände eines Qubits von denen eines anderen beeinfluss werden, spricht man davon, dass diese Quantenverschränkt sind.\cite{schmehQuantencomputer2026}
 
-\begin{align}
-    &\alpha_0\ket{0000000}+\alpha_1\ket{0000001}+\dots+\alpha_{127}\ket{1111111}
-\end{align}
+\begin{equation}
+    \alpha_0\ket{0000000}+\alpha_1\ket{0000001}+\dots+\alpha_{127}\ket{1111111}
+    \label{eq:acht-qubit}
+\end{equation}
 
-Alle Wahrscheinlichkeiten müssen zusammen wieder eins ergeben.
+Auch bei einem acht-qubit system wie in Gleichung-\ref{eq:acht-qubit} Wahrscheinlichkeiten müssen zusammen wieder eins ergeben.
 \begin{align}
     &{\left|\alpha_0\right|}^2+{\left|\alpha_1\right|}^2+\dots+{\left|\alpha_{127}\right|}^2=1
 \end{align}
 Man kann sich den Vektor als Punkt im 128-dimensionalem Koordinatensystem darstellen.
 Durch Quantengatter lassen sich die Zustände manipulieren, dadurch ist es möglich Quantenalgorithmen zu entwerfen.
+Ein Quantengatter muss vollständig umkehrbar sein und die Summe aller quadrierten Amplituden muss wieder eins ergeben \cite{pospiechQuantencomputerCoGrundideen2021}.
 
 Eine bekannte Art ein Qubit grafisch darzustellen ist als Bloch-Kugel.
-Ein Qubit sie in Gleichung-\ref{eq:qubit} lässt sich auch in dessen Polarkoordinatendarstellung schreiben, wie in Gleichung-\ref{eq:qubit-polarkoordinaten} darstellen.
+Ein Qubit wie in Gleichung-\ref{eq:qubit} lässt sich auch in dessen Polarkoordinatendarstellung, wie in Gleichung-\ref{eq:qubit-polarkoordinaten} darstellen.
 \begin{equation}
   |\psi\rangle =
   \cos(\theta/2)e^{i\varphi_0}|0\rangle + \sin(\theta/2)e^{i\varphi_1}|1\rangle
   \label{eq:qubit-polarkoordinaten}
 \end{equation}\cite{macchiavello210BlochSphere}
 
-Damit kann man ein Qubit grafisch darstellung und durch verschiedene Operationen, \enquote{ein Gefühl dafür entwickeln} was ein Qubit ist und wie es funktioniert.
+Damit lässt sich ein Qubit grafisch darstellen, wie in Abbilbung-\ref{fig:Bloch-Kugel}.
+Dessen Amplituden sind dann winkel.
+Diese Darstellung hilft dabei, sich das abstrakte Konzept von Qubits bildlich vorstellen zu können,
+dadurch kann man auch ein etwas \enquote{intuitiveres} Gefühl vom Verhalten von Qubits erhalten.
 
 \begin{figure}[htbp]
     \centering
@@ -147,7 +155,7 @@ Wenn sich die Amplitude (damit auch die Wahrscheinlichkeit) eines der n-Qubits �
 
 \subsubsection{Interferenz}
 Im Zusammenspiel mit Superposition und Quantenverschränkung, macht dieses Prinzip Quantencomputer zu extrem Leistungsfähigen Rechenmaschinen.
-Die Rechenpfade die entstehen lassen sich als komplexe Amplituden ausdrücken, die sich wie Wellen verhalten.
+Die Rechenpfade die entstehen, lassen sich als komplexe Amplituden ausdrücken, die sich wie Wellen verhalten.
 Diese Amplituden können sich gegenseitig verstärken (konstruktive Interferenz) oder gegenseitig abschwächen (destruktive Interferenz).
 Damit können sich die Rechenpfade selbst auf den richtigen Weg lenken, die Wahrscheinlichkeit auf einen richtigen Rechenweg wird verstärkt \cite{molfettaQuantumComputingNew2026}.
 
