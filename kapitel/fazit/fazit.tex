@@ -5,7 +5,7 @@ Der aktuelle Entwicklungsstand eines kryptografisch relevanten Quantencomputer i
 NISQ ist eine Komplexitätsklasse von Quantenalgorithmen \cite{chenComplexityNISQ2023}.
 Die Quantencomputer welche innerhalb dieser Klasse rechnen, besitzen eine mittlere Anzahl an Qubits und sind nicht fehler korrigierend.
 Längere Rechenzeiten führen zu fehlern in Berechnungen.
-Die Entwicklung derzeitige Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in \ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
+Die Entwicklung derzeitige Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in der Grafik von Abbildung-\ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
 
 \begin{figure}[htbp]
     \centering
@@ -15,7 +15,7 @@ Die Entwicklung derzeitige Quantencomputer basiert derzeit mehr auf Heuristiken 
 \end{figure}
 
 Zur Zeitspanne bis zu einem Kryptoanalytisch relevanten Quantencomputer schreibt das BSI, dass Zukunftsprognosen oft genau 20 Jahre vor Eintritt vorausgesagt werden und durch neue Entwicklungen im Bereich der qLDPC-Codes könnte sich der Bereich sogar noch weiter,
-auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
+bis auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
 
 Wenn im optimistischen Fall, von 10 Jahre bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
 Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte.
@@ -31,6 +31,10 @@ Das Unternehmen Gardner spricht sogar von einem Zeitraum von fünf bis zehn Jahr
 \end{figure}
 
 In Abbildung-\ref{fig:qc-nutzen} werden die Schritte der Entwicklung von Quantencomputern (nach Gardner) bildlich dargestellt.
+Momentan haben Quantencomputer nur einen sehr eingeschränkten Nutzen.
+In nur wenigen, angepassten Fällen haben sie einen Vorteil gegenüber klassichen Computern, wobei sich das hinsichtlich fortschritten in der Fehlerkorrektur bald ändern kann.
+
+
 Diese Prognosen sind sehr optimistisch hinsichtlich der Entwicklung.
 Kritiker hingegen sprechen auch davon, dass es wahrscheinlich ist, dass es nie Quantencomputer geben wird.
 Um einen Kryptoanalytisch relevanten Quantencomputer zu bauen, der tatsächlich in der Lage ist, Chiffren wie RSA oder ECC-Varianten zu knacken,
@@ -39,7 +43,17 @@ wären bis zu millionen von Qubits notwendig, ob es jemals einen Fehlerkorrigier
 Aus der Sicht der Theoretischen Informatik, bezeichnet man die Komplexitätsklasse der derzeitigen Quantencomputer als NISQ.
 NISQ beschreibt eine Komplexitätsklasse von Problemen, die mit klassischen Computern, mit Zugang zu rauschbehafteten Quanten-schaltkreisen gelöst werden können.
 NISQ Computer sind z.B. in der Lage, angepasste Probleme von Simon's Problem zu lösen, sie sind aber nicht in der Lage, beschleunigungen bei unstrukturierter Suche wie Grover's Algorithmus zu erreichen.
-Wenn man die Komplexitätsklassen vergleicht wie in \ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen.
+Wenn man die Komplexitätsklassen vergleicht wie in Abbildung-\ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen.
+Man definiert drei Komplexitätsklassen:
+\begin{itemize}
+    \item BPP (bounded error probabilistic polynomial time)\\
+    Die Klasse der Entscheidungsprobleme, für die es einen randomisierten Algorithmus gibt, der unter begrenzter Fehlerwahrscheinlichkeit, das Entscheidungsprobleme in polynomieller Zeit lösen kann.
+    Ein klassischer Computer mit Zufall kann diese Probleme lösen.
+    \item NISQ (noisy intermediate-scale quantum)\\
+    Die Klasse der Entscheidungsprobleme, die mit klassichen Computern mit Zugriff auf einen rauschbehafteten Quantencomputern, in polynomieller Zeit, gelöst werden können.
+    \item BQP (bounded error quantum polynomial time)\\
+    Die Klasse der Entscheidungsprobleme die, mit einem Quantenalgorithmus, auf einem idealen Quantencomputer, unter begrenzter Fehlerwahrscheinlichkeit, in polynomieller Zeit gelöst werden können \cite{homeisterQuantumComputingVerstehen2015}.
+\end{itemize}
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}
@@ -63,7 +77,7 @@ Manche Probleme sind effizienter auf klassischen Computern zu lösen, als auf ra
 Keines der Fragestellungen von $\mathrm{BPP} \subsetneq \mathrm{NISQ}$, $\mathrm{NISQ} \subsetneq \mathrm{BQP}$ und $\mathrm{BPP} \subsetneq \mathrm{BQP}$ sind alle nicht bewiesen.\\
 Bekannt ist, dass gilt $\mathrm{BPP} \subseteq \mathrm{NISQ}$, weil NISQ einen klassischen Computer vollständig beinhaltet und eine NISQ Schnittstelle hat.
 Ein Fehlerkorrigierender Quantencomputer muss auch in der Lage sein, einen rauschbehafteten Quantencomputer zu simulieren, deshalb, $\mathrm{NISQ} \subseteq \mathrm{BQP}$.
-Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$.
+Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$, siehe Abbildung-\ref{fig:bpp-nisq-bqp}.
 
 Zudem ist bewiesen, dass NISQ Computer nicht eine Beschleunigung wie Grover's Algorithmus erreichen können \cite{chenComplexityNISQ2023}.
 
@@ -91,7 +105,7 @@ Für MAYO1, FALCON512 und SNOVAIK, ist immer noch UDP möglich.
 
 Da NIST der Merkle-Tree-Ladder Modus empfiehlt, wäre es in diesem Modus nur notwendig, hin- und wieder die Ladder selbst zu signieren, ansonsten wird gezieltes hashen verwendet.
 Wenn nur hin- und wieder die teure PQC-Signatur eingesetzt werden muss, macht das insgesamt keinen großen Unterschied welcher Algorithmus verwendet wird.
-Nach diesem Prinzip könnte sogar der SHA-DSA eingesetzt werden, falls ML-DSA kryptoanalytische Schwächen aufweisen sollte.
+Nach diesem Prinzip könnte sogar der SHA-DSA eingesetzt werden, sollte ML-DSA kryptoanalytische Schwächen aufweisen sollte.
 
 Dennoch zeigen MAYO1, SNOVAIK und FALCON512 bessere performance und könnte alle weiterhin mit UDP-only betrieben werden.
 Warum NIST diesen dennoch bevorzugt, könnte daran liegen dass FALCON durch dessen komplexe implementierung und häufige Verwendung von Zufallszahlengeneratoren,
