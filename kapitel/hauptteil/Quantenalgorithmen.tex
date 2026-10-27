@@ -1,0 +1,197 @@
+\newcommand{\hadamard}{\ensuremath{%
+  \frac{1}{\sqrt{2}}
+  \begin{pmatrix}
+    1 & 1 \\
+    1 & -1
+  \end{pmatrix}%
+}}
+
+\newcommand{\qubitnull}{\ensuremath{\begin{pmatrix}1\\0\end{pmatrix}}}
+\newcommand{\qubiteins}{\ensuremath{\begin{pmatrix}0\\1\end{pmatrix}}}
+
+\newcommand{\minusspin}{\ensuremath{\frac{1}{\sqrt{2}}(|0\rangle-|1\rangle)}}
+\newcommand{\plusspin}{\ensuremath{\frac{1}{\sqrt{2}}(|0\rangle+|1\rangle)}}
+
+\section{Quantenalgorithmen}
+Um einen Quantenalgorithmus zu entwickeln, sind fundamental neue logische Operatoren notwendig.
+Damit ein Algorithmus effizient ist, müssen die Prinzipen, Quantenverschränkung, interferenz und Dekohärenz, effektiv eingesetzt werden.
+
+\subsection{Logische Gatter und Komponenten}
+Quantengatter können durch Matrizen als das mathematische Äquivalent dargestellt werden.
+Eine wichtige Maßnahme dazu ist, dass die Gatter eine Unitäre Matrix sind und die die Summe aller quadrierten Amplituden, gleich 1 bleibt.
+Ein wichtiger Gatter werden ist das Hadamard-Gatter, dieses wird an den Qubits $|0\rangle=\qubitnull$ und $|1\rangle=\qubiteins$ verdeutlicht:
+\begin{equation}
+    H = \frac{1}{\sqrt{2}}
+    \begin{pmatrix}
+        1 & 1\\
+        1 & -1
+    \end{pmatrix}
+    \label{eq:Hadamard-matrix}
+\end{equation}
+Mathematische Definition aus Gleichung-\ref{eq:Hadamard-matrix}, mit ihr kann eine Qubit in eine Superposition gebracht und auch wieder in eine feste Position gebracht werden.
+Angewandt auf Qubits, bringen sie folgende Resultate:
+\begin{align}
+    H|0\rangle = \hadamard \qubitnull = \minusspin = |+\rangle\\
+    H|1\rangle = \hadamard \qubiteins = \plusspin = |-\rangle
+\end{align}
+Die Zustände haben zwar die gleiche Wahrscheinlichkeit aus 0 oder 1, allerdings unterscheidet sich ihr spin, welcher entscheident ist für Interferenz.
+Wenn die Hadamard-Matrix erneut auf $|-\rangle$ oder $|+\rangle$ angewandt wird, ergibt sich wieder der ursprüngliche Zustand 0 oder 1.
+Wichtig für einen Quantenalgorithmus ist zudem das Orakel / die Blackbox.
+Quantenalgorithmen wie der Deutsch- oder Deutsch-Jozsa-Algorithmus funktionieren nach dem query model.
+Es können Anfragen an das Orakel gestellt werden und für jeweils dafür Antworten erhalten, wie häufig Anfragen gestellt werden, bestimmt die effizienz des Algorithmus.
+Das Orakel wird als unitary query-gate $U_f$ definiert, für das kann eine Anfrage mit $x$ gestellt werden und eine Antwort $f(x)$ erhalten werden.
+Ein Quantencomputer kann mehrere Eingabe auf einmal an das Orakel stellen, damit wird parallelität und Interferenz deutlich.
+
+\subsection{Deutsch-Algorithmus}
+Der Deutsch Algorithmus ist einer der ersten Quantenalgorithmen, der gezeigt hat, dass ein Quantencomputer theoretisch einen Vorteil gegenüber einem klassischen Computern haben kann.
+Dieser Algorithmus hat keinen praktischen nutzen, ist aber ein gutes Beispiel wie so ein Algorithmus funktionieren kann.
+Das Problem ist, wir haben eine Funktion f, die entweder konstant oder balanciert ist.
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+    $x$ & $f_1(x)$ & $f_2(x)$ & $f_3(x)$ & $f_4(x)$\\ 
+    \hline
+    0 & 0 & 0 & 1 & 1\\
+    \hline
+    1 & 0 & 1 & 0 & 1\\
+    \end{tabular}
+    \caption{Funktionswerte für f(x)}
+    \label{fig:deutsch-algorithmus}
+\end{table}
+
+Die Funktion aus Abbilung-\ref{fig:deutsch-algorithmus} ist balanciert wenn sie wie $f_2$ und $f_3$ gleich häufig 0 wie 1 als Ergebnis liefert, im Fall von $f_1$ und $f_4$ ist sie konstant.
+Der Deutsch-Algorithmus funktioniert nur genau für dieses Problem, in dem wir die Funktion $f:\{0,1\}\to\{0,1\}$ haben.
+
+der Deutsch Algorithmus kann folgendermaßen dargestellt werden:
+\newpage
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{bilder/Deutsch_algo.png}
+    \caption{Schaltkreis des Deutsch-Algorithmus \cite{DeutschsAlgorithm}}
+    \label{fig:deutsch-schaltkreis}
+\end{figure}
+
+Wie in Abbildung-\ref{fig:deutsch-schaltkreis} zu sehen ist, werden zuerst zwei Qubits initialisiert mit den Werten 0 und 1.
+in einem n-qubit system, werden die Qubits über das tensor produkt verbunden.
+Die Qubits werden absichtlich mit $|0\rangle$ und $|1\rangle$ initialisiert, in das erste Qubit $|1\rangle$ wird der Wert für x rein geschrieben, das andere Qubit wird als hilfsregister verwendet, es wird mit dem Ergebnis der Funktion beschrieben.
+Wenn wir bei der initialisierung der Qubits, den Zustand $|\pi_0\rangle$ haben, dann wäre dieser:
+\begin{align}
+    |\pi_0\rangle=|1\rangle|0\rangle\\
+    |\pi_0\rangle=|10\rangle
+\end{align}
+
+Als erster Schritt, wird auf beide Qubits jeweils ein Hadamard-Gatter angewandt, im in Abbildung-\ref{fig:deutsch-schaltkreis} beschriebenen Zustand $|\pi_1\rangle$ bilden die Qubits den Zustand:
+\begin{align}
+    &H|0\rangle=\plusspin=|+\rangle\\
+    &H|1\rangle=\minusspin=|-\rangle\\
+    |\pi_1\rangle=|-\rangle\otimes|+\rangle&=\minusspin|1\rangle\otimes\plusspin|0\rangle
+\end{align}
+Durch ausmultiplizieren erhalten wir:
+\begin{align}
+    |\pi_1\rangle=\frac{1}{2}(|0\rangle-|1\rangle)|0\rangle+\frac{1}{2}(|0\rangle-|1\rangle)|1\rangle
+\end{align}
+Nachdem sich die Qubits in superposition befinden, wird das Orakel befragt.
+Das ist der Vorteil eines Quantencomputers, dieser kann mit nur einer Abfrage des zwei-Qubit Systems eine Antwort enthalten, ein klassischer Computer müsste zwei seperate Anfragen für die Fälle 0 oder 1 machen.
+Das Orakel $U_f$ ist ebenfalls eine unitäre Matrix und wird durch $U_f|x\rangle|y\rangle=|x\rangle|y\otimes f(x)\rangle$ definiert.
+Durch das Orakel wird das 0-Qubit nicht verändert, das 1-Qubit wird abhängig vom 0-Qubit verändert, wie in \ref{fig:orakel-deutsch-algorithmus} zu sehen ist.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/quantum-parallelism.png}
+    \caption{Orakel des deutsch algorithmus \cite{QueryModelComputation}}
+    \label{fig:orakel-deutsch-algorithmus}
+\end{figure}
+
+Das $|0\rangle$ bleibt im $|0\rangle$ Zustand.
+Das $|1\rangle$ Qubit wird in den Zustand $|1 \oplus f(0)\rangle$ versetzt.
+
+Nachdem wir $|\pi_1\rangle$ darauf ausgeführt haben, erhalten wir den Zustand:
+\begin{align}
+    |\pi_2\rangle=
+\frac{1}{2}(
+    |0\oplus f(0)\rangle
+    -|1\oplus f(0)\rangle
+)|0\rangle
++
+\frac{1}{2}(
+    |0\oplus f(1)\rangle
+    -|1\oplus f(1)\rangle
+)|1\rangle
+\end{align}.
+
+Wenn wir betracht ziehen, dass man auch noch folgendes vereinfachen kann:
+\begin{align}
+    |0\oplus a\rangle - |1\oplus a\rangle=(-1)^a(|0\rangle-|1\rangle)
+\end{align}
+
+Dann lässt sich $|\pi_2\rangle$ auch so schreiben:
+\begin{align}
+    |\pi_2\rangle=\frac{1}{2}(-1)^{f(0)}(|0\rangle-|1\rangle)|0\rangle+
+    \frac{1}{2}(-1)^{f(1)}(|0\rangle-|1\rangle)|1\rangle
+\end{align}
+
+Vereinfacht lässt sich dann $|\pi_2\rangle$ noch wie in Gleichung-\ref{eq:vereinfacht-pi-zwei} darstellen.
+\begin{equation}
+    |\pi_2\rangle=|-\rangle(\frac{
+        (-1)^{f(0)}|0\rangle+(-1)^{f(1)}|1\rangle
+    }
+    {
+        \sqrt{2}
+    })
+    \label{eq:vereinfacht-pi-zwei}
+\end{equation}
+
+Wenn der Faktor $(-1)^{f(0)}$ aus der Summe von Gleichung-\ref{eq:vereinfacht-pi-zwei} gezogen wird, erhalten wir:
+\begin{equation}
+    |\pi_2\rangle=
+    (-1)^{f(0)}|-\rangle(\frac{
+        |0\rangle+(-1)^{f(0)\oplus f(1)}|1\rangle
+    }
+    {
+        \sqrt{2}
+    })
+    =
+    \begin{cases}
+(-1)^{f(0)} \lvert-\rangle\lvert+\rangle
+& \text{if } f(0) \oplus f(1) = 0, \\[6pt]
+(-1)^{f(0)} \lvert-\rangle\lvert-\rangle
+& \text{if } f(0) \oplus f(1) = 1.
+\end{cases}
+\label{eq:wiederholt-vereinfacht-pi-zwei}
+\end{equation}
+
+Nach der Anwendung des letzten Hadamard-Gatters auf das erste Qubit, erhalten wir den Zustand $|\pi_3\rangle$.
+Der Zustand $|\pi_3\rangle$ sieht so aus wie in Gleichung-\ref{eq:pi-drei}:
+\begin{equation}
+|\pi_3\rangle =
+\begin{cases}
+(-1)^{f(0)} |-\rangle |0\rangle
+& \text{if } f(0) \oplus f(1) = 0 \\[6pt]
+(-1)^{f(0)} |-\rangle |1\rangle
+& \text{if } f(0) \oplus f(1) = 1
+\end{cases}
+\label{eq:pi-drei}
+\end{equation}
+
+Als letztes kann nun die Messung des ersten Qubits erfolgen, dann bricht die Superposition zusammen und es gibt die Zustände 1 oder 0.
+Wenn der Ouput 1 liefert ist f eine balancierte Funktion, bei 0 ist sie konstant.
+
+Mit einem klassischen Computer müsste man f(0) und f(1) prüfen, um festzustellen ob f konstant oder balanciert ist, mit einem Quantencomputer und dem Deutsch-Algorithmus genügt eine Anfrage.
+Der Vorteil ist realistisch nicht wahrnehmbar, aber es zeigt das es theoretisch möglich ist einen Quantenvorteil zu schaffen.
+
+Dieser Algorithmus ist bereits kompliziert und abstrakt, er ist aber noch ziemlich simpel im Vergleich zu anderen, die folgend nicht mehr ausführlich erklärt werden.
+
+\subsection{Deutsch-Jozsa-Algorithmus}
+Der Unterschied zum Deutsch-Algorithmus ist, dass dieser eine Funktion bearbeiten kann die eine beliebige Anzahl an input Bits nehmen kann und ein Bit als Ausgabe hat.
+Der Algorithmus bei einer Funktion $f:\{0,1\}^n\to\{0,1\}$ bestimmen ob diese balanciert oder unbalanciert ist, mit exponentieller Beschleunigung im Gegensatz zu klassischen Algorithmen, einschließlich randomisieren klassischen Algorithmen.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/DJ_algo.png}
+    \caption{Schaltkreis des Deutsch-Jozsa-Algorithmus \cite{DeutschJozsaAlgorithm}}
+    \label{fig:deutsch-jozsa-algorithmus}
+\end{figure}
+
+\subsection{Simon's Algorithmus}
+Dieser Algorithmus ist in der Lage eine Funktion f mit $f:\{0,1\}^m\to\{0,1\}^n$ zu finden.
+Mit einem klassischen Computer erfordert das eine Kollision zu finden, mit Simon's Algorithmus lässt sich das in $O(n)$
