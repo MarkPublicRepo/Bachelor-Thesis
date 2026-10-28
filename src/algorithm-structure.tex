@@ -1,0 +1,12 @@
+% Präambel
+\usepackage{enumitem}
+
+\newenvironment{problem}[1]{%
+  \par\medskip\noindent\textbf{#1}
+  \begin{description}[leftmargin=2.5cm, style=nextline, font=\bfseries\itshape, topsep=2pt]%
+}{%
+  \end{description}\medskip%
+}
+\newcommand{\Input}{\item[Input:]}
+\newcommand{\Promise}{\item[Promise:]}
+\newcommand{\Output}{\item[Output:]}
