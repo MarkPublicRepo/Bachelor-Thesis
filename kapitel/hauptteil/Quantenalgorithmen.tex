@@ -18,8 +18,8 @@ Damit ein Algorithmus effizient ist, müssen die Prinzipen, Quantenverschränkun
 
 \subsection{Logische Gatter und Komponenten}
 Quantengatter können durch Matrizen als das mathematische Äquivalent dargestellt werden.
-Eine wichtige Maßnahme dazu ist, dass die Gatter eine Unitäre Matrix sind und die die Summe aller quadrierten Amplituden, gleich 1 bleibt.
-Ein wichtiger Gatter werden ist das Hadamard-Gatter, dieses wird an den Qubits $|0\rangle=\qubitnull$ und $|1\rangle=\qubiteins$ verdeutlicht:
+Eine wichtige Maßnahme dazu ist, dass die Gatter eine Unitäre Matrix sind und das alle Amplituden a, $\sum_{i}{|a_i|}^2=1$.
+Ein wichtiges Gatter ist das Hadamard-Gatter, dieses wird an den Qubits $|0\rangle=\qubitnull$ und $|1\rangle=\qubiteins$ verdeutlicht:
 \begin{equation}
     H = \frac{1}{\sqrt{2}}
     \begin{pmatrix}
@@ -31,10 +31,10 @@ Ein wichtiger Gatter werden ist das Hadamard-Gatter, dieses wird an den Qubits $
 Mathematische Definition aus Gleichung-\ref{eq:Hadamard-matrix}, mit ihr kann eine Qubit in eine Superposition gebracht und auch wieder in eine feste Position gebracht werden.
 Angewandt auf Qubits, bringen sie folgende Resultate:
 \begin{align}
-    H|0\rangle = \hadamard \qubitnull = \minusspin = |+\rangle\\
-    H|1\rangle = \hadamard \qubiteins = \plusspin = |-\rangle
+    H|0\rangle = \hadamard \qubitnull = \plusspin = |+\rangle\\
+    H|1\rangle = \hadamard \qubiteins = \minusspin = |-\rangle
 \end{align}
-Die Zustände haben zwar die gleiche Wahrscheinlichkeit aus 0 oder 1, allerdings unterscheidet sich ihr spin, welcher entscheident ist für Interferenz.
+Die Zustände haben zwar die gleiche Wahrscheinlichkeit aus 0 oder 1, allerdings unterscheidet sich ihre phase, welcher entscheident ist für Interferenz.
 Wenn die Hadamard-Matrix erneut auf $|-\rangle$ oder $|+\rangle$ angewandt wird, ergibt sich wieder der ursprüngliche Zustand 0 oder 1.
 Wichtig für einen Quantenalgorithmus ist zudem das Orakel / die Blackbox.
 Quantenalgorithmen wie der Deutsch- oder Deutsch-Jozsa-Algorithmus funktionieren nach dem query model.
@@ -73,8 +73,8 @@ der Deutsch Algorithmus kann folgendermaßen dargestellt werden:
 
 Wie in Abbildung-\ref{fig:deutsch-schaltkreis} zu sehen ist, werden zuerst zwei Qubits initialisiert mit den Werten 0 und 1.
 in einem n-qubit system, werden die Qubits über das tensor produkt verbunden.
-Die Qubits werden absichtlich mit $|0\rangle$ und $|1\rangle$ initialisiert, in das erste Qubit $|1\rangle$ wird der Wert für x rein geschrieben, das andere Qubit wird als hilfsregister verwendet, es wird mit dem Ergebnis der Funktion beschrieben.
-Wenn wir bei der initialisierung der Qubits, den Zustand $|\pi_0\rangle$ haben, dann wäre dieser:
+Die Qubits werden absichtlich mit $|0\rangle$ und $|1\rangle$ initialisiert, in das erste Qubit $|0\rangle$ wird der Wert für x rein geschrieben, das andere Qubit wird als hilfsregister verwendet, es wird mit dem Ergebnis der Funktion beschrieben.
+Wenn wir bei der initialisierung der Qubits, den Zustand $|\pi_1\rangle$ haben, dann wäre dieser:
 \begin{align}
     |\pi_0\rangle=|1\rangle|0\rangle\\
     |\pi_0\rangle=|10\rangle
@@ -130,6 +130,9 @@ Dann lässt sich $|\pi_2\rangle$ auch so schreiben:
     \frac{1}{2}(-1)^{f(1)}(|0\rangle-|1\rangle)|1\rangle
 \end{align}
 
+Interessanterweise hat dabei das Hilfs-Qubit seinen Zustand $|-\rangle$ behalten.
+Das Eingabe-Qubit erhält abhängig von $f(x)$ eine Phase von $(-1)^{f(x)}$, dadurch wird die Phase auf das Eingabe-Qubit \enquote{zurückübertragen}, das wird als \textbf{Phase Kickback} bezeichnet und ist wichtig für die Interferenz der verschiedenen Rechenpfade.
+
 Vereinfacht lässt sich dann $|\pi_2\rangle$ noch wie in Gleichung-\ref{eq:vereinfacht-pi-zwei} darstellen.
 \begin{equation}
     |\pi_2\rangle=|-\rangle(\frac{
@@ -173,8 +176,9 @@ Der Zustand $|\pi_3\rangle$ sieht so aus wie in Gleichung-\ref{eq:pi-drei}:
 \label{eq:pi-drei}
 \end{equation}
 
-Als letztes kann nun die Messung des ersten Qubits erfolgen, dann bricht die Superposition zusammen und es gibt die Zustände 1 oder 0.
-Wenn der Ouput 1 liefert ist f eine balancierte Funktion, bei 0 ist sie konstant.
+Dabei steht das $|-\rangle$ für das Hilfsbit und das andere/rechte Qubit für das Eingabe-Qubit.
+Nun kann zuletzt die Messung des rechten Qubits erfolgen, dadurch bricht die Superposition zusammen und das Qubit nimmt den Wert 0 oder 1 an.
+Bei einer konstanten Funktion nimmt das Qubit den Wert 0 an und bei einer balancierten den Wert 1.
 
 Mit einem klassischen Computer müsste man f(0) und f(1) prüfen, um festzustellen ob f konstant oder balanciert ist, mit einem Quantencomputer und dem Deutsch-Algorithmus genügt eine Anfrage.
 Der Vorteil ist realistisch nicht wahrnehmbar, aber es zeigt das es theoretisch möglich ist einen Quantenvorteil zu schaffen.
