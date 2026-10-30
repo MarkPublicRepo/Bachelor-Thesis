@@ -140,30 +140,30 @@ Das Eingabe-Qubit erhält abhängig von $f(x)$ eine Phase von $(-1)^{f(x)}$, dad
 
 Vereinfacht lässt sich dann $|\pi_2\rangle$ noch wie in Gleichung-\ref{eq:vereinfacht-pi-zwei} darstellen.
 \begin{equation}
-    |\pi_2\rangle=|-\rangle(\frac{
+    |\pi_2\rangle=|-\rangle\left(\frac{
         (-1)^{f(0)}|0\rangle+(-1)^{f(1)}|1\rangle
     }
     {
         \sqrt{2}
-    })
+    }\right)
     \label{eq:vereinfacht-pi-zwei}
 \end{equation}
 
 Wenn der Faktor $(-1)^{f(0)}$ aus der Summe von Gleichung-\ref{eq:vereinfacht-pi-zwei} gezogen wird, erhalten wir:
 \begin{equation}
     |\pi_2\rangle=
-    (-1)^{f(0)}|-\rangle(\frac{
+    (-1)^{f(0)}|-\rangle\left(\frac{
         |0\rangle+(-1)^{f(0)\oplus f(1)}|1\rangle
     }
     {
         \sqrt{2}
-    })
+    }\right)
     =
     \begin{cases}
 (-1)^{f(0)} \lvert-\rangle\lvert+\rangle
-& \text{if } f(0) \oplus f(1) = 0, \\[6pt]
+& \text{falls } f(0) \oplus f(1) = 0, \\[6pt]
 (-1)^{f(0)} \lvert-\rangle\lvert-\rangle
-& \text{if } f(0) \oplus f(1) = 1.
+& \text{falls } f(0) \oplus f(1) = 1.
 \end{cases}
 \label{eq:wiederholt-vereinfacht-pi-zwei}
 \end{equation}
@@ -174,9 +174,9 @@ Der Zustand $|\pi_3\rangle$ sieht so aus wie in Gleichung-\ref{eq:pi-drei}:
 |\pi_3\rangle =
 \begin{cases}
 (-1)^{f(0)} |-\rangle |0\rangle
-& \text{if } f(0) \oplus f(1) = 0 \\[6pt]
+& \text{falls } f(0) \oplus f(1) = 0 \\[6pt]
 (-1)^{f(0)} |-\rangle |1\rangle
-& \text{if } f(0) \oplus f(1) = 1
+& \text{falls } f(0) \oplus f(1) = 1
 \end{cases}
 \label{eq:pi-drei}
 \end{equation}
@@ -252,7 +252,83 @@ Nur n- von 2n-Qubits, werden durch ein Hadamard-Gatter geleitet, alle 2n durch d
 Dieses Vorgehen wird solange ausgeführt, bis sich mit einer ausreichenden Wahrscheinlichkeit der String bestimmen lassen kann.
 Dieser Algorithmus ist auch wichtig für heutige NISQ-Quantencomputer, da einige angepasste Versionen, sich mit diesen Computern benutzen lassen.
 Er war auch die Inspiration für Shor's Algorithmus zum effizienten Faktorisieren von Primfaktoren.
-Simon's Algorithmus selbst lässt sich in wenigen spezifischen Fällen, lässt sich dieser Algorithmus als Angriff aus Symmetrische Kryptoverfahren einsetzen \cite{SimonsAlgorithm,aumassonSeriousCryptographyPractical2018,chenComplexityNISQ2023}.
+Simon's Algorithmus selbst lässt sich in wenigen spezifischen Fällen, lässt sich dieser Algorithmus als Angriff aus Symmetrische Kryptoverfahren einsetzen.
+Allerding lässt sich Simon's Problem mit probalistischen Algorithmen auch mit klassischen Computern in wenigen Schritten lösen \cite{SimonsAlgorithm,aumassonSeriousCryptographyPractical2018,chenComplexityNISQ2023}.
 
 \subsection{Grover's Algorithmus}
-Ein wichtiger Algorithmus
+Grover's Algorithmus ist in der Lage einen String in einem unstrukturierten Datensatz zu finden.
+Klassische Verfahren brauchen für n Strings, durchschnittlich $O(\frac{n}{2})$ Schritte um einen Eintrag zu finden, mit Grover's Algorithmus in das in nur $O(\sqrt{n})$ Schritten möglich.
+Grover's Algorithmus lässt sich folgendermaßen definieren:
+\begin{problem}{Unstrukturierte Suche}
+    \Input $f:\Sigma^n\to \Sigma$
+    \Output ein String $x\in \Sigma^n$ für den gilt f(x)=1 oder \enquote{keine Lösung}, falls kein solcher String existiert
+\end{problem}
+
+Anstelle ein Hilfs-Qubit zu verwenden um Nutzen des Phase Kickback zu machen, kann dies durch ein \textit{Phase Query Gate} implementiert werden.
+Das geschieht durch:
+\begin{equation}
+    Z_f:|x\rangle\to (-1)^{f(x)}|x\rangle\ \text{(für alle } x\in \Sigma^n)
+\end{equation}
+
+Zusätzlich wird noch ein ODER Gatter benötigt für n-Qubits.
+Ein klassisches ODER ist folgendes:
+\begin{equation}
+    OR(x)=
+    \begin{cases}
+        0\ x=0^n\\
+        1\ x\neq0^n
+    \end{cases}
+    \text{(für alle }x\in \Sigma^n)
+\end{equation}
+Wenn ein einziges Bit $\neq 0$ ist, dann ist der Ausdruck korrekt.
+Ein ODER als Quantengatter sieht so aus:
+\begin{equation}
+    Z_{OR}=
+    \begin{cases}
+        |x\rangle\ x=0^n\\
+        -|x\rangle\ x\neq 0^n
+    \end{cases}
+    \text{(für alle }x\in \Sigma^n)
+\end{equation}
+Wenn ein einziges Qubit nicht $|0\rangle$ ist, dann wird von allen die Phase umgekehrt.
+Damit sind alle Gatter bekannt, die für Grover's Algorithmus benötigt werden.
+Die Grover operation ist selbst definiert als:
+\begin{equation}
+    G=H^{\otimes n}Z_{OR}H^{\otimes n}Z_f
+    \label{eq:grover-operator}
+\end{equation}
+Die Notation $H^{\otimes n}$ in \ref{eq:grover-operator} bedeutet, anwendung des Hadamard-Gatters über n-Qubits.
+Um diese Gleichung als Algorithmus zu verstehen, muss man sie von rechts nach links lesen.
+Die Schritte des Grover's Algorithmus kann wie folgt beschreiben:
+\begin{enumerate}
+    \item Initialisierung: n-Qubits werden mit $H^{\otimes n|0^n\rangle}$ initilisiert.
+    \item Iteration: Der Grover Operator G, wird t-mal angewandt.
+    \item Messung: Nach t iterationen, werden die Qubits gemessen, mit hoher Wahrscheinlichkeit auf Korrektheit gemessen.
+\end{enumerate}
+
+Für t wird $\frac{\pi}{4}\sqrt{n}$ verwendet, warum es diese Anzahl, soll nicht darauf eingegangen werden.
+
+\subsubsection{Beispielhafte Anwendung}
+Abschließend ein Beispiel wie der Algorithmus schrittweise angewendet wird.
+
+Es werden in einem Anfangszustand, n-Qubits als 0 initilisiert.
+\begin{equation}
+    \psi_1=|0^n\rangle
+\end{equation}
+
+Die Qubits werden mit Hadamard-Gattern in eine Superposition gebracht.
+\begin{equation}
+    \psi_2=H^{\otimes n}|\psi_1\rangle
+\end{equation}
+
+Nun wird der Grover Operator t-mal angewendet:
+\begin{equation}
+    |\psi_{t+2}\rangle=G^t|\psi_2\rangle=\underbrace{G \circ G \circ \cdots \circ G}_{t\text{-mal}}\,|\psi_2\rangle
+\end{equation}
+
+Dann erfolgt die Messung und mit hoher Wahrscheinlichkeit sollte der String gefunden worden sein, falls dieser existiert.
+für $t\approx\frac{\pi}{4}\sqrt{n}$ haben wir eine Laufzeitkomplexität von $O(\sqrt{n})$, es wird vermutet dass es unmöglich ist, dieses Problem in weniger als $O(\sqrt{n})$ Schritten zu lösen \cite{groverFastQuantumMechanical1996}.
+Für dieses Problem gibt es auch randomisierten Algorithmen Algorithmus, der dieses Problem in $O(\sqrt{n})$ lösen kann.
+
+\subsection{Shor's Algorithmus}
+Wegen diesem Algorithmus gibt es die Notwendigkeit der Post-Quanten-Kryptografie und folglich diese Bachelorarbeit.
