@@ -306,7 +306,7 @@ Die Schritte des Grover's Algorithmus kann wie folgt beschreiben:
     \item Messung: Nach t iterationen, werden die Qubits gemessen, mit hoher Wahrscheinlichkeit auf Korrektheit gemessen.
 \end{enumerate}
 
-Für t wird $\frac{\pi}{4}\sqrt{n}$ verwendet, warum es diese Anzahl, soll nicht darauf eingegangen werden.
+Für t wird $\frac{\pi}{4}\sqrt{n}$ verwendet, warum es diese Anzahl ist, soll nicht darauf eingegangen werden.
 
 \subsubsection{Beispielhafte Anwendung}
 Abschließend ein Beispiel wie der Algorithmus schrittweise angewendet wird.
@@ -332,3 +332,56 @@ Für dieses Problem gibt es auch randomisierten Algorithmen Algorithmus, der die
 
 \subsection{Shor's Algorithmus}
 Wegen diesem Algorithmus gibt es die Notwendigkeit der Post-Quanten-Kryptografie und folglich diese Bachelorarbeit.
+Shor's Algorithmus ist ein hybrider Algorithmus, teile davon werden klassisch berechnet und ein rechenintensiver Teil wird auf einem Quantencomputer ausgeführt.
+Das unterliegende Problem ist die Periodenfindung, es ist möglich herauszufinden, ob eine Funktion periodisch ist oder nicht.
+Wenn mit der Periode $\omega$ eine Funktion gesucht wird, für:
+\begin{equation}
+    f(x+\omega)=f(x)
+    \label{eq:shors-problem}
+\end{equation}
+Dann kann shor's Algorithmus, effizient die Periode $\omega$ finden, wenn diese existiert.
+Aus der Gleichung-\ref{eq:shors-problem} macht sich die Ähnlichkeit zu Simon's Problem sichbar, tatsächlich war Simon's Algorithmus auch eine Inspiration für Shor's Algorithmus.
+Um grob zu verstehen, wie Shor's Algorithmus funktioniert, wird das finden von Primfaktoren am Bespiel von $N=15$, $p=3$ und $q=5$ gezeigt.
+Angenommen wir wissen nur das $N=15$ ist, p und q sind unbekannt.
+Als erstes soll eine Zahl x gefunden werden, für die gilt:
+\begin{align}
+    x^2 \equiv 1 \bmod N \\
+    x   \not\equiv \pm 1 \bmod N
+\end{align}
+
+Wenn diese Bedingungen erfüllt sind, dann wissen wir auch dass es $x^2-1 \equiv 0 \bmod N$ geben muss und dass dadurch $x^2-1$ ein vielfaches von N ist.
+Deshalb können wir schreiben:
+\begin{equation}
+    x^2-1 = lN
+\end{equation}
+$l$ ist ein ganzzahliger Faktor von $N$.
+Nach der dritten Binomischen Formel, können wir es auch so umschreiben:
+\begin{equation}
+    (x-1)(x+1) = lN
+\end{equation}
+
+Das bedeutet, es muss $p=x^2-1\ \text{und}\ q=x^2+1$ gelten, oder umgekehrt.
+
+Damit wir ein $x$ haben, für das dies gilt, müssen wir eine Zahl finden, für die der größte gemeinsame Teiler mit N, für $x^2-1\ \text{und}\ x^2+1$ gleich 1 ist.
+Dieser Schritt kann einfach auf einem klassischen Computer berechnet werden.
+
+Um den größten gemeinsamen Teiler zwischen zwei Zahlen, a und b, zu nennen, verwenden wir die Bezeichnung $\gcd(a,b)$.
+\begin{algorithm}[htbp]
+\caption{factors\_classic}
+\label{alg:factors-classic}
+\begin{algorithmic}[1]
+  \Require Zahl $x$, für die gilt $x^2 \equiv 1 \bmod N$ und $x \not\equiv \pm 1 \bmod N$, Zahl $N$
+  \Ensure Nichttrivialer Teiler von $N$
+  \Repeat
+    \State $x \gets$ zufällige Zahl aus $\{2, \dots, N-1\}$
+    \State $d \gets \gcd(x, N)$
+    \If{$d > 1$}
+      \State \Return $d$
+    \EndIf
+    \State $r \gets$ Ordnung von $x$ modulo $N$ \Comment{Quantenteil}
+    \If{$r$ gerade \textbf{und} $x^{r/2} \not\equiv -1 \pmod{N}$}
+      \State \Return $\gcd(x^{r/2} - 1,\, N)$
+    \EndIf
+  \Until{Teiler gefunden}
+\end{algorithmic}
+\end{algorithm}
