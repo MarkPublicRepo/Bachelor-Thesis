@@ -360,17 +360,17 @@ Nach der dritten Binomischen Formel, können wir es auch so umschreiben:
     (x-1)(x+1) = lN
 \end{equation}
 
-Das bedeutet, es muss $p=x^2-1\ \text{und}\ q=x^2+1$ gelten, oder umgekehrt.
+Das bedeutet, es muss $p=gcd(x^2-1, N)\ \text{und}\ q=gcd(x^2+1, N)$ gelten, oder umgekehrt, für $x$ gilt: $x=a^{r/2}$.
 
 Damit wir ein $x$ haben, für das dies gilt, müssen wir eine Zahl finden, für die der größte gemeinsame Teiler mit N, für $x^2-1\ \text{und}\ x^2+1$ gleich 1 ist.
 Dieser Schritt kann einfach auf einem klassischen Computer berechnet werden.
 
 Um den größten gemeinsamen Teiler zwischen zwei Zahlen, a und b, zu nennen, verwenden wir die Bezeichnung $\gcd(a,b)$.
 \begin{algorithm}[htbp]
-\caption{factors\_classic}
-\label{alg:factors-classic}
+\caption{shor's Algorithmus}
+\label{alg:shors-algorithmus}
 \begin{algorithmic}[1]
-  \Require Zahl $x$, für die gilt $x^2 \equiv 1 \bmod N$ und $x \not\equiv \pm 1 \bmod N$, Zahl $N$
+  \Require ungerade, ganzzahlige, Semiprimzahl $N$
   \Ensure Nichttrivialer Teiler von $N$
   \Repeat
     \State $x \gets$ zufällige Zahl aus $\{2, \dots, N-1\}$
@@ -385,3 +385,54 @@ Um den größten gemeinsamen Teiler zwischen zwei Zahlen, a und b, zu nennen, ve
   \Until{Teiler gefunden}
 \end{algorithmic}
 \end{algorithm}
+
+Der schwierige und rechenintensive Teil des Algorithmus ist ist in Zeile 7, die Ordnung r zu finden, um dies effizient zu berechnen, ist ein Quantencomputer notwendig.
+Der Algorithmus zur Periodenfindung wird anschließend vereinfacht erklärt und warum das überhaupt auf die Findung der Ordnung angewandet werden kann.
+Wenn man sich die Reihe der berechnungen von $2^n \bmod 15$ anschaut, sieht man dass sich die Werte in gleichen Abständen wiederholen.
+\begin{align*}
+    2^0 \bmod 15 &= 1\\
+    2^1 \bmod 15 &= 2\\
+    2^2 \bmod 15 &= 4\\
+    2^3 \bmod 15 &= 8\\
+    2^4 \bmod 15 &= 1\\
+    2^5 \bmod 15 &= 2\\
+    2^6 \bmod 15 &= 4\\
+    2^7 \bmod 15 &= 8\\
+    &\vdots
+\end{align*}
+
+\newpage
+
+Als Funktionsgrafen lässt sich das deutlicher sehen.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/graf.png}
+    \caption{Funktionsgrafen von $2^n \bmod 15$, nach eigener Darstellung}
+    \label{fig:funktionsgrafen}
+\end{figure}
+
+Wie in Abbildung-\ref{fig:funktionsgrafen} zu sehen ist, weißt die Funktion ein Muster auf.
+Sie wiederholt sich nach einer bestimmten Anzahl an Schritten, dadurch lässt sich der Algorithmus der Periodenfindung ebenfalls auf sie anwenden.
+Die Funktion aus Abbildung-\ref{fig:funktionsgrafen}, wiederholt sich immer nach 4 Schritten, dabei spricht man von einer Ordnung ($r$) von $r=4$.
+
+Der Algorithmus zur Periodenfindung, lässt sich mit IBM's Qiskit, folgendermaßen als Schaltkreis darstellen:
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/QPE.png}
+    \caption{Schaltkreis für die Periodenfindung}
+    \label{fig:periodenfindung-schaltkreis}
+\end{figure}
+
+In Abbildung-\ref{fig:periodenfindung-schaltkreis} sind gleich einige Qubit Zustände zu sehen und Unitäre Operatoren, die vereinfacht der Reihe nach erklärt werden sollen.
+Die Qubits in $|0^m\rangle$ sind da um die Zustände der Operationen von $U$ zu speichern. Die eigentlichen Zustände werden in $|\psi\rangle$ berechnet, durch die Parallelisierung von Quantenprozessoren kann diese sehr große Möglichkeit an Zuständen berechnet werden.
+Um den Operator $U$ so anzupassen, dass es die Ordnung einer Funktion finden kann, wird die Funktion $M_a$ für $U$ verwendet, sie berechnet $M_a|x\rangle=|x*a\bmod N\rangle$, wobei $a$ ein beliebiger Wert $1\le a \le N-1$ ist, der zuvor festgelegt wurde (siehe Algorithmus-\ref{alg:shors-algorithmus}) und $x$ im Bereich zwischen $2^1$ und $2^{m-1}$ liegt.
+\begin{align*}
+    M_2^{1}|1\rangle&=|2\rangle\\
+    M_2^{2}|2\rangle&=|4\rangle\\
+    M_2^{3}|3\rangle&=|8\rangle\\
+    &\vdots\\
+    M_2^{r}|y\rangle&=|1\rangle\\
+\end{align*}
+Im Anschluss wird eine Quanten Fourier Transformation durchgeführt, diese sorgt sozusagen dafür, dass der Abstand r, wirklich zu einer Periode wird und sich somit in der Schwingung sehen lässt.
+Nach der Fourier Transformation, lassen sich die Werte als Ausschlag im Messwert sehen.
