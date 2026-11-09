@@ -192,7 +192,7 @@ Dieser Algorithmus ist bereits kompliziert und abstrakt, er ist aber noch ziemli
 
 \subsection{Deutsch-Jozsa-Algorithmus}
 Der Unterschied zum Deutsch-Algorithmus ist, dass dieser eine Funktion bearbeiten kann die eine beliebige Anzahl an input Bits nehmen kann und ein Bit als Ausgabe hat.
-Der Algorithmus bei einer Funktion $f\colon\Sigma^n\to\Sigma$ für alle $n\ge1$, bestimmen ob diese balanciert oder konstant ist, mit exponentieller Beschleunigung im Gegensatz zu klassischen Algorithmen, einschließlich randomisieren klassischen Algorithmen.
+Der Algorithmus kann bei einer Funktion $f\colon\Sigma^n\to\Sigma$ für alle $n\ge1$, bestimmen ob diese balanciert oder konstant ist, mit exponentieller Beschleunigung im Gegensatz zu klassischen Algorithmen.
 \begin{problem}{Deutsch-Jozsa Problem}
   \Input   Eine Funktion $f\colon \Sigma^n\to\Sigma$ als Orakel.
   \Promise $f$ ist konstant oder balanciert.
@@ -208,15 +208,15 @@ Der Algorithmus bei einer Funktion $f\colon\Sigma^n\to\Sigma$ für alle $n\ge1$,
 
 Interressant zu sehen, ist auch das in \ref{fig:deutsch-jozsa-algorithmus} ein Qubit als $|1\rangle$ initialisiert wird, damit der Phase Kickback später wirken kann.
 
-Wenn alle ouput Qubits 0 sind, dann ist die Funktion f balanciert, falls mindestens ein Qubit den Wert 1 hat, ist sie konstant.
-Funktionen, die weder balanciert noch konstant sind, werden nicht berücksichtigt.
+Wenn alle ouput Qubits 0 sind, dann ist die Funktion f balanciert, falls mindestens ein Qubit des Output den Wert 1 hat, ist sie konstant.
+Funktionen, die weder balanciert noch konstant sind, werden nicht berücksichtigt und als sogenannten \enquote{dont-care input} bezeichnet.
 Dieser Quantenalgorithmus benötigt $O(1)$ Operationen um das Problem zu lösen, ein klassischer determisitischer Algorithmus liegt im schlechtesten Fall bei $2^{n-1}+1$ Anfragen.
 
 Der Deutsch-Jozsa Algorithmus ist eine generalisierung des Deutsch Algorithmus, dieser Algorithmus kann auch auf andere Probleme übertragen werden, wie z.B. auf das Bernstein-Vazirani Problem.
 Das Bernstein-Vazarani Problem kann wie folgt beschrieben werden:
-\begin{problem}{Bervstein-Verani Problem}
+\begin{problem}{Bernstein-Vazarani Problem}
     \Input $f\colon\Sigma^n\to\Sigma$
-    \Promise Es existiert ein binärstring $s = s_{n-1}\dots s_0$ für den gilt, $f(x)=s\times s$ für alle $x \in {0,1}^n$
+    \Promise Es existiert ein binärstring $s = s_{n-1}\dots s_0$ für den gilt, $f(x)=s\times x$ für alle $x \in \Sigma^n$
     \Output String s
 \end{problem}
 
@@ -224,8 +224,8 @@ Dieses Problem lässt sich mit dem Schaltkreis des Deutsch-Jozsa Algorithmus lö
 
 \subsection{Simon's Algorithmus}
 Dieser Algorithmus ist in der Lage bei einer Funktion f mit $f\colon\Sigma^n\to\Sigma^m$ einen String s zu finden.
-Mit einem klassischen Computer erfordert das in $O(n^{\frac{n}{2}})$ Orakelabfragen, einen bestimmten String zu finden, das ist im prinzip die Schwierigkeit eine kollision zu finden.
-Mit Simon's Algorithmus lässt sich das in $O(n)$ schritten lösen.
+Mit einem klassischen Computer erfordert das in $O(2^{\frac{n}{2}})$ Orakelabfragen, einen bestimmten String zu finden, das ist im prinzip die Schwierigkeit eine kollision zu finden.
+Mit einem Quantencomputer lässt sich das in $O(n)$ schritten lösen.
 
 \begin{problem}{Simon's Problem}
     \Input Funktion $f\colon\Sigma^n\to\Sigma^m$
@@ -233,7 +233,7 @@ Mit Simon's Algorithmus lässt sich das in $O(n)$ schritten lösen.
     \Output String s
 \end{problem}
 
-In \ref{fig:Simons-algorithmus} kann man sehen, dass sich der Schaltkreis dem vom Deutsch-Jozsa Algorithmus sehr ähnlich sieht.
+In Abbildung-\ref{fig:Simons-algorithmus} kann man sehen, dass der Schaltkreis dem vom Deutsch-Jozsa Algorithmus sehr ähnlich sieht.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\textwidth]{bilder/Simon.png}
@@ -257,7 +257,7 @@ Allerding lässt sich Simon's Problem mit probalistischen Algorithmen auch mit k
 
 \subsection{Grover's Algorithmus}
 Grover's Algorithmus ist in der Lage einen String in einem unstrukturierten Datensatz zu finden.
-Klassische Verfahren brauchen für n Strings, durchschnittlich $O(\frac{n}{2})$ Schritte um einen Eintrag zu finden, mit Grover's Algorithmus in das in nur $O(\sqrt{n})$ Schritten möglich.
+Klassische Verfahren brauchen für n Strings, durchschnittlich $O(\frac{n}{2})$ Schritte um einen Eintrag zu finden, mit Grover's Algorithmus in das in nur $O(\sqrt{N})$ Schritten möglich.
 Grover's Algorithmus lässt sich folgendermaßen definieren:
 \begin{problem}{Unstrukturierte Suche}
     \Input $f:\Sigma^n\to \Sigma$
@@ -327,8 +327,9 @@ Nun wird der Grover Operator t-mal angewendet:
 \end{equation}
 
 Dann erfolgt die Messung und mit hoher Wahrscheinlichkeit sollte der String gefunden worden sein, falls dieser existiert.
-für $t\approx\frac{\pi}{4}\sqrt{n}$ haben wir eine Laufzeitkomplexität von $O(\sqrt{n})$, es wird vermutet dass es unmöglich ist, dieses Problem in weniger als $O(\sqrt{n})$ Schritten zu lösen \cite{groverFastQuantumMechanical1996}.
-Für dieses Problem gibt es auch randomisierten Algorithmen Algorithmus, der dieses Problem in $O(\sqrt{n})$ lösen kann.
+für $t\approx\frac{\pi}{4}\sqrt{n}$ haben wir eine Laufzeitkomplexität von $O(\sqrt{N})$, es wird vermutet dass es unmöglich ist, dieses Problem in weniger als $O(\sqrt{N})$ Schritten zu lösen \cite{groverFastQuantumMechanical1996}.
+Dieses Problem lässt sich nicht mit randomisierten Algorithmen lösen, in $O(\sqrt{N})$.
+Dieser Algorithmus auf einem Quantencomputer, ist einem klassischen bei unstrukturierter Suche, überlegen.
 
 \subsection{Shor's Algorithmus}
 Wegen diesem Algorithmus besteht die Notwendigkeit der Post-Quanten-Kryptografie und folglich diese Bachelorarbeit.
