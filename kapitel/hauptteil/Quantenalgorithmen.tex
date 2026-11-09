@@ -331,9 +331,10 @@ für $t\approx\frac{\pi}{4}\sqrt{n}$ haben wir eine Laufzeitkomplexität von $O(
 Für dieses Problem gibt es auch randomisierten Algorithmen Algorithmus, der dieses Problem in $O(\sqrt{n})$ lösen kann.
 
 \subsection{Shor's Algorithmus}
-Wegen diesem Algorithmus gibt es die Notwendigkeit der Post-Quanten-Kryptografie und folglich diese Bachelorarbeit.
-Shor's Algorithmus ist ein hybrider Algorithmus, teile davon werden klassisch berechnet und ein rechenintensiver Teil wird auf einem Quantencomputer ausgeführt.
-Das unterliegende Problem ist die Periodenfindung, es ist möglich herauszufinden, ob eine Funktion periodisch ist oder nicht.
+Wegen diesem Algorithmus besteht die Notwendigkeit der Post-Quanten-Kryptografie und folglich diese Bachelorarbeit.
+Shor's Algorithmus ist ein hybrider Algorithmus, teile davon werden klassisch berechnet und der rechenintensive Teil wird auf einem Quantencomputer ausgeführt,
+nämlich das unterliegende Problem der Periodenfindung.
+Es ist möglich herauszufinden, ob eine Funktion periodisch ist oder nicht.
 Wenn mit der Periode $\omega$ eine Funktion gesucht wird, für:
 \begin{equation}
     f(x+\omega)=f(x)
@@ -341,69 +342,78 @@ Wenn mit der Periode $\omega$ eine Funktion gesucht wird, für:
 \end{equation}
 Dann kann shor's Algorithmus, effizient die Periode $\omega$ finden, wenn diese existiert.
 Aus der Gleichung-\ref{eq:shors-problem} macht sich die Ähnlichkeit zu Simon's Problem sichbar, tatsächlich war Simon's Algorithmus auch eine Inspiration für Shor's Algorithmus.
+
 Um grob zu verstehen, wie Shor's Algorithmus funktioniert, wird das finden von Primfaktoren am Bespiel von $N=15$, $p=3$ und $q=5$ gezeigt.
 Angenommen wir wissen nur das $N=15$ ist, p und q sind unbekannt.
-Als erstes soll eine Zahl x gefunden werden, für die gilt:
-\begin{align}
-    x^2 \equiv 1 \bmod N \\
-    x   \not\equiv \pm 1 \bmod N
-\end{align}
-
-Wenn diese Bedingungen erfüllt sind, dann wissen wir auch dass es $x^2-1 \equiv 0 \bmod N$ geben muss und dass dadurch $x^2-1$ ein vielfaches von N ist.
-Deshalb können wir schreiben:
+Als erstes wird eine Zahl $a$ mit $1<a<N$ gewählt. Wenn $gcd(a,N) > 1$ gilt, dann ist bereits ein nicht-trivialer Teiler von $N$ gefunden, ansonsten muss ein $r$ (hier für $\omega$) berechnet werden, für das gilt:
 \begin{equation}
-    x^2-1 = lN
+    a^r \equiv 1 \bmod N
 \end{equation}
-$l$ ist ein ganzzahliger Faktor von $N$.
+$r$ muss eine gerade Zahl sein und die Bedingung:
+\begin{equation}
+    a^{r/2} \not\equiv -1 \bmod N
+\end{equation}
+muss erfüllt sein.
+Dann liefern:
+\begin{align}
+    gcd\left(a^{r/2}-1, N\right)\\
+    gcd\left(a^{r/2}+1, N\right)
+\end{align}
+jeweils, nicht-triviale Teiler von N.
+
+Wenn diese Bedingungen erfüllt sind, dann wissen wir auch dass $a^2-1 \equiv 0 \bmod N$ dann gelten muss und dass dadurch $a^2-1$ ein vielfaches von N ist.
+Deshalb gibt es auch eine ganze Zahl $l$, für die gilt:
+\begin{equation}
+    a^r-1 = lN
+\end{equation}
+$l$ ist ein vielfaches von $N$.
 Nach der dritten Binomischen Formel, können wir es auch so umschreiben:
 \begin{equation}
-    (x-1)(x+1) = lN
+\left(a^{r/2}-1\right)\left(a^{r/2}+1\right)=lN.
 \end{equation}
 
-Das bedeutet, es muss $p=gcd(x^2-1, N)\ \text{und}\ q=gcd(x^2+1, N)$ gelten, oder umgekehrt, für $x$ gilt: $x=a^{r/2}$.
-
-Damit wir ein $x$ haben, für das dies gilt, müssen wir eine Zahl finden, für die der größte gemeinsame Teiler mit N, für $x^2-1\ \text{und}\ x^2+1$ gleich 1 ist.
-Dieser Schritt kann einfach auf einem klassischen Computer berechnet werden.
+Das bedeutet, es muss $p=gcd(a^2-1, N)\ \text{und}\ q=gcd(a^2+1, N)$ gelten, oder umgekehrt.
 
 Um den größten gemeinsamen Teiler zwischen zwei Zahlen, a und b, zu nennen, verwenden wir die Bezeichnung $\gcd(a,b)$.
 \begin{algorithm}[htbp]
 \caption{shor's Algorithmus}
 \label{alg:shors-algorithmus}
 \begin{algorithmic}[1]
-  \Require ungerade, ganzzahlige, Semiprimzahl $N$
+  \Require ungerade, zusammengesetzte Zahl $N$
   \Ensure Nichttrivialer Teiler von $N$
   \Repeat
-    \State $x \gets$ zufällige Zahl aus $\{2, \dots, N-1\}$
-    \State $d \gets \gcd(x, N)$
-    \If{$d > 1$}
+    \State $a \gets$ zufällige Zahl im Bereich $\{2, \dots, N-1\}$
+    \State $d \gets \gcd(a, N)$
+    \If{$d > 1$} \Comment{Falls nichttrivialer Teiler gefunden wurde, abgeschlossen}
       \State \Return $d$
     \EndIf
-    \State $r \gets$ Ordnung von $x$ modulo $N$ \Comment{Quantenteil}
-    \If{$r$ gerade \textbf{und} $x^{r/2} \not\equiv -1 \pmod{N}$}
-      \State \Return $\gcd(x^{r/2} - 1,\, N)$
+    \State $r \gets$ Ordnung von $a$ modulo $N$ \Comment{Quantenteil}
+    \If{$r$ gerade \textbf{und} $a^{r/2} \not\equiv -1 \pmod{N}$}
+      \State \Return $\gcd(a^{r/2} - 1,\, N)$
     \EndIf
-  \Until{Teiler gefunden}
+  \Until{$gcd\left(a^{r/2}-1,N\right)$}
 \end{algorithmic}
 \end{algorithm}
 
-Der schwierige und rechenintensive Teil des Algorithmus ist ist in Zeile 7, die Ordnung r zu finden, um dies effizient zu berechnen, ist ein Quantencomputer notwendig.
+Der schwierige und rechenintensive Teil des Algorithmus ist ist in Zeile 7, die Ordnung $r$ zu finden.
+Um dies effizient zu berechnen, ist ein Quantencomputer notwendig.
 Der Algorithmus zur Periodenfindung wird anschließend vereinfacht erklärt und warum das überhaupt auf die Findung der Ordnung angewandet werden kann.
+
 Wenn man sich die Reihe der berechnungen von $2^n \bmod 15$ anschaut, sieht man dass sich die Werte in gleichen Abständen wiederholen.
 \begin{align*}
-    2^0 \bmod 15 &= 1\\
+    2^0 \bmod 15 &= \boxed{1}\\
     2^1 \bmod 15 &= 2\\
     2^2 \bmod 15 &= 4\\
     2^3 \bmod 15 &= 8\\
-    2^4 \bmod 15 &= 1\\
+    2^4 \bmod 15 &= \boxed{1}\\
     2^5 \bmod 15 &= 2\\
     2^6 \bmod 15 &= 4\\
     2^7 \bmod 15 &= 8\\
+    2^8 \bmod 15 &= \boxed{1}\\
     &\vdots
 \end{align*}
 
-\newpage
-
-Als Funktionsgrafen lässt sich das deutlicher sehen.
+An einem Funktionsgrafen lässt sich das deutlicher sehen.
 
 \begin{figure}[htbp]
     \centering
@@ -425,14 +435,20 @@ Der Algorithmus zur Periodenfindung, lässt sich mit IBM's Qiskit, folgendermaß
 \end{figure}
 
 In Abbildung-\ref{fig:periodenfindung-schaltkreis} sind gleich einige Qubit Zustände zu sehen und Unitäre Operatoren, die vereinfacht der Reihe nach erklärt werden sollen.
-Die Qubits in $|0^m\rangle$ sind da um die Zustände der Operationen von $U$ zu speichern. Die eigentlichen Zustände werden in $|\psi\rangle$ berechnet, durch die Parallelisierung von Quantenprozessoren kann diese sehr große Möglichkeit an Zuständen berechnet werden.
-Um den Operator $U$ so anzupassen, dass es die Ordnung einer Funktion finden kann, wird die Funktion $M_a$ für $U$ verwendet, sie berechnet $M_a|x\rangle=|x*a\bmod N\rangle$, wobei $a$ ein beliebiger Wert $1\le a \le N-1$ ist, der zuvor festgelegt wurde (siehe Algorithmus-\ref{alg:shors-algorithmus}) und $x$ im Bereich zwischen $2^1$ und $2^{m-1}$ liegt.
+Die Qubits in $|0^m\rangle$ sind da für die Phasenabschätzung, durch die steigende Anzahl an verwendeten Qubits, steigt die genauigkeit der Phasenabschätzung.
+Die eigentlichen Zustände werden in $|\psi\rangle$ berechnet, durch die Parallelisierung von Quantenprozessoren kann eine sehr große Menge an Zuständen gleichzeitig berechnet werden.
+
+der Operator $U_a$ ist folgend definiert, dass dieser die modulare Berechnung ausführen kann:
+\begin{equation}
+    U_a|x\rangle=|ax \bmod N\rangle
+\end{equation}
+Für das Beispiel mit $a=2$ und $N=15$ wird die folge wie folgt berechnet:
 \begin{align*}
-    M_2^{1}|1\rangle&=|2\rangle\\
-    M_2^{2}|2\rangle&=|4\rangle\\
-    M_2^{3}|3\rangle&=|8\rangle\\
-    &\vdots\\
-    M_2^{r}|y\rangle&=|1\rangle\\
+U_2|1\rangle&=|2\rangle\\
+U_2|2\rangle&=|4\rangle\\
+U_2|4\rangle&=|8\rangle\\
+U_2|8\rangle&=|1\rangle\\
+&\vdots
 \end{align*}
-Im Anschluss wird eine Quanten Fourier Transformation durchgeführt, diese sorgt sozusagen dafür, dass der Abstand r, wirklich zu einer Periode wird und sich somit in der Schwingung sehen lässt.
-Nach der Fourier Transformation, lassen sich die Werte als Ausschlag im Messwert sehen.
+
+Im Anschluss wird eine Quanten-Fourier-Transformation auf die erste Register angwendet, durch diese lassen sich Messwerte erzeugen, aus denen sich die Periodenlänge $r$ bestimmen lässt.
