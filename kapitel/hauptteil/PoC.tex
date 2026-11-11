@@ -1,7 +1,11 @@
 \section{Proof-of-Concept: Performance testing der PQC-Algorithmen}
 \label{section-poc}
+Um zu zeigen, wie die PQC-Signaturalgorithmen im einem echten DNS-Server implementiert werden können, wie die Auswirkungen sind und was sich generell ändert, wurde ein Proof-of-Concept entwickelt.
+In diesem Proof-of-Concept wurden die standartisierten Signaturalgorithmen implementiert und weitere, die in der liboqs Bibliothek vorhanden sind, siehe Tabelle-\ref{fig:PQC-in-PoC}.
+Um die Signaturverfahren zu vergleichen ist ebenfalls ein benchmarking vorhanden.
+
 %Mit der liboqs Bibliothek wurde anhand von wiederholten Messungen ein statistischer Vergleich der Performance, verschiedener POC-Algorithmen, gemessen.
-Als Proof-of-Concept wurde mit der open-source Bibliothek liboqs (\url{https://github.com/open-quantum-safe/liboqs}) pqc in den DNS Server powerDNS (\url{https://github.com/PowerDNS/pdns}) integriert und dessen Performance gemessen.
+Zur durchführung des PoC wurde mit der open-source Bibliothek liboqs (\url{https://github.com/open-quantum-safe/liboqs}) pqc in den DNS Server powerDNS (\url{https://github.com/PowerDNS/pdns}) integriert und dessen Performance gemessen.
 Die Implementierung dieser des PoC und des benchmarkings wurde mit Hilfe des LLM Kimi-K3 geschrieben \cite{MoonshotaiKimiK3Hugging2026}.
 Das PoC ist ein Fork des powerDNS Servers.
 Es wurde eine neue Datei \enquote{oqssigners.cc} erstellt, sie bietet ein template für die PQC-Algorithmen.
