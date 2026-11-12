@@ -12,12 +12,12 @@
 \newcommand{\minusspin}{\ensuremath{\frac{1}{\sqrt{2}}(|0\rangle-|1\rangle)}}
 \newcommand{\plusspin}{\ensuremath{\frac{1}{\sqrt{2}}(|0\rangle+|1\rangle)}}
 
-\section{Quantenalgorithmen}
+\chapter{Quantenalgorithmen}
 \label{section-Quantenalgorithmen}
 Um einen Quantenalgorithmus zu entwickeln, sind fundamental neue logische Operatoren notwendig.
 Damit ein Algorithmus effizient ist, müssen die Prinzipen, Quantenverschränkung, interferenz und Dekohärenz, effektiv eingesetzt werden.
 
-\subsection{Logische Gatter und Komponenten}
+\section{Logische Gatter und Komponenten}
 Quantengatter können durch Matrizen als das mathematische Äquivalent dargestellt werden.
 Eine wichtige Maßnahme dazu ist, dass die Gatter eine Unitäre Matrix sind und das alle Amplituden a, $\sum_{i}{|a_i|}^2=1$.
 Ein wichtiges Gatter ist das Hadamard-Gatter, dieses wird an den Qubits $|0\rangle=\qubitnull$ und $|1\rangle=\qubiteins$ verdeutlicht:
@@ -43,7 +43,7 @@ Es können Anfragen an das Orakel gestellt werden und für jeweils dafür Antwor
 Das Orakel wird als unitary query-gate $U_f$ definiert, für das kann eine Anfrage mit $x$ gestellt werden und eine Antwort $f(x)$ erhalten werden.
 Ein Quantencomputer kann mehrere Eingabe auf einmal an das Orakel stellen, damit wird parallelität und Interferenz deutlich.
 
-\subsection{Deutsch-Algorithmus}
+\section{Deutsch-Algorithmus}
 Der Deutsch Algorithmus ist einer der ersten Quantenalgorithmen, der gezeigt hat, dass ein Quantencomputer theoretisch einen Vorteil gegenüber einem klassischen Computern haben kann.
 Dieser Algorithmus hat keinen praktischen nutzen, ist aber ein gutes Beispiel wie so ein Algorithmus funktionieren kann.
 Das Problem ist, wir haben eine Funktion f, die entweder konstant oder balanciert ist.
@@ -191,7 +191,7 @@ Der Vorteil ist realistisch nicht wahrnehmbar, aber es zeigt das es theoretisch 
 
 Dieser Algorithmus ist bereits kompliziert und abstrakt, er ist aber noch ziemlich simpel im Vergleich zu anderen, die folgend nicht mehr ausführlich erklärt werden.
 
-\subsection{Deutsch-Jozsa-Algorithmus}
+\section{Deutsch-Jozsa-Algorithmus}
 Der Unterschied zum Deutsch-Algorithmus ist, dass dieser eine Funktion bearbeiten kann die eine beliebige Anzahl an input Bits nehmen kann und ein Bit als Ausgabe hat.
 Der Algorithmus kann bei einer Funktion $f\colon\Sigma^n\to\Sigma$ für alle $n\ge1$, bestimmen ob diese balanciert oder konstant ist, mit exponentieller Beschleunigung im Gegensatz zu klassischen Algorithmen.
 \begin{problem}{Deutsch-Jozsa Problem}
@@ -223,7 +223,7 @@ Das Bernstein-Vazarani Problem kann wie folgt beschrieben werden:
 
 Dieses Problem lässt sich mit dem Schaltkreis des Deutsch-Jozsa Algorithmus lösen, darauf soll aber nicht weiter eingegangen werden.
 
-\subsection{Simon's Algorithmus}
+\section{Simon's Algorithmus}
 Dieser Algorithmus ist in der Lage bei einer Funktion f mit $f\colon\Sigma^n\to\Sigma^m$ einen String s zu finden.
 Mit einem klassischen Computer erfordert das in $O(2^{\frac{n}{2}})$ Orakelabfragen, einen bestimmten String zu finden, das ist im prinzip die Schwierigkeit eine kollision zu finden.
 Mit einem Quantencomputer lässt sich das in $O(n)$ schritten lösen.
@@ -256,7 +256,7 @@ Er war auch die Inspiration für Shor's Algorithmus zum effizienten Faktorisiere
 Simon's Algorithmus selbst lässt sich in wenigen spezifischen Fällen, lässt sich dieser Algorithmus als Angriff aus Symmetrische Kryptoverfahren einsetzen.
 Allerding lässt sich Simon's Problem mit probalistischen Algorithmen auch mit klassischen Computern in wenigen Schritten lösen \cite{SimonsAlgorithm,aumassonSeriousCryptographyPractical2018,chenComplexityNISQ2023}.
 
-\subsection{Grover's Algorithmus}
+\section{Grover's Algorithmus}
 Grover's Algorithmus ist in der Lage einen String in einem unstrukturierten Datensatz zu finden.
 Klassische Verfahren brauchen für n Strings, durchschnittlich $O(\frac{n}{2})$ Schritte um einen Eintrag zu finden, mit Grover's Algorithmus in das in nur $O(\sqrt{N})$ Schritten möglich.
 Grover's Algorithmus lässt sich folgendermaßen definieren:
@@ -309,7 +309,7 @@ Die Schritte des Grover's Algorithmus kann wie folgt beschreiben:
 
 Für t wird $\frac{\pi}{4}\sqrt{n}$ verwendet, warum es diese Anzahl ist, soll nicht darauf eingegangen werden.
 
-\subsubsection{Beispielhafte Anwendung}
+\subsection{Beispielhafte Anwendung}
 Abschließend ein Beispiel wie der Algorithmus schrittweise angewendet wird.
 
 Es werden in einem Anfangszustand, n-Qubits als 0 initilisiert.
@@ -332,7 +332,7 @@ für $t\approx\frac{\pi}{4}\sqrt{n}$ haben wir eine Laufzeitkomplexität von $O(
 Dieses Problem lässt sich nicht mit randomisierten Algorithmen lösen, in $O(\sqrt{N})$.
 Dieser Algorithmus auf einem Quantencomputer, ist einem klassischen bei unstrukturierter Suche, überlegen.
 
-\subsection{Shor's Algorithmus}
+\section{Shor's Algorithmus}
 Wegen diesem Algorithmus besteht die Notwendigkeit der Post-Quanten-Kryptografie und folglich diese Bachelorarbeit.
 Shor's Algorithmus ist ein hybrider Algorithmus, teile davon werden klassisch berechnet und der rechenintensive Teil wird auf einem Quantencomputer ausgeführt,
 nämlich das unterliegende Problem der Periodenfindung.

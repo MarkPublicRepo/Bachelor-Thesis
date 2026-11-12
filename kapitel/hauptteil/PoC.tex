@@ -1,4 +1,4 @@
-\section{Proof-of-Concept: Performance testing der PQC-Algorithmen}
+\chapter{Proof-of-Concept: Performance testing der PQC-Algorithmen}
 \label{section-poc}
 Um zu zeigen, wie die PQC-Signaturalgorithmen im einem echten DNS-Server implementiert werden können, wie die Auswirkungen sind und was sich generell ändert, wurde ein Proof-of-Concept entwickelt.
 In diesem Proof-of-Concept wurden die standartisierten Signaturalgorithmen implementiert und weitere, die in der liboqs Bibliothek vorhanden sind, siehe Tabelle-\ref{fig:PQC-in-PoC}.
@@ -17,7 +17,7 @@ Es wurden keine angepassten NSEC-Versionen implementiert, das PoC wurde auf die 
 Die Signaturverfahren von DNSSEC wurden um folgende erweitert:
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|>{\centering\arraybackslash}p{3.5cm}|c|}
         \hline
         Algorithmus & ID & Security (Bit) & Länge öffentlicher Schlüssel (Byte)& Länge Signatur (Byte)\\
         \hline
@@ -52,7 +52,7 @@ Das PoC, das benchmarking und die Auswertung des Benchmarking sind auf Github un
     \item https://github.com/MarkPublicRepo/powerDNS-PQC-Benchmark-auswertung.git \textbf{Benchmarking Auswertung}
 \end{itemize}
 
-\subsection{Benchmarking Auswertung}
+\section{Benchmarking Auswertung}
 
 Durch benchmarking der einzelnen Algorithmen, eines Ressource Record, für jeweils keypair, signieren und verifizieren für 100 iterationen, haben sich folgende Messwerte ergeben.
 Zu beachten ist, dass wegen der starken Unterschiede in den Messergebnissen, für jede Auswertung eine logarithmische Skala erforderlich ist.

@@ -3,7 +3,7 @@
 \newcommand{\probalpha}{{\left|\alpha\right|}^2}
 \newcommand{\probbeta}{{\left|\beta\right|}^2}
 
-\section{Quantencomputer}
+\chapter{Quantencomputer}
 \label{section-Quantencomputer}
 
 Quantencomputer werden häufig missverstanden als eine Art von Supercomputern, die in der Lage sind
@@ -24,6 +24,8 @@ Zur Zeit dieser Arbeit, stecken Quantencomputer noch in ihren Kinderschuhen.
 Es gibt bereits Fortschritte (IBM quantum error-correction code in 2024 \cite{LandmarkIBMError,smalleyWasIstQuantencomputing2025}) aber noch ist ein allgemeiner praktischer Einsatz von Quantencomputern noch nicht in Sicht.
 Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day.\cite{schmehQuantencomputer2026}
 
+\newpage
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{bilder/quantencomputer.png}
@@ -33,13 +35,13 @@ Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird al
 
 In Abbildung-\ref{fig:quantencomputer} ist ein analoger 10-qubit Quantencomputer für 8.5mio € zu sehen, der durch die EU und Spanien finanziert wurde.
 
-\subsection{Prinzipien von Quantencomputern}
+\section{Prinzipien von Quantencomputern}
 Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition, Quantenverschränkung, Interferenz und Dekohärenz.
 Um einen Quantencomputer zu betreiben, muss der Prozessor in Themperaturen nahe dem absoluten Nullpunkt betrieben werden.
 Der Prozessor, welcher das Herz des Computers ist, ist nur eine kleiner Chip, der Rest der Maschine ist vor allem dazu da, die richtigen Bedingungen zu gewährleisten.
 Andere Technologien als Photonen, wie der Ansatz von Qubits, basierend auf Ionenfallen, biergt die Hoffnung dass Qubits auch bei Zimmertemperaturen betrieben werden können. \cite{pospiechQuantencomputerCoGrundideen2021}
 
-\subsubsection{Qubits}
+\subsection{Qubits}
 Ein klassischer Computer arbeitet mit Bits.
 Bits können einen festen Wert von null oder eins annehmen.
 Ein Qubit andererseits, kann mit einer bestimmten Wahrscheinlichkeit, Zustände von 0 oder 1 annehmen.
@@ -120,7 +122,7 @@ dadurch kann man auch ein etwas \enquote{intuitiveres} Gefühl vom Verhalten von
 
 \newpage
 
-\subsubsection{Überlagerung/Superposition}
+\subsection{Überlagerung/Superposition}
 Wie das anschauliche Beispiel von Schrödingers Katze nahelegt, man kann nicht wissen ob die Katze lebendig oder tot ist,
 solange man nicht nachschaut, das gleiche Prinzip gilt auch bei Qubits.
 Qubits können einen Zustand als Teilchen oder als Welle haben, solange man diese nicht observiert, haben sie eine Wahrscheinlichkeit eine Welle zu sein und die Gegenwahrscheinlichkeit für ein Teilchen.
@@ -146,7 +148,7 @@ Der Zustand eines n-Qubit Quantencomputer lässt sich wie in Gleichung-\ref{eq:n
 mit $c\in\mathbb{C}$ als Amplitude und $k\ =\ [0, 2^n-1]$ in Binärdarstellung der Qubits.
 Ein n-Qubit Quantencomputer wie in Gleichung-\ref{eq:n-qubit} erzeugt Wellenfunktionen in einem $2^n$-dimensionalem komplexen Hilbertraum\cite{QuantumComputationComplex}.
 
-\subsubsection{Quantenverschränkung}
+\subsection{Quantenverschränkung}
 Ein Qubit alleine ist nicht sonderlich nützlich, damit ein Quantencomputer sein volles Potenzial entfalten kann.
 Um das volle Potenzial von Quantencomputern zu entfalten, sind mehrere Qubits nötig und dabei ist die Quantenverschränkung unerlässlich.
 Wenn zwei (oder mehrere) Qubits verschränkt sind, bedeutet dass eine Änderung des einen, auch eine direkte Auswirkung auf das Andere hat.
@@ -154,15 +156,18 @@ Wenn zwei (oder mehrere) Qubits verschränkt sind, bedeutet dass eine Änderung 
 Ein n-Qubit Quantencomputer wie durch Gleichung-\ref{eq:n-qubit} beschrieben, ist nur wirklich nützlich wenn die Amplituden auch voneinander abhängig sind.
 Wenn sich die Amplitude (damit auch die Wahrscheinlichkeit) eines der n-Qubits ändert, beinflusst dies auch die Anderen.
 
-\subsubsection{Interferenz}
+\subsection{Interferenz}
 Im Zusammenspiel mit Superposition und Quantenverschränkung, macht dieses Prinzip Quantencomputer zu extrem Leistungsfähigen Rechenmaschinen.
 Die Rechenpfade die entstehen, lassen sich als komplexe Amplituden ausdrücken, die sich wie Wellen verhalten.
 Diese Amplituden können sich gegenseitig verstärken (konstruktive Interferenz) oder gegenseitig abschwächen (destruktive Interferenz).
 Damit können sich die Rechenpfade selbst auf den richtigen Weg lenken, die Wahrscheinlichkeit auf einen richtigen Rechenweg wird verstärkt \cite{molfettaQuantumComputingNew2026}.
 
-\subsubsection{Dekohärenz}
+\subsection{Dekohärenz}
 Qubits sind sehr instabil, sie zerfallen leicht aus einer Superposition in einen feste Zustand.
 Dekohärenz ist der Prozess in dem ein System aus einem Quantenzustand in einen nicht-Quantenzustand zerfällt.
 Damit Quantencomputer richtig funktionieren, ist es wünschenswert, die Dekohärenz möglichst zu minimieren.
 Es kann aber auch beabsichtigt sein, z.B. wenn die Messung nach der Manipulation erfolgt, dadurch verfallen die Qubits in einen festen Zustand,
 der aussagekräftig für die Berechnung ist \cite{aumassonSeriousCryptographyPractical2018}.
+
+\section{Komplexitätsklassen von Quantencomputern}
+hier steht der teil aus der zusammenfassung von BPP, NISQ und BQP.

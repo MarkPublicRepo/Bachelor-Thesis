@@ -1,4 +1,4 @@
-\section{DNS und DNSSEC}
+\chapter{DNS und DNSSEC}
 \label{section-DNSSEC}
 %Domain Name System oder kurz DNS ist ein dienst, der es ermöglicht über Datenbanken einen Host Namen in eine IP Adresse aufzulösen und umgekehrt.
 %Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen.
@@ -91,7 +91,7 @@ von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit un
 
 Wie aus Abbildung-\ref{fig:rrsig} anhand des DNS Code 13 entnehmen kann wird, in diesem Paket, ECDSA P-256 mit SHA-256 als Signatur Algorithmus verwendet.
 
-\subsection{Upgrade auf PQC}
+\section{Upgrade auf PQC}
 Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
 Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in Abbildung-\ref{fig:NIST-PQC-Standarts}, die aus Runde 4 standartisierten NIST-Standarts für Digitale Signaturen und deren Varianten.
 \begin{table}[htbp]

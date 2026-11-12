@@ -1,4 +1,4 @@
-\section{Post-Quanten-Kryptografie Signatur Algorithmen}
+\chapter{Post-Quanten-Kryptografie Signatur Algorithmen}
 \label{section-Post-Quanten-Kryptografie-algorithmen}
 Durch die mögliche Bedrohung von Quantencomputern in der Zukunft, werden neue Kryptographische Verfahren standartisiert.
 Das NIST hat dabei fünf Sicherheitsstufen definiert als Referenz welches Niveau für die Algorithmen zu erbringen ist.
@@ -25,14 +25,14 @@ Die Sicherheitsstufen und deren Referenz sind in Abbildung-\ref{fig:NIST-Sicherh
     \label{fig:NIST-Sicherheitslevel}
 \end{table}
 
-\subsection{Der Umstieg von derzeitigen Digitalen Signaturen zu PQC}
+\section{Der Umstieg von derzeitigen Digitalen Signaturen zu PQC}
 Die heutigen Digitalen Signaturen ((EC)DSA, (EC)ElGamal) basieren auf dem diskreten Logarithmus Problem oder bei RSA auf der schwierigkeit des faktorisierens großer Semi-Primzahlen in dessen Primfaktoren.
 RSA hat den Vorteil, dass die verschlüsselung und die Signatur sich nicht stark von einander unterscheiden.\cite{paarKryptografieVerstaendlichLehrbuch2016}
 
 Die Verfahren aus dem NIST-Auswahlprozess haben längere Signaturen und nicht so einfach wie RSA.
 Der Signatur- und Verschlüsselungsalgorithmus unterscheiden sich stärker voneinander. Für DNSSEC sind nur die Signaturen interessant.
 
-\subsection{NIST Auswahlprozess für Digitale Signaturen}
+\section{NIST Auswahlprozess für Digitale Signaturen}
 Zur Zeit dieser Arbeit befindet sich der NIST Auswahlprozess in der 4-ten Runde, nach dem Stand vom 11.März.2025.
 Als digitalen signatur Standart zugelassen sind momentan CRYSTALS-Dilithium (ML-DSA), FALCON (FN-DSA) und SPHINCS$^+$ (SLH-DSA) \cite{alagicStatusReportFourth2025}.
 Zusätzliche Kandidaten für Digitale Signatur Schemas, die noch standartisiert werden sollen, sind noch in der evalution.
@@ -76,8 +76,8 @@ Intern funktioniert dieses Verfahren auch mit Merkle-Trees und dem HORST-few-tim
 dabei werden auch Schlüssel zufällig gewählt.
 Hashbasierte Verfahren haben den Vorteil dass sie, wie in Abbildung-\ref{fig:NIST-PQC-Standarts} zu sehen ist, kurze öffentliche Schlüssel, aber dafür sehr lange Signaturlängen haben \cite{soniHardwareArchitecturesPostQuantum2021,aumassonSeriousCryptographyPractical2018,bernsteinSPHINCSSignatureFramework2019,fussKryptographie2025}.
 
-\subsection{weitere PQC-Signatur-Verfahren}
-\subsubsection{Rainbow}
+\section{weitere PQC-Signatur-Verfahren}
+\subsection{Rainbow}
 Rainbow ist ein multivariates Polynomiales Kryptosystem, welches eine Generalisierung des Oil and Vinegar scheme (UOV) ist.
 Das unterliegende Problem ist, dass ein multivariates Gleichungssystem von Polynomen über einem endlichen Feld ein NP-schweres Problem ist.
 Ein Gleichungssystem wie das folgende (aus serious cryptography\cite{aumassonSeriousCryptographyPractical2018}) mit vier unbekannten ist gegeben, um es zu lösen müssen alle vier unbekannten $x_1,x_2,x_3,x_4$ gefunden werden.
@@ -93,7 +93,7 @@ Das Rainbow kryptosystem wird beschrieben als eine mehrschichtige oil-and-vinega
 Rainbow wurde im Laufe des NIST-Verfahrens vollständig gebrochen und soll nicht mehr verwendet werden.
 Es wurde gezeigt, dass sich der private Schlüssel durchschnittlich innerhalb 53 Stunden berechnen lässt \cite{beullensBreakingRainbowTakes2022}.
 
-\subsubsection{HAWK}
+\subsection{HAWK}
 Ebenfalls ein Algorithmus der auf dem SIS-Problem aufbaut, genauer gesagt dem Gitter isomorphismus problem, der Algorithmus basiert sogar auf FALCON.
 Hawk sein privater Schlüssel ist selbst eine Matrix und es nutzt als Signatur und zur Verifikation zusätzlich einen salt \cite{saarinenPostQuantumCryptography15th2024}.
 Das Unternehmen Anthropic hat mit einer angepassten version ihres large language models \enquote{Mythos 6} (vor offiziellem Release) einen Angriff auf dieses Kryptosystem gebaut, welches innerhalb von 60 Stunden eine signifikaten Verbesserung des bisher besten Angriffs gefunden hat.
@@ -102,36 +102,36 @@ Nach 60 Stunden und Kosten von 100.000\$ in Token, hat das System dessen Ergebni
 Die bisher angenommene Sicherheit von HAWK-256 von $2^{64}$ lies sich auf $2^{38}$ reduzieren, das Team von HAWK spricht von einer ungefähren halbierung der Blockgröße um einen equivalenten privaten Schlüssel zu berechnen.
 Nach der entdeckung des Angriffs durch Anthropic wurde HAWK vom NIST Auswahlprozess zurückgezogen, weil HAWK kein konkurent mehr ist für derzeitige Gitter-basierte Kryptosysteme, trotz dass Anthropic diesen Angriff als \enquote{unpraktisch für größere Schlüssel} beschrieben hat \cite{DiscoveringCryptographicWeaknesses2026,Hawk,straznickasHAWKnKeyRecoveryReduces}.
 
-\subsubsection{SIKE}
+\subsection{SIKE}
 Basierend auf Elliptischen Kurven und angenommen Quantensicher zu sein, wurde dieses Verfahren dem NIST Auswahlverfahren eingereicht.
 Nach kryptoanalytischer Betrachtung haben sich doch Schwächen gezeigt, sogar so fatal, dass einige Angriffe es ermöglichen das Verfahren innerhalb weniger Minuten komplett zu brechen.
 Das Verfahren in irgendeiner Sicherheitsrelevanten Sicht zu verwenden ist absolut ausgeschlossen \cite{cepelewiczPostQuantumCryptographyScheme2022,SIKESupersingularIsogeny}.
 
-\subsubsection{SNOVA}
+\subsection{SNOVA}
 Ein Multivariates Kryptosystem, welches auf dem Unbalanced Oil and Vinegar (UOV) Schema aufbaut.
 Dadurch dass es über nicht-kommutativen Ringen rechnet, soll es im gegensatz zu OUV hat es kürzere Schlüssellängen haben effizienter rechnen.
 SNOVA's Schlüssellängen für den öffentlichen Schlüssel und für die Signatur sind sogar kürzer als die von FALCON \cite{SNOVAPostQuantumDigital,saarinenPostQuantumCryptography15th2024}.
 
-\subsubsection{UOV}
+\subsection{UOV}
 Das älteste der multivariaten Verfahren aus dem NIST Auswahlprozess und die Basis für viele Verfahren dieser Art, wie SNOVA, MAYO oder Rainbow.
 Die Falltür Information dieses Verfahren basiert auf einem linearen m-dimensionalem untervektorraum, welcher als oil-space bezeichnet wird.
 Der öffentliche Schlüssel selbst besteht aus m-Matrizen \cite{saarinenPostQuantumCryptography15th2024}.
 Der öffentliche Schlüssel ist riesig mit 412kB und unbrauchbar für DNSSEC.
 
-\subsubsection{CROSS}
+\subsection{CROSS}
 Codes and Restricted Objects Signature Scheme (CROSS) baut auf Zero-Knowledge (ZK) Beweisen auf.
 Durch eine Fiat-Shamir Transformation auf einen nicht-interaktiven ZK-Beweis.
 Das unterliegende Problem ist das NP-vollständige \enquote{restricted syn-drome decoding problem}.
 Es ist ein code-basiertes Sicherheitssystem, welches intern Merkle-Trees verwendet \cite{baldiAlgorithmSpecificationsSupporting2025,saarinenPostQuantumCryptography15th2024}.
 Es wurde entworfen um schnell zu sein, für DNSSEC ist es nicht optimal durch große Schlüsselgrößen.
 
-\subsubsection{MQOM}
+\subsection{MQOM}
 MQ on my Mind (MQOM).
 Wie schon im Namen steht, ist es ein Verfahren welches auf der Schwierigkeit von multivariaten Gleichungssystemen (MQ) aufbaut.
 Es baut auf Zero-Knowledge Beweisen auf und wird durch die Fiat-Shamir Transformation zu einem digitalen Signatur Verfahren umgewandelt.
 Im ist es ein MQ-Verfahren, im Gegensatz zu CROSS, welches ein code-basiertes Verfahren ist \cite{benadjilaMQMyMind2023}.
 CROSS und MQOM unterscheiden sich signifikant, auch wenn sie beiden mit ZK und Fiat-Shamir funktionieren.
 
-\subsubsection{MAYO}
+\subsection{MAYO}
 Ein Verfahren welches ebenfalls auf UOV aufbaut.
 Es wurde entworfen als ein multivariates Kryptosystem, welches nach UOV funktioniert, aber kürzere Schlüssellängen hat für den öffentlichen Schlüssel und die Signatur \cite{teamMAYO}.
