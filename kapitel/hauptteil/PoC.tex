@@ -148,3 +148,36 @@ FALCON512 ist somit nicht nur das Verfahren, welches die geringe Performance ein
 Mit vergleichweise kurzen Schlüssel- und Signaturlängen, ist es eine möglicherweise eine interessante alternative zu klassische Verfahren.
 
 \textbf{SNOVAIK} hat im Vergleich zu FALCON512, geringe Laufzeiten aber dafür mehr Abweichung, bis auf Schlüsselerzeugung, was aber für DNSSEC nicht so wichtig ist.
+
+
+\subsection{Erkenntnisse des PoC}
+Durch die Berücksichtigung von Schlüssel- und Signaturlängen, sowie Laufzeit und abweichungen, sind die PQC-Signaturalgorithmen aus der libqos bibliothek die noch in Frage kommen, bezüglich Median und Standartabweichung:
+\begin{enumerate}
+    \item ML-DSA44
+    \item FALCON512
+    \item MAYO1
+    \item SNOVAIK
+\end{enumerate}
+Das BSI empfiehlt als PQC-Signatur alternative für DNSSEC, ML-DSA im Merkle-Tree-Ladder Modus zu nutzen.
+Durch die Auswertung des PoC hat sich ergeben, dass ML-DSA nicht die performanteste Alternative ist.
+ML-DSA schlägt zwar SNOVAIK, manchmal in der Signaturerstellung und dessen öffentlicher Schlüssel ist 144 Byte kürzer als der von MAYO1, ansonsten hat es aber die schlechtesten Werte in jedem Fall.
+Zusätzlich ist durch ML-DSA44 auch ein TCP-fallback notwendig, siehe Abbildung-\ref{fig:rrsig-ml-dsa44}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{bilder/ml-dsa.png}
+    \caption{Screenshot, Wireshark captures eines RRSIG-Paketes mit ML-DSA44 Signatur}
+    \label{fig:rrsig-ml-dsa44}
+\end{figure}
+
+Für MAYO1, FALCON512 und SNOVAIK, ist immer noch UDP möglich.
+
+Da NIST der Merkle-Tree-Ladder Modus empfiehlt, wäre es in diesem Modus nur notwendig, hin- und wieder die Ladder selbst zu signieren, ansonsten wird gezieltes hashen verwendet.
+Wenn nur hin- und wieder die teure PQC-Signatur eingesetzt werden muss, macht das insgesamt keinen großen Unterschied welcher Algorithmus verwendet wird.
+Nach diesem Prinzip könnte sogar der SHA-DSA eingesetzt werden, sollte ML-DSA kryptoanalytische Schwächen aufweisen sollte.
+
+Dennoch zeigen MAYO1, SNOVAIK und FALCON512 bessere performance und könnte alle weiterhin mit UDP-only betrieben werden.
+Warum NIST diesen dennoch bevorzugt, könnte daran liegen dass FALCON durch dessen komplexe implementierung und häufige Verwendung von Zufallszahlengeneratoren,
+eine hohe Wahrscheinlichkeit für implementierungsschwächen zeigt.
+Multivariate Verfahren wie SNOVA und MAYO haben oftmals gezeigt, trotz annahme sicher zu sein, signifikante Schwächen zu haben, wie z.B. das Verfahren \enquote{Rainbow},
+welches im Laufe des NIST Prozess vollständig gebrochen wurde \cite{beullensBreakingRainbowTakes2022}.

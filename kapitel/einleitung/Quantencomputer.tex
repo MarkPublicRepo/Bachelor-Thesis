@@ -170,4 +170,85 @@ Es kann aber auch beabsichtigt sein, z.B. wenn die Messung nach der Manipulation
 der aussagekräftig für die Berechnung ist \cite{aumassonSeriousCryptographyPractical2018}.
 
 \section{Komplexitätsklassen von Quantencomputern}
-hier steht der teil aus der zusammenfassung von BPP, NISQ und BQP.
+Aus der Sicht der Theoretischen Informatik, bezeichnet man die Komplexitätsklasse der derzeitigen Quantencomputer als NISQ.
+NISQ beschreibt eine Komplexitätsklasse von Problemen, die mit klassischen Computern, mit Zugang zu rauschbehafteten Quanten-schaltkreisen gelöst werden können.
+NISQ Computer sind z.B. in der Lage, angepasste Probleme von Simon's Problem zu lösen, sie sind aber nicht in der Lage, Beschleunigungen bei unstrukturierter Suche wie Grover's Algorithmus zu erreichen.
+Wenn man die Komplexitätsklassen vergleicht wie in Abbildung-\ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen.
+Man definiert drei Komplexitätsklassen:
+\begin{itemize}
+    \item BPP (bounded error probabilistic polynomial time)\\
+    Die Klasse der Entscheidungsprobleme, für die es einen randomisierten Algorithmus gibt, der unter begrenzter Fehlerwahrscheinlichkeit, das Entscheidungsprobleme in polynomieller Zeit lösen kann.
+    Ein klassischer Computer mit Zufall kann diese Probleme lösen.
+    \item NISQ (noisy intermediate-scale quantum)\\
+    Die Klasse der Entscheidungsprobleme, die mit klassichen Computern mit Zugriff auf einen rauschbehafteten Quantencomputern, in polynomieller Zeit, gelöst werden können.
+    \item BQP (bounded error quantum polynomial time)\\
+    Die Klasse der Entscheidungsprobleme die, mit einem Quantenalgorithmus, auf einem idealen Quantencomputer, unter begrenzter Fehlerwahrscheinlichkeit, in polynomieller Zeit gelöst werden können \cite{homeisterQuantumComputingVerstehen2015}.
+\end{itemize}
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+  % BQP (äußerste Menge)
+  \draw[fill=blue!8, thick] (0,0) ellipse (5cm and 3.2cm);
+  \node[font=\large] at (0,2.5) {BQP};
+
+  % NISQ
+  \draw[fill=blue!20, thick] (0,-0.5) ellipse (3.5cm and 2.1cm);
+  \node[font=\large] at (0,0.9) {NISQ};
+
+  % BPP (innerste Menge)
+  \draw[fill=blue!35, thick] (0,-1.0) ellipse (1.9cm and 1.0cm);
+  \node[font=\large] at (0,-1.0) {BPP};
+\end{tikzpicture}
+\caption{Verhältnis der Komplexitätsklassen BPP, NISQ und BQP. Eigene Darstellung.}
+\label{fig:bpp-nisq-bqp}
+\end{figure}
+Es ist nicht bekannt, welche Probleme alle in NISQ liegen, es ist allerdings bekannt, dass nicht für alle Probleme eine Quantenbeschleunigung erreicht werden kann.
+Manche Probleme sind effizienter auf klassischen Computern zu lösen, als auf rauschbehafteten Quantencomputern.
+Keine der Fragestellungen von $\mathrm{BPP} \subsetneq \mathrm{NISQ}$, $\mathrm{NISQ} \subsetneq \mathrm{BQP}$ und $\mathrm{BPP} \subsetneq \mathrm{BQP}$ ist bewiesen.\\
+Bekannt ist, dass gilt $\mathrm{BPP} \subseteq \mathrm{NISQ}$, weil NISQ einen klassischen Computer vollständig beinhaltet und eine NISQ Schnittstelle hat.
+Ein Fehlerkorrigierender Quantencomputer muss auch in der Lage sein, einen rauschbehafteten Quantencomputer zu simulieren, deshalb, $\mathrm{NISQ} \subseteq \mathrm{BQP}$.
+Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$, siehe Abbildung-\ref{fig:bpp-nisq-bqp}.
+
+Zudem ist bewiesen, dass NISQ Computer nicht eine Beschleunigung wie Grover's Algorithmus erreichen können \cite{chenComplexityNISQ2023}.
+
+\section{Entwicklungsstand Quantencomputer}
+Laut IBM soll die Quantencomputer-Branche bis 2035 schätzungsweise ein Volumen von 1,3 Billionen US-Dollar erreichen \cite{smalleyWasIstQuantencomputing2025}.
+Michio Kaku beschreibt das kommen der Quantencomputer als ein potentiell größeres historisches Ergeignis als die Einführung der digitalen Computer \cite{bigthinkMichioKakuQuantum2023}.
+Der aktuelle Entwicklungsstand eines kryptografisch relevanten Quantencomputer ist nach BSI immer noch auf dem Stand des NISQ-Zeitalters.
+NISQ ist eine Komplexitätsklasse von Quantenalgorithmen \cite{chenComplexityNISQ2023}.
+Die Quantencomputer welche innerhalb dieser Klasse rechnen, besitzen eine mittlere Anzahl an Qubits und sind nicht fehler korrigierend.
+Längere Rechenzeiten führen zu fehlern in Berechnungen.
+Die Entwicklung derzeitige Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in der Grafik von Abbildung-\ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{bilder/Bewertungsmodell_Quantencomputer_Algorithmen.png}
+    \caption{Entwicklungsstand Quantencomputer nach BSI \cite{EntwicklungsstandQuantencomputer}}
+    \label{fig:EntwicklungsstandQuantencomputer}
+\end{figure}
+
+Zur Zeitspanne bis zu einem Kryptoanalytisch relevanten Quantencomputer schreibt das BSI, dass Zukunftsprognosen oft genau 20 Jahre vor Eintritt vorausgesagt werden und durch neue Entwicklungen im Bereich der qLDPC-Codes könnte sich der Bereich sogar noch weiter,
+bis auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
+
+Wenn im optimistischen Fall, von 10 Jahre bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
+Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte.
+Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden,
+also collect-now-forge-later tritt hier nicht ein.
+
+Das Unternehmen Gardner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
+\begin{figure}[htbp]
+\centering
+\resizebox{0.9\textwidth}{!}{\qcTacho}
+\caption{Geschäftlicher Nutzen von Quantencomputing über die Zeit. Eigene Darstellung nach \cite{WhatCIOsNeed}.}
+\label{fig:qc-nutzen}
+\end{figure}
+
+In Abbildung-\ref{fig:qc-nutzen} werden die Schritte der Entwicklung von Quantencomputern (nach Gardner) bildlich dargestellt.
+Momentan haben Quantencomputer nur einen sehr eingeschränkten Nutzen.
+In nur wenigen, angepassten Fällen haben sie einen Vorteil gegenüber klassichen Computern, wobei sich das hinsichtlich fortschritten in der Fehlerkorrektur bald ändern kann.
+
+
+Diese Prognosen sind sehr optimistisch hinsichtlich der Entwicklung.
+Kritiker hingegen sprechen auch davon, dass es wahrscheinlich ist, dass es nie Quantencomputer geben wird.
+Um einen Kryptoanalytisch relevanten Quantencomputer zu bauen, der tatsächlich in der Lage ist, Chiffren wie RSA oder ECC-Varianten zu knacken,
+wären bis zu millionen von Qubits notwendig, ob es jemals einen Fehlerkorrigierenden Quantencomputer von dieser größe geben wird, ist noch höchst spekulativ \cite{aumassonSeriousCryptographyPractical2018}.

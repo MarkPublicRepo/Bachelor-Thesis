@@ -135,3 +135,16 @@ CROSS und MQOM unterscheiden sich signifikant, auch wenn sie beiden mit ZK und F
 \subsection{MAYO}
 Ein Verfahren welches ebenfalls auf UOV aufbaut.
 Es wurde entworfen als ein multivariates Kryptosystem, welches nach UOV funktioniert, aber kürzere Schlüssellängen hat für den öffentlichen Schlüssel und die Signatur \cite{teamMAYO}.
+
+\section{Quantenkryptografie}
+Nicht zu verwechseln mit der Post-Quanten-Kryptografie, über die bisher geschrieben wurde.
+Die Quantenkryptografie beschäftigt sich damit wie man die Gesetze der Quantenphysik benutzen kann um damit sichere Kryptografie zu bauen.
+Es ist ein besser erforschtes Feld als Quantencomputer an sich.
+Der BB84-Quantenschlüsselaustausch macht sich das Prinzip zunutze, dass man Photonen nicht observieren kann, ohne sie zu ändern.
+Was bei Qubits dazu führt dass man sie nicht verändern kann, ist hier die Sicherheit.
+Eine Nachricht wird über Photonen übertragen und wenn eine dritte Person diese Nachricht mitschneidet, wird sie verändert und es ist somit aufgefallen.
+Statt das die Sicherheit auf der Schwierigkeit eines mathematischen Problems basiert, basiert die Sicherheit hier auf den Regeln der Quantenmechanik \cite{schmehQuantencomputer2026,ahonenEntanglementEnhancedQuantumKey2009}.
+Wegen einigen Schwächen wird aber von der NSA, von der Nutzung dieser Verfahren abgeraten, allerding entwickelt NIST dieses Feld durchgehend weiter und versucht weiterhin Rauschen zu redizieren und somit die Übertragung verlässlicher zu machen \cite{WhatQuantumCryptography2025}.
+Eventuell könnte sich dieses Feld in der Zukunft noch in der Asymmetrischen Kryptografie etablieren.
+Dadurch dass diese Verfahren auch nicht durch Angriffe Quantencomputern (wenn sicher) gebrochen werden können, haben sie auch eine Schnittmenge mit der Post-Quanten-Kryptografie.
+Für DNSSEC wäre allerding etwas wie \enquote{Generalized Quantum-assisted Digital Signature (GQaDS)} interessant, da digitale Signaturen benötigt werden \cite{tarableGeneralizedQuantumassistedDigital2024}.
