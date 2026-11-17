@@ -12,15 +12,15 @@ Ebenso hört man die auch, dass ein Quantencomputer im Gegensatz zu einem tradit
 nicht sequenziell rechnet, also alles nacheinander, aber sehr schnell, sondern alle berechnungen parallel auszuführen kann.
 Das ist schon eher korrekt, aber auch noch ungenau.
 
-Quantencomputer sind keine neuen Computer, sie können theoretisch manche Ressourcenlastingen Berechnungen effizienter ausführen, als es ein traditioneller Computer könnte.
-Sie sind aber in ihrer Architektur, fundamental neue Rechenmodelle.
-Ein gewöhnlicher Computer funktioniert mit Bits und Bitmanipulationen durch logische Gatter, wie AND, OR, NOT, NAND, NOR, XOR und XNOR.
-Ein Quantencomputer basiert auf Qubits und benutzt Quantengatter wie das Hadamard-Gatter oder CNOT zur manipulation der Qubits.
+Quantencomputer sind keine neuen schnelleren Supercomputer, sie können theoretisch manche Ressourcenlastingen Berechnungen effizienter ausführen, als es ein traditioneller Computer könnte, aber nicht weil sie \enquote{das gleiche machen, aber schneller}.
+Sie sind in ihrer Architektur, fundamental neue Rechenmodelle.
+Ein gewöhnlicher Computer funktioniert mit Bits, die die Zustände Wahr (1) oder Falsch (0) annehmen können und Bitmanipulationen führen durch logische Gatter, wie AND, OR, NOT, NAND, NOR, XOR oder XNOR bitmanipulationen aus.
+Ein Quantencomputer basiert auf Qubits, welche Superpositionen zwischen den Zuständen $|0\rangle$ und $|1\rangle$ annehmen können und benutzt invertierbare Quantengatter wie das Hadamard-Gatter oder CNOT zur manipulation der Qubits.
 Zudem geht ein Quantencomputer anderst vor, bei der Berechnung von Problemen und wird mit sogenannten Quantenalgorithmen programmiert.
 Quantencomputer sind nicht so weitflächig einsetzbar wie klassische Computer, die bessere Bezeichnung wäre eher Quantenprozessor oder Quantenchip.
 Allerdings hat sich der Begriff Quantencomputer durchgesetzt.
 
-Zur Zeit dieser Arbeit, stecken Quantencomputer noch in ihren Kinderschuhen.
+Zur Zeit dieser Arbeit (November 2026), stecken Quantencomputer noch in ihren Kinderschuhen.
 Es gibt bereits Fortschritte (IBM quantum error-correction code in 2024 \cite{LandmarkIBMError,smalleyWasIstQuantencomputing2025}) aber noch ist ein allgemeiner praktischer Einsatz von Quantencomputern noch nicht in Sicht.
 Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day.\cite{schmehQuantencomputer2026}
 
@@ -29,23 +29,18 @@ Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird al
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{bilder/quantencomputer.png}
-    \caption{Analoger 10-qubit Quantencomputer von Barcelona’s Supercomputing Center (BSC) \cite{dailyQilimanjaroInauguratesAnalog2026}}\hfill
+    \caption{Analoger 10-qubit Quantencomputer vom Barcelona Supercomputing Center (BSC) \cite{dailyQilimanjaroInauguratesAnalog2026}}\hfill
     \label{fig:quantencomputer}
 \end{figure}
 
-In Abbildung-\ref{fig:quantencomputer} ist ein analoger 10-qubit Quantencomputer für 8.5mio € zu sehen, der durch die EU und Spanien finanziert wurde.
+In Abbildung-\ref{fig:quantencomputer} ist ein analoger 10-qubit Quantencomputer für 8.5 Millionen € zu sehen, der durch die EU und Spanien finanziert wurde.
 
-\section{Prinzipien von Quantencomputern}
-Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition, Quantenverschränkung, Interferenz und Dekohärenz.
-Um einen Quantencomputer zu betreiben, muss der Prozessor in Themperaturen nahe dem absoluten Nullpunkt betrieben werden.
-Der Prozessor, welcher das Herz des Computers ist, ist nur eine kleiner Chip, der Rest der Maschine ist vor allem dazu da, die richtigen Bedingungen zu gewährleisten.
-Andere Technologien als Photonen, wie der Ansatz von Qubits, basierend auf Ionenfallen, biergt die Hoffnung dass Qubits auch bei Zimmertemperaturen betrieben werden können. \cite{pospiechQuantencomputerCoGrundideen2021}
 
-\subsection{Qubits}
+\section{Qubits}
 Ein klassischer Computer arbeitet mit Bits.
 Bits können einen festen Wert von null oder eins annehmen.
-Ein Qubit andererseits, kann mit einer bestimmten Wahrscheinlichkeit, Zustände von 0 oder 1 annehmen.
-Ein Qubit wird als linearkombination (siehe Gleichung-\ref{eq:qubit}) dargestellt mit den Amplituden $\alpha$ und $\beta$.
+Ein Qubit andererseits, ist ein Zustandsraum von $|0\rangle$ oder $|1\rangle$ Zuständen, die eine Wahrscheinlichkeit für $0$ oder $1$ ergeben, wenn sie gemessen werden.
+Ein Qubit wird als linearkombination wie in \ref{eq:qubit} dargestellt, mit den Amplituden $\alpha$ und $\beta$.
 
 \begin{equation}
     \ket{\psi}\ =\ \alpha\ket{0}\ +\ \beta\ket{1}
@@ -53,9 +48,11 @@ Ein Qubit wird als linearkombination (siehe Gleichung-\ref{eq:qubit}) dargestell
 \end{equation}
 
 Die Wahrscheinlichkeit für eine null, ist hier der $P(0)\ =\ \probalpha$ und die Wahrscheinlichkeit auf eine eins, $P(1)\ =\ \probbeta$.
-Folgend, ein Beispiel um es zu verdeutlichen.
-Man stellt das Qubit als Vektor $\psi$ in ket Notation da. Nehmen wir an wir haben für die Amplituden $\alpha=\alphavalue$ und $\beta=\betavalue$.
 
+Folgend, ein Beispiel um es zu verdeutlichen.
+Man stellt das Qubit als Vektor $\psi$ in Dirac Notation da. Nehmen wir an, wir haben für die Amplituden $\alpha, \beta \in \mathrm{C}$, mit deren Amplituden, $\alpha=\alphavalue$ und $\beta=\betavalue$.
+
+Dann ist der entsprechende Zustand $|\psi\rangle$:
 \begin{align}
     \ket{\psi}\ =\ (\sqrt{\frac{1}{8}})\ket{0}\ +\ (\sqrt{\frac{7}{8}})\ket{1}
 \end{align}
@@ -84,86 +81,128 @@ Die Wahrscheinlichkeiten ergeben in der Summe $\probalpha + \probbeta\ =\ \alpha
 %\label{fig:koordinatensystem}
 %\end{figure}
 
-Wenn wir mehr als ein Qubit haben, wie hier z.B. 7, können wir damit $2^{7}=128$ Zustände darstellen.
-Wenn die Zustände eines Qubits von denen eines anderen beeinfluss werden, spricht man davon, dass diese Quantenverschränkt sind.\cite{schmehQuantencomputer2026}
+Wenn wir mehr als ein Qubit haben, wie hier z.B. 8, können wir damit $2^{8}=256$ Zustände darstellen.
+Wenn mehrere Qubits zusammen einen gemeinsamen Zustand besitzen, spricht man davon, dass diese Quantenverschränkt sind.\cite{schmehQuantencomputer2026}
 
 \begin{equation}
-    \alpha_0\ket{0000000}+\alpha_1\ket{0000001}+\dots+\alpha_{127}\ket{1111111}
+    \alpha_0\ket{00000000}+\alpha_1\ket{00000001}+\dots+\alpha_{255}\ket{11111111}
     \label{eq:acht-qubit}
 \end{equation}
 
-Auch bei einem acht-qubit system wie in Gleichung-\ref{eq:acht-qubit} Wahrscheinlichkeiten müssen zusammen wieder eins ergeben.
+Auch bei einem acht-qubit system wie in \ref{eq:acht-qubit}, müssen die einzelnen Wahrscheinlichkeiten wieder zusammen eins ergeben.
 \begin{align}
-    &{\left|\alpha_0\right|}^2+{\left|\alpha_1\right|}^2+\dots+{\left|\alpha_{127}\right|}^2=1
+    &{\left|\alpha_0\right|}^2+{\left|\alpha_1\right|}^2+\dots+{\left|\alpha_{255}\right|}^2=1
 \end{align}
-Man kann sich den Vektor als Punkt im 128-dimensionalem Koordinatensystem darstellen.
+Man kann sich den Vektor als Punkt im 256-dimensionalem komplexen Zustandsraum (Hilbert-Raum) darstellen.
 Durch Quantengatter lassen sich die Zustände manipulieren, dadurch ist es möglich Quantenalgorithmen zu entwerfen.
 Ein Quantengatter muss vollständig umkehrbar sein und die Summe aller quadrierten Amplituden muss wieder eins ergeben \cite{pospiechQuantencomputerCoGrundideen2021}.
 
 Eine bekannte Art ein Qubit grafisch darzustellen ist als Bloch-Kugel.
-Ein Qubit wie in Gleichung-\ref{eq:qubit} lässt sich auch in dessen Polarkoordinatendarstellung, wie in Gleichung-\ref{eq:qubit-polarkoordinaten} darstellen.
+Ein Qubit wie in \ref{eq:qubit} lässt sich auch in dessen Polarkoordinatendarstellung, wie in \ref{eq:qubit-polarkoordinaten} darstellen.
 \begin{equation}
   |\psi\rangle =
-  \cos(\theta/2)e^{i\varphi_0}|0\rangle + \sin(\theta/2)e^{i\varphi_1}|1\rangle
+  \cos(\frac{\theta}{2})|0\rangle + \sin(\frac{\theta}{2})e^{i\varphi}|1\rangle
   \label{eq:qubit-polarkoordinaten}
 \end{equation}\cite{macchiavello210BlochSphere}
 
-Damit lässt sich ein Qubit grafisch darstellen, wie in Abbilbung-\ref{fig:Bloch-Kugel}.
-Dessen Amplituden sind dann winkel.
+Damit lässt sich ein Qubit, wie in \ref{fig:Bloch-Kugel}, grafisch als Kugel darstellen.
 Diese Darstellung hilft dabei, sich das abstrakte Konzept von Qubits bildlich vorstellen zu können,
 dadurch kann man auch ein etwas \enquote{intuitiveres} Gefühl vom Verhalten von Qubits erhalten.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{bilder/Bloch_sphere.png}
+    \includegraphics[width=0.6\textwidth]{bilder/Bloch_sphere.png}
     \caption{Grafische Darstellung eines Qubit als Bloch-Kugel. \cite{Kubitti2026}}\hfill
     \label{fig:Bloch-Kugel}
 \end{figure}
 
-\newpage
+Was in der grafischen Qubit Darstellung in \ref{fig:Bloch-Kugel} zu sehen ist, ist dass neben den Zuständen $|0\rangle$ und $|1\rangle$ mit dem Winkel $\theta$, auch noch eine weitere Achse mit dem Winkel $\varphi$ hinzukommt.
+Diese weitere Achse beschreibt die \textbf{Phase} des Qubit, sie ist wichtig für Interferenz und somit auch zur Entwicklung von Quantenalgorithmen.
+
+Wenn Quantengatter auf ein Qubit angewendet werden, lässt sich das als Rotation des Zustandsvektors auf der Bloch-Kugel zeigen.
+Als Beispiel erfolgt durch die Anwendung eines Hadamard-Gatters $H$ auf den Zustand $|0\rangle$, $H|0\rangle=\frac{|0\rangle+|1\rangle}{\sqrt{2}}=|+\rangle$.
+Das lässt sich einfach als Rotation interpretieren, der Zustand zeigt also in die Richtung des \enquote{$+$}-Zustands auf der x-Achse und liegt genau zwischen $|0\rangle$ und $|1\rangle$ auf.
+Wenn erneut das Hadamard-Gatter angewant wird, rotiert der Zustandsvektor genau in seinen ursprünglichen Zustand zurück.
+
+Die Phase ist interessant, wie später noch in \ref{section-Quantenalgorithmen} zu sehen ist.
+Wenn wir beispielsweise auf zwei verschiedene Qubits, $|0\rangle$ und $|1\rangle$ das Hadamard-Gatter anwenden bekommen wir:
+\begin{align}
+    H|0\rangle=\frac{|0\rangle+|1\rangle}{\sqrt{2}}=|+\rangle\\
+    H|1\rangle=\frac{|0\rangle-|1\rangle}{\sqrt{2}}=|-\rangle
+\end{align}
+Dabei sind die Wahrscheinlichkeiten der Zustände beide:
+\begin{align}
+    P(\alpha_0 \cap \beta_0) = |\alpha_0|^2+|\beta_0|^2 = |\frac{1}{\sqrt{2}}|^2+|\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1\\
+    P(\alpha_1 \cap \beta_1) = |\alpha_1|^2+|\beta_1|^2 = |\frac{1}{\sqrt{2}}|^2+|-\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1
+\end{align}
+Sie haben beide die gleiche Wahrscheinlichkeit für die Zustände $|0\rangle$ oder $|1\rangle$ nach der Hadamard Transformation, aber mit unterschiedlichen Phasen.
+Deshalb auch die $|-\rangle$ und $|+\rangle$ Notation.
+
+\section{Quantencomputer Technik und Funktionsweise}
+Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition, Quantenverschränkung, Interferenz.
+Um einen Quantencomputer zu betreiben, müssen für manche computer die Quantum Processing Units (QPU) bei Temperaturen nahe dem absoluten Nullpunkt gekühlt werden um zu funktionieren, andere könnten theoretisch bei Raumtemperatur betrieben werden.
+Sie bieten alle ihre Vorteile, aber auch schwierigkeiten.
+Der Prozessor, welcher das Herz des Computers ist, ist nur eine kleiner Chip, der Rest der Maschine ist vor allem dazu da, die richtigen Bedingungen zu gewährleisten.
+
+Es gibt verschieden Ansätze der Quantencomputer Technik.
+Die am weitesten entwickelte Technik, sind Qubits auf \textbf{Basis von Supraleitung}.
+Diese beruhen auf der Technik der Halbleiterherstellung und zeichnen sich aus durch, schnelle Gatterschaltung und initialisierung der Qubits und sind vielversprechend zu Fehlerkorrektur.
+Der große Nachteil ist, dass anfällig zu dekohärenz sind und diese bei nahezu Nulltemperaturen betrieben werden müssen, sie benötigen eine Temperatur zwischen 10-20 mK.
+
+Quantencomputer die auf der \textbf{Kernspinresonanz} basieren, sog. NMR-Quantencomputer, haben den Vorteil dass sie bei Zimmertemperaturen eingesetzt werden können und dass die Technik bereits bekannt ist.
+Das ist die selbe Technologie, die auch in MRT's in der Medizin eingesetzt wird.
+
+Basierend auf \textbf{Photonen} (Licht Teilchen) sind sie sehr beweglich und können gut informationen transportieren ebenso können die Photonen-Quantencomputer bei Raumtemperatur betrieben werden, sie können aber nicht ohne weitere Hilfsobjekte, verschränkt werden.
+
+Bei der Technik von Ionen in \textbf{Ionenfallen}, wie z.B. der Firma IonQ, besteht auch die Hoffnung dass man diese Computer bei Zimmertemperaturen betreiben könnte.
+Es zeigen sich lange Dekohärenzzeiten, die bis in die Sekunden gehen, sie lassen sich für präzise Berechnungen einsetzen und sie lassen sich gut auf eine hohe Anzahl an Qubits hochskallieren.
+Diese Technik hat das Problem, dass sie lange Zeiten für Gatteroperationen benötigen.
+
+\textbf{Topologische Qubits} sind robust gegen lokales Rauschen und könnten die notwendigkeit für Fehlerkorrektur reduzieren.
+Sie gehören zu den vielversprechendsten in Betrach auf Fehlerkorrekur.
+Der wesentliche Nachteil ist, dass sie sehr reine Materialien zur Herstellung benötigen, zudem benötigen sie kontrolle auf der nano-Skala.
+\cite{pospiechQuantencomputerCoGrundideen2021,molfettaQuantumComputingNew2026}
 
 \subsection{Überlagerung/Superposition}
-Wie das anschauliche Beispiel von Schrödingers Katze nahelegt, man kann nicht wissen ob die Katze lebendig oder tot ist,
-solange man nicht nachschaut, das gleiche Prinzip gilt auch bei Qubits.
-Qubits können einen Zustand als Teilchen oder als Welle haben, solange man diese nicht observiert, haben sie eine Wahrscheinlichkeit eine Welle zu sein und die Gegenwahrscheinlichkeit für ein Teilchen.
-
+Qubits befinden sich, solange man sie nicht observiert, in einer Superposition.
+Dabei sind sie Teilchen und Welle zugleich, erst wenn man sie observiert, kollabieren sie in einen Zustand, indem sie einen festen Zustand von 0 oder 1 haben.
 Dieses Phänomen der Physik wird als Überlagerung oder Superposition beschrieben.
 Es macht es Quantencomputern möglich, mittels einer Anzahl $n$ an Qubits, $2^n$ Zustände abzubilden.
 
-Ein einzelnes Qubit aus Gleichung-\ref{eq:einzelnes-qubit} kann $2^1$ Zustände ${0, 1}$ annehmen.
-Wenn sich dieses Qubit in der Superposition befindet, befindet es sich mit den Amplituden $\alpha, \beta \in \mathbb{C}$ und den dazugehörigen Wahrscheinlichkeiten $\probalpha$ für eins und mit der Gegenwahrscheinlichkeit $\probbeta$ für null.
+Ein einzelnes Qubit wie in \ref{eq:einzelnes-qubit} kann $2^1$ Zustände ${0, 1}$ annehmen.
+Wenn sich dieses Qubit in der Superposition befindet, befindet es sich mit den Amplituden $\alpha, \beta \in \mathbb{C}$ und den dazugehörigen Wahrscheinlichkeiten $\probalpha$ für null und mit der Gegenwahrscheinlichkeit $\probbeta$ für eins.
 
 \begin{equation}
     \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
     \label{eq:einzelnes-qubit}
 \end{equation}
 
-Der Zustand eines n-Qubit Quantencomputer lässt sich wie in Gleichung-\ref{eq:n-qubit} darstellen.
+Der Zustand eines n-Qubit Quantencomputer lässt sich wie in \ref{eq:n-qubit} darstellen.
 
 \begin{equation}
-    \ket{\psi} = \sum_{k\ =\ 0}^{2^n-1}\alpha\ket{c_k}
+    \ket{\psi} = \sum_{k\ =\ 0}^{2^n-1}c_k\ket{k}
     \label{eq:n-qubit}
 \end{equation}
 
-mit $c\in\mathbb{C}$ als Amplitude und $k\ =\ [0, 2^n-1]$ in Binärdarstellung der Qubits.
-Ein n-Qubit Quantencomputer wie in Gleichung-\ref{eq:n-qubit} erzeugt Wellenfunktionen in einem $2^n$-dimensionalem komplexen Hilbertraum\cite{QuantumComputationComplex}.
+mit $c\in\mathbb{C}$ als Amplitude und $k\ =\ 0,1,\dots,2^n-1$ in Binärdarstellung der Qubits.
+Ein n-Qubit Quantencomputer wie in \ref{eq:n-qubit} erzeugt Wellenfunktionen in einem $2^n$-dimensionalem komplexen Hilbertraum \cite{QuantumComputationComplex}.
 
 \subsection{Quantenverschränkung}
-Ein Qubit alleine ist nicht sonderlich nützlich, damit ein Quantencomputer sein volles Potenzial entfalten kann.
-Um das volle Potenzial von Quantencomputern zu entfalten, sind mehrere Qubits nötig und dabei ist die Quantenverschränkung unerlässlich.
-Wenn zwei (oder mehrere) Qubits verschränkt sind, bedeutet dass eine Änderung des einen, auch eine direkte Auswirkung auf das Andere hat.
+Ein Qubit alleine genüg nicht um das volles Potenzial des Quantencomputing entfalten zu können.
+Um das volle Potenzial von Quantencomputing zu entfalten, sind mehrere Qubits nötig und dabei ist die Quantenverschränkung unerlässlich.
+Wenn zwei (oder mehrere) Qubits verschränkt sind, bedeutet dass die verschränken Qubits einen gemeinsamen Zustand besitzen.
 
-Ein n-Qubit Quantencomputer wie durch Gleichung-\ref{eq:n-qubit} beschrieben, ist nur wirklich nützlich wenn die Amplituden auch voneinander abhängig sind.
+Ein n-Qubit Quantencomputer wie durch \ref{eq:n-qubit} beschrieben, ist nur wirklich nützlich wenn die Amplituden auch einen gemeinsamen Zustand haben.
 Wenn sich die Amplitude (damit auch die Wahrscheinlichkeit) eines der n-Qubits ändert, beinflusst dies auch die Anderen.
 
 \subsection{Interferenz}
 Im Zusammenspiel mit Superposition und Quantenverschränkung, macht dieses Prinzip Quantencomputer zu extrem Leistungsfähigen Rechenmaschinen.
 Die Rechenpfade die entstehen, lassen sich als komplexe Amplituden ausdrücken, die sich wie Wellen verhalten.
 Diese Amplituden können sich gegenseitig verstärken (konstruktive Interferenz) oder gegenseitig abschwächen (destruktive Interferenz).
-Damit können sich die Rechenpfade selbst auf den richtigen Weg lenken, die Wahrscheinlichkeit auf einen richtigen Rechenweg wird verstärkt \cite{molfettaQuantumComputingNew2026}.
+Damit können sich die Rechenpfade selbst auf den richtigen Weg lenken, die Wahrscheinlichkeit auf einen richtigen Rechenpfad wird verstärkt \cite{molfettaQuantumComputingNew2026}.
 
 \subsection{Dekohärenz}
-Qubits sind sehr instabil, sie zerfallen leicht aus einer Superposition in einen feste Zustand.
+Qubits sind sehr instabil, sie zerfallen leicht aus einem Quantenzustand in einen Zustand, indem die Beziehungen der Teilchen nicht mehr wie gewünscht funktionieren.
 Dekohärenz ist der Prozess in dem ein System aus einem Quantenzustand in einen nicht-Quantenzustand zerfällt.
 Damit Quantencomputer richtig funktionieren, ist es wünschenswert, die Dekohärenz möglichst zu minimieren.
 Es kann aber auch beabsichtigt sein, z.B. wenn die Messung nach der Manipulation erfolgt, dadurch verfallen die Qubits in einen festen Zustand,
@@ -209,7 +248,7 @@ Bekannt ist, dass gilt $\mathrm{BPP} \subseteq \mathrm{NISQ}$, weil NISQ einen k
 Ein Fehlerkorrigierender Quantencomputer muss auch in der Lage sein, einen rauschbehafteten Quantencomputer zu simulieren, deshalb, $\mathrm{NISQ} \subseteq \mathrm{BQP}$.
 Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$, siehe Abbildung-\ref{fig:bpp-nisq-bqp}.
 
-Zudem ist bewiesen, dass NISQ Computer nicht eine Beschleunigung wie Grover's Algorithmus erreichen können \cite{chenComplexityNISQ2023}.
+Zudem ist bewiesen, dass NISQ Computer nicht eine quadratische Beschleunigung gegenüber klassischen Computern für unstrukturierte Suche, wie Grover's Algorithmus, erreichen können \cite{chenComplexityNISQ2023}.
 
 \section{Entwicklungsstand Quantencomputer}
 Laut IBM soll die Quantencomputer-Branche bis 2035 schätzungsweise ein Volumen von 1,3 Billionen US-Dollar erreichen \cite{smalleyWasIstQuantencomputing2025}.
@@ -235,7 +274,9 @@ Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten releva
 Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden,
 also collect-now-forge-later tritt hier nicht ein.
 
-Das Unternehmen Gardner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
+\newpage
+
+Das Unternehmen Gartner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
 \begin{figure}[htbp]
 \centering
 \resizebox{0.9\textwidth}{!}{\qcTacho}
@@ -249,6 +290,6 @@ In nur wenigen, angepassten Fällen haben sie einen Vorteil gegenüber klassiche
 
 
 Diese Prognosen sind sehr optimistisch hinsichtlich der Entwicklung.
-Kritiker hingegen sprechen auch davon, dass es wahrscheinlich ist, dass es nie Quantencomputer geben wird.
+Kritiker hingegen sprechen auch davon, dass es wahrscheinlich ist, dass es nie große, fehlerkorrigierende Quantencomputer geben wird.
 Um einen Kryptoanalytisch relevanten Quantencomputer zu bauen, der tatsächlich in der Lage ist, Chiffren wie RSA oder ECC-Varianten zu knacken,
-wären bis zu millionen von Qubits notwendig, ob es jemals einen Fehlerkorrigierenden Quantencomputer von dieser größe geben wird, ist noch höchst spekulativ \cite{aumassonSeriousCryptographyPractical2018}.
+wären bis zu millionen von (physischen) Qubits notwendig, ob es jemals einen Fehlerkorrigierenden Quantencomputer von dieser größe geben wird, ist noch höchst spekulativ \cite{aumassonSeriousCryptographyPractical2018}.
