@@ -98,7 +98,7 @@ Durch Quantengatter lassen sich die Zustände manipulieren, dadurch ist es mögl
 Ein Quantengatter muss vollständig umkehrbar sein und die Summe aller quadrierten Amplituden muss wieder eins ergeben \cite{pospiechQuantencomputerCoGrundideen2021}.
 
 Eine bekannte Art ein Qubit grafisch darzustellen ist als Bloch-Kugel.
-Ein Qubit wie in \ref{eq:qubit} lässt sich auch in dessen Polarkoordinatendarstellung, wie in \ref{eq:qubit-polarkoordinaten} darstellen.
+Ein Qubit wie in \ref{eq:qubit} lässt sich auch in Polarkoordinatendarstellung, wie in \ref{eq:qubit-polarkoordinaten} darstellen.
 \begin{equation}
   |\psi\rangle =
   \cos(\frac{\theta}{2})|0\rangle + \sin(\frac{\theta}{2})e^{i\varphi}|1\rangle
@@ -106,13 +106,13 @@ Ein Qubit wie in \ref{eq:qubit} lässt sich auch in dessen Polarkoordinatendarst
 \end{equation}\cite{macchiavello210BlochSphere}
 
 Damit lässt sich ein Qubit, wie in \ref{fig:Bloch-Kugel}, grafisch als Kugel darstellen.
-Diese Darstellung hilft dabei, sich das abstrakte Konzept von Qubits bildlich vorstellen zu können,
+Diese Darstellung hilft dabei, sich das abstrakte Konzept von Qubit bildlich vorstellen zu können,
 dadurch kann man auch ein etwas \enquote{intuitiveres} Gefühl vom Verhalten von Qubits erhalten.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\textwidth]{bilder/Bloch_sphere.png}
-    \caption{Grafische Darstellung eines Qubit als Bloch-Kugel. \cite{Kubitti2026}}\hfill
+    \includegraphics[width=0.8\textwidth]{bilder/bloch-sphere.png}
+    \caption{Grafische Darstellung eines Qubit als Bloch-Kugel. \cite{smytheBlochSphere2025}}\hfill
     \label{fig:Bloch-Kugel}
 \end{figure}
 
@@ -121,7 +121,7 @@ Diese weitere Achse beschreibt die \textbf{Phase} des Qubit, sie ist wichtig fü
 
 Wenn Quantengatter auf ein Qubit angewendet werden, lässt sich das als Rotation des Zustandsvektors auf der Bloch-Kugel zeigen.
 Als Beispiel erfolgt durch die Anwendung eines Hadamard-Gatters $H$ auf den Zustand $|0\rangle$, $H|0\rangle=\frac{|0\rangle+|1\rangle}{\sqrt{2}}=|+\rangle$.
-Das lässt sich einfach als Rotation interpretieren, der Zustand zeigt also in die Richtung des \enquote{$+$}-Zustands auf der x-Achse und liegt genau zwischen $|0\rangle$ und $|1\rangle$ auf.
+Der Einsatz eines Quantengatters lässt sich einfach als Rotation interpretieren, der Zustand zeigt also in die Richtung des \enquote{$+$}-Zustands auf der x-Achse und liegt genau zwischen $|0\rangle$ und $|1\rangle$ auf.
 Wenn erneut das Hadamard-Gatter angewant wird, rotiert der Zustandsvektor genau in seinen ursprünglichen Zustand zurück.
 
 Die Phase ist interessant, wie später noch in \ref{section-Quantenalgorithmen} zu sehen ist.
@@ -132,10 +132,10 @@ Wenn wir beispielsweise auf zwei verschiedene Qubits, $|0\rangle$ und $|1\rangle
 \end{align}
 Dabei sind die Wahrscheinlichkeiten der Zustände beide:
 \begin{align}
-    P(\alpha_0 \cap \beta_0) = |\alpha_0|^2+|\beta_0|^2 = |\frac{1}{\sqrt{2}}|^2+|\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1\\
-    P(\alpha_1 \cap \beta_1) = |\alpha_1|^2+|\beta_1|^2 = |\frac{1}{\sqrt{2}}|^2+|-\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1
+    P_{|+\rangle}(0) + P_{|+\rangle}(1) = |\alpha_0|^2+|\beta_0|^2 = |\frac{1}{\sqrt{2}}|^2+|\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1\\
+    P_{|-\rangle}(0) + P_{|-\rangle}(1) = |\alpha_1|^2+|\beta_1|^2 = |\frac{1}{\sqrt{2}}|^2+|-\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1
 \end{align}
-Sie haben beide die gleiche Wahrscheinlichkeit für die Zustände $|0\rangle$ oder $|1\rangle$ nach der Hadamard Transformation, aber mit unterschiedlichen Phasen.
+Sie haben beide die gleiche Wahrscheinlichkeit für die Zustände $|0\rangle$ oder $|1\rangle$ nach der Hadamard Transformation, aber mit unterscheiden sich in ihrer Phase.
 Deshalb auch die $|-\rangle$ und $|+\rangle$ Notation.
 
 \section{Quantencomputer Technik und Funktionsweise}
@@ -210,9 +210,9 @@ der aussagekräftig für die Berechnung ist \cite{aumassonSeriousCryptographyPra
 
 \section{Komplexitätsklassen von Quantencomputern}
 Aus der Sicht der Theoretischen Informatik, bezeichnet man die Komplexitätsklasse der derzeitigen Quantencomputer als NISQ.
-NISQ beschreibt eine Komplexitätsklasse von Problemen, die mit klassischen Computern, mit Zugang zu rauschbehafteten Quanten-schaltkreisen gelöst werden können.
+NISQ beschreibt eine Komplexitätsklasse von Problemen, die von klassischen Computern, mit Zugang zu rauschbehafteten Quanten-schaltkreisen gelöst werden können.
 NISQ Computer sind z.B. in der Lage, angepasste Probleme von Simon's Problem zu lösen, sie sind aber nicht in der Lage, Beschleunigungen bei unstrukturierter Suche wie Grover's Algorithmus zu erreichen.
-Wenn man die Komplexitätsklassen vergleicht wie in Abbildung-\ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen.
+Wenn man die Komplexitätsklassen vergleicht wie in \ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen.
 Man definiert drei Komplexitätsklassen:
 \begin{itemize}
     \item BPP (bounded error probabilistic polynomial time)\\
@@ -246,18 +246,18 @@ Manche Probleme sind effizienter auf klassischen Computern zu lösen, als auf ra
 Keine der Fragestellungen von $\mathrm{BPP} \subsetneq \mathrm{NISQ}$, $\mathrm{NISQ} \subsetneq \mathrm{BQP}$ und $\mathrm{BPP} \subsetneq \mathrm{BQP}$ ist bewiesen.\\
 Bekannt ist, dass gilt $\mathrm{BPP} \subseteq \mathrm{NISQ}$, weil NISQ einen klassischen Computer vollständig beinhaltet und eine NISQ Schnittstelle hat.
 Ein Fehlerkorrigierender Quantencomputer muss auch in der Lage sein, einen rauschbehafteten Quantencomputer zu simulieren, deshalb, $\mathrm{NISQ} \subseteq \mathrm{BQP}$.
-Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$, siehe Abbildung-\ref{fig:bpp-nisq-bqp}.
+Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$, siehe \ref{fig:bpp-nisq-bqp}.
 
 Zudem ist bewiesen, dass NISQ Computer nicht eine quadratische Beschleunigung gegenüber klassischen Computern für unstrukturierte Suche, wie Grover's Algorithmus, erreichen können \cite{chenComplexityNISQ2023}.
 
 \section{Entwicklungsstand Quantencomputer}
 Laut IBM soll die Quantencomputer-Branche bis 2035 schätzungsweise ein Volumen von 1,3 Billionen US-Dollar erreichen \cite{smalleyWasIstQuantencomputing2025}.
-Michio Kaku beschreibt das kommen der Quantencomputer als ein potentiell größeres historisches Ergeignis als die Einführung der digitalen Computer \cite{bigthinkMichioKakuQuantum2023}.
+Der berühmte Physiker Michio Kaku, bezeichnet das kommen der Quantencomputer als ein potentiell größeres historisches Ergeignis als die Einführung der digitalen Computer \cite{bigthinkMichioKakuQuantum2023}.
 Der aktuelle Entwicklungsstand eines kryptografisch relevanten Quantencomputer ist nach BSI immer noch auf dem Stand des NISQ-Zeitalters.
-NISQ ist eine Komplexitätsklasse von Quantenalgorithmen \cite{chenComplexityNISQ2023}.
-Die Quantencomputer welche innerhalb dieser Klasse rechnen, besitzen eine mittlere Anzahl an Qubits und sind nicht fehler korrigierend.
+NISQ ist eine Komplexitätsklasse von Problemen, die auf einem Rauschbehafteten, Quantencomputer mit Zugang zu einem klassischen Computer, in polynomialzeit berechnet werden können \cite{chenComplexityNISQ2023}.
+Die Quantencomputer welche innerhalb dieser Klasse rechnen, besitzen eine mittlere Anzahl an Qubits, im hunderer Bereich, sie sind nicht fehler korrigierend.
 Längere Rechenzeiten führen zu fehlern in Berechnungen.
-Die Entwicklung derzeitige Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in der Grafik von Abbildung-\ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
+Die Entwicklung von NISQ-Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in der Grafik von \ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
 
 \begin{figure}[htbp]
     \centering
@@ -266,17 +266,20 @@ Die Entwicklung derzeitige Quantencomputer basiert derzeit mehr auf Heuristiken 
     \label{fig:EntwicklungsstandQuantencomputer}
 \end{figure}
 
-Zur Zeitspanne bis zu einem Kryptoanalytisch relevanten Quantencomputer schreibt das BSI, dass Zukunftsprognosen oft genau 20 Jahre vor Eintritt vorausgesagt werden und durch neue Entwicklungen im Bereich der qLDPC-Codes könnte sich der Bereich sogar noch weiter,
+Zur Zeitspanne bis zu einem Kryptoanalytisch relevanten Quantencomputer schreibt das BSI, dass Zukunftsprognosen oft genau 20 Jahre vor Eintritt eines Durchbruchs, vorausgesagt werden und durch neue Entwicklungen im Bereich der Quantum Low-Density Parity-Check Codes (qLDPC-Codes) könnte sich der Bereich sogar noch weiter,
 bis auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
+Das Unternehmen Gartner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
+Das Mittel zwischen den breit gestreuten Zeitabschätzungen von 5-20 Jahren, sind 12.5 Jahre.
 
-Wenn im optimistischen Fall, von 10 Jahre bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
-Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte.
-Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden,
-also collect-now-forge-later tritt hier nicht ein.
+
+Wenn im Mittel, von 12.5 Jahren bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
+Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte, sogenanntes \enquote{harvest now, decrypt later}.
+Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden, das wäre für Signaturen eher \enquote{collect now, forge later}.
+Für vertrauliche Nachrichten ist das ein größeres Problem, denn digitale Signaturen, wie bei DNSSEC haben nur kurze gültigkeitszeiten, von Stunden bis Tage.
+Dadurch ist die Gefahr von Signatur Fälschung ein geringeres Problem als das entschlüsseln von gelagerten Nachrichten oder Angriffe auf die Implementierungen.
 
 \newpage
 
-Das Unternehmen Gartner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
 \begin{figure}[htbp]
 \centering
 \resizebox{0.9\textwidth}{!}{\qcTacho}
@@ -284,7 +287,7 @@ Das Unternehmen Gartner spricht sogar von einem Zeitraum von fünf bis zehn Jahr
 \label{fig:qc-nutzen}
 \end{figure}
 
-In Abbildung-\ref{fig:qc-nutzen} werden die Schritte der Entwicklung von Quantencomputern (nach Gardner) bildlich dargestellt.
+In \ref{fig:qc-nutzen} werden die Schritte der Entwicklung von Quantencomputern (nach Gartner), bildlich dargestellt.
 Momentan haben Quantencomputer nur einen sehr eingeschränkten Nutzen.
 In nur wenigen, angepassten Fällen haben sie einen Vorteil gegenüber klassichen Computern, wobei sich das hinsichtlich fortschritten in der Fehlerkorrektur bald ändern kann.
 
