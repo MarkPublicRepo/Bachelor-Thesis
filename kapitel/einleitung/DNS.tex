@@ -3,10 +3,15 @@
 Im Internet kennen sich Computer über IP-Adressen.
 Da es für Menschen nicht realistisch ist, sich für jeden Computer der angesprochen werden soll, sich die IP-Adresse des Computers zu merken,
 gibt es das Domain Name System (DNS).
+Bevor es DNS gab, wurde eine HOSTS.TXT Datei verwendet, in der alle Namen der Computer festgehalten wurden.
+Weil durch die wachstende Größe des Internets, die Anzahl der nicht mehr überschaubar wurden und das heraussuchen der Namen zu uneffizient wurden,
+wurde DNS eingeführt.
+
 DNS ist ein ein System, das dazu da ist, IP-Adressen in Namen umzuwandeln die für Menschbar lesbar und umgänglich sind.
 Ebenso kann DNS auch Namen in IP-Adressen umwandeln, was als reverse-DNS bezeichnet wird.
-An einem praktischen Beispiel lässt sich das einfach zeigen.
-Z.B. steht die IP-Adresse von example.com mit \textbf{host example.com} abrufen, in Abbildung-\ref{fig:output-host-example.com} ist ein DNS-Eintrag den man mit \enquote{host} (unter linux) abrufen kann, alternativ lässt sich dies auch mit z.B. \enquote{dig} auflösen.
+In \ref{fig:output-host-example.com} lässt sich sehen, dass zu jeder IP-Adresse auch ein Name gehört und auch umgekehrt.
+
+Z.B. steht die IP-Adresse von example.com mit \textbf{host example.com} abrufen, in \ref{fig:output-host-example.com} ist ein DNS-Eintrag den man mit \enquote{host} (unter linux) abrufen kann, alternativ lässt sich dies auch mit z.B. \enquote{dig} auflösen.
 \begin{figure}[htbp]
   \centering
   \lstinputlisting{src/host_example-com.txt}
@@ -16,10 +21,15 @@ Z.B. steht die IP-Adresse von example.com mit \textbf{host example.com} abrufen,
 
 DNS ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen, meistens ist es sogar einer der ersten Dienste die überhaupt die Kommunikation im Internet unter Computern ermöglicht.\\
 
-DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
-Das DNS Protokoll läuft standartmäßig auf UDP mit Port 53. TPC-fallback ist möglich, wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit\cite{ietf-rfc-1034,ServiceNameTransport}.
-Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus\cite{ietf-rfc-1034,ietf-rfc-1035}.
-Die Domänen werden wie in \ref{fig:dns-baum} zu sehen ist, in einer Baumstruktur angeordnet.
+\section{Domain Name Space und Ressource Records}
+Der Domain Name Space (DNS-Namespace, (DNS-)Namensraum) beschreibt den kompletten Baum aller vorhandenen Domänen.
+
+Der DNS Baum teilt sich anhand dessen Domänen auf. Die oberste Domäne ist die sogenannte root-Domain und wird mit einem \enquote{.} gekennzeichnet.
+Unter der root-Domain liegen die Top-Level-Domains (TLD).
+In Abbildung-\ref{fig:dns-baum} sind com, de und org die TLDs, es sind immer die Domänen, die unmittelbar unter der root-Domain liegen.
+Die Knoten darunter, die keine Blätter sind, sind weitere Domänen, wenn sie weitere Kinder haben, wie in Abbildung-\ref{fig:dns-baum}, com, de, org und auch example.com, dann werden diese als Subdomänen bezeichnet.
+Die Blätter werden als \enquote{labels} bezeichnet.
+Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, Domänen-Server sind verteilte Datenbanksysteme und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein\cite{baunComputernetzeKompaktPraxisorientierte2025}.
 
 % diese figure ist von claude generiert worden. Muss erwähnt werden!
 \begin{figure}[htbp]
@@ -48,17 +58,62 @@ for tree={
 \label{fig:dns-baum}
 \end{figure}
 
-Der DNS Baum teilt sich anhand dessen Domänen auf. Die oberste Domäne ist die sogenannte root-Domain und wird mit einem \enquote{.} gekennzeichnet.
-Unter der root-Domain liegen die Top-Level-Domains (TLD).
-In Abbildung-\ref{fig:dns-baum} sind com, de und org die TLDs, es sind immer die Domänen, die unmittelbar unter der root-Domain liegen.
-Die Knoten darunter, die keine Blätter sind, sind weitere Domänen, wenn sie weitere Kinder haben, wie in Abbildung-\ref{fig:dns-baum}, com, de, org und auch example.com, dann werden diese als Subdomänen bezeichnet.
-Die Blätter werden als \enquote{labels} bezeichnet.
-Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, Domänen-Server sind verteilte Datenbanksysteme und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein\cite{baunComputernetzeKompaktPraxisorientierte2025}.
-
-In Abbildung-\ref{fig:dns-baum} ist eine mögliche Struktur einer hierarchischen Struktur eines DNS-Namensraumes zu sehen.
 Die Namensauflösung geschieht von rechts nach links.
 Die jeweilige Zone kann mehrere labels haben oder wiederrum subdomänen.
 Im Beispiel von Abbildung-\ref{fig:dns-baum} haben org und de, jeweils ein label namens example.
 Das der Name example in beiden Domänen vorkommt, führt zu keinem Konflikt.
 Trotz dass der Name der gleiche ist, kann unterschieden werden, weil dieser nicht in der selben Domäne ist.
 Im Fall von der com Domäne ist example wieder eine subdomäne, die die labels \enquote{www} und \enquote{mail} besitzt.
+
+\subsection{Ressource Records}
+
+Alle Knoten und Blätter beinhalten Informationen, diese werden in Ressource Records gespeichert.
+Es gibt unterschiedliche Ressourcen, mit unterschiedlichen Ressource Records, wie in \ref{tab:rr-types} zu sehen ist.
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Typ & Beschreibung\\
+    \hline
+    A & Host Adresse (IPv4)\\
+    \hline
+    AAAA & Host Adresse (IPv6)\\
+    \hline
+    CNAME & Alias auf anderen Domänennamen\\
+    \hline
+    MX & Mailserver der Domäne\\
+    \hline
+    NS & Nameserver der Zone\\
+    \hline
+    HINFO & CPU \& OS des Host\\
+    \hline
+    PTR & pointer zu einem anderen Teil des Namensraumes\\
+    \hline
+    SOA & Identifiziert den Beginn einer Authoritätszone\\
+    \hline
+  \end{tabular}
+  \caption{Ressource Record Typen}
+  \label{tab:rr-types}
+\end{table}
+
+\section{Namensserver}
+Diese Server besitzen DNS Informationen über ihre Zone und über die anderen Namensserver im Namensraum, falls auf diese verwiesen werden soll.
+Der haupsächliche Zweck eines Namensservers, ist die nutzung der Daten, die in ihren Zonen vorliegen, um damit Anfragen beantworten zu können.
+Es gibt verschiedene Arten von Namensservern.
+
+Die einfachste Art von Anfrage für den Server, ist eine \textbf{nicht-rekursive}, auf diese Weise werden Anfragen, nur anhand von lokalen Daten beantwortet.
+Wenn keine Daten vorhanden sind, wird entweder mit einem Fehler geantwortet oder auf einen anderen Namensserver referenziert.
+Dieser Modus der Verarbeitung ist notwendig, implementiert zu werden.
+
+Für den Client ist die \textbf{rekursive} Verarbeitung die einfachste.
+Als Antwort kann an den Client nur ein Fehler oder eine Antwort geliefert werden.
+Dieser Modus ist optional, es kann eingestellt werden, wer Anfragen stellen darf, es muss nicht jedem geantwortet werden.
+
+Auf die Art der Anfragen Verarbeitung wird nicht weiter eingegangen, es ist aber interessant zu wissen, wie der Server damit umgeht, deshalb sollte es erwähnt sein.
+
+\section{Resolver}
+
+%DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
+%Das DNS Protokoll läuft standartmäßig auf UDP mit Port 53. TPC-fallback ist möglich, wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit\cite{ietf-rfc-1034,ServiceNameTransport}.
+%Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus\cite{ietf-rfc-1034,ietf-rfc-1035}.
+%Die Domänen werden wie in \ref{fig:dns-baum} zu sehen ist, in einer Baumstruktur angeordnet.
