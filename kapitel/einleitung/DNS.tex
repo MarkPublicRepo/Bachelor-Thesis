@@ -109,9 +109,29 @@ Für den Client ist die \textbf{rekursive} Verarbeitung die einfachste.
 Als Antwort kann an den Client nur ein Fehler oder eine Antwort geliefert werden.
 Dieser Modus ist optional, es kann eingestellt werden, wer Anfragen stellen darf, es muss nicht jedem geantwortet werden.
 
+Bei einer \textbf{iterativen} Anfrage, muss der Client selbst für jeden Namensserver eine Anfrage stellen, bis der entsprechende Namensserver gefunden wird.
+Der Unterschied zu nicht-rekursiv ist, dass nicht nur eine Anfrage damit gemeint ist, sondern der Resolver verfolgt den gesamten Auflösungsprozess selbst.
+
 Auf die Art der Anfragen Verarbeitung wird nicht weiter eingegangen, es ist aber interessant zu wissen, wie der Server damit umgeht, deshalb sollte es erwähnt sein.
 
 \section{Resolver}
+Sie sind die Schnittstelle zwischen dem Anwender Programm und dem DNS Server.
+Das Anwenderprogramm schickt eine Anfrage an der Resolver und dieser verarbeitet sie weiter.
+Der Resolver selbst übernimmt die Verarbeitung der Anfrage zwischen dem DNS Dienst und dem Programm, welches die Antwort benötigt \cite{ietf-rfc-1034}.
+
+\section{Ablauf einer DNS-Abfrage}
+Wenn ein Anwendungsprogramm eine DNS-Anfrage schickt, werden in den meisten Fällen, folgende Schritte durchlaufen.
+\begin{enumerate}
+  \item Das Anwendungsprogramm schickt eine Anfrage an den Resolver.
+  \item Der Resolver schickt eine DNS-Anfrage an den root-Namensserver.
+  \item Der root-Namensserver Antwortet dem Resolver mit der Adresse einem TLD DNS-Server.
+  \item Der Resolver sendet dann die Anfrage an den gegebenen TLD DNS-Server.
+  \item Die TLD antwortet mit der IP-Adresse der des Namensservers, der die gesuchte Domäne verwaltet.
+  \item Nun schickt der Resolver eine Anfrage an den Namensserver.
+  \item Der Namensserver antwortet mit der IP-Adresse der gesuchten Domäne.
+  \item Der Resolver schickt die IP-Adresse der gesuchten Domäne, zurück an das Anwendungsprogramm, welches die ursprüngliche Anfrage geschickt hat.
+\end{enumerate}
+Das Anwendungsprogramm kann nun mit der IP-Adresse mit der gesuchten Domäne eine Verbindung aufbauen \cite{WhatDNSLearning}.
 
 %DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
 %Das DNS Protokoll läuft standartmäßig auf UDP mit Port 53. TPC-fallback ist möglich, wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit\cite{ietf-rfc-1034,ServiceNameTransport}.
