@@ -4,14 +4,15 @@ Im Internet kennen sich Computer über IP-Adressen.
 Da es für Menschen nicht realistisch ist, sich für jeden Computer der angesprochen werden soll, sich die IP-Adresse des Computers zu merken,
 gibt es das Domain Name System (DNS).
 Bevor es DNS gab, wurde eine HOSTS.TXT Datei verwendet, in der alle Namen der Computer festgehalten wurden.
-Weil durch die wachstende Größe des Internets, die Anzahl der nicht mehr überschaubar wurden und das heraussuchen der Namen zu uneffizient wurden,
+Weil durch die wachstende Größe des Internets, die Anzahl nicht mehr überschaubar und das heraussuchen der Namen zu uneffizient wurde,
 wurde DNS eingeführt.
 
 DNS ist ein ein System, das dazu da ist, IP-Adressen in Namen umzuwandeln die für Menschbar lesbar und umgänglich sind.
 Ebenso kann DNS auch Namen in IP-Adressen umwandeln, was als reverse-DNS bezeichnet wird.
-In \ref{fig:output-host-example.com} lässt sich sehen, dass zu jeder IP-Adresse auch ein Name gehört und auch umgekehrt.
+In \ref{fig:output-host-example.com} lässt sich sehen, dass zum Beispiel zu der IP-Adresse 104.20.23.154 der Computername example.com gehört.
 
-Z.B. steht die IP-Adresse von example.com mit \textbf{host example.com} abrufen, in \ref{fig:output-host-example.com} ist ein DNS-Eintrag den man mit \enquote{host} (unter linux) abrufen kann, alternativ lässt sich dies auch mit z.B. \enquote{dig} auflösen.
+Mit \textbf{host example.com} lässt sich abrufen, zu welcher IP-Adresse die Domäne example.com gehört, alternativ lässt sich dies auch mit z.B. \enquote{dig} auflösen.
+Mit \enquote{dig example.com} enthält man einen Resource Record, worauf noch eingegangen wird.
 \begin{figure}[htbp]
   \centering
   \lstinputlisting{src/host_example-com.txt}
@@ -28,7 +29,8 @@ Der DNS Baum teilt sich anhand dessen Domänen auf. Die oberste Domäne ist die 
 Unter der root-Domain liegen die Top-Level-Domains (TLD).
 In Abbildung-\ref{fig:dns-baum} sind com, de und org die TLDs, es sind immer die Domänen, die unmittelbar unter der root-Domain liegen.
 Die Knoten darunter, die keine Blätter sind, sind weitere Domänen, wenn sie weitere Kinder haben, wie in Abbildung-\ref{fig:dns-baum}, com, de, org und auch example.com, dann werden diese als Subdomänen bezeichnet.
-Die Blätter werden als \enquote{labels} bezeichnet.
+Jeder Bestandteil eines Domänennamens, zwischen zwei Punkten, wie in www.example.com, \enquote{www}, \enquote{example} und \enquote{com}, wird als Label bezeichnet.
+
 Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, Domänen-Server sind verteilte Datenbanksysteme und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein\cite{baunComputernetzeKompaktPraxisorientierte2025}.
 
 % diese figure ist von claude generiert worden. Muss erwähnt werden!
@@ -58,7 +60,7 @@ for tree={
 \label{fig:dns-baum}
 \end{figure}
 
-Die Namensauflösung geschieht von rechts nach links.
+Die Hirarchie der Domänen wird von rechts nach links gelesen.
 Die jeweilige Zone kann mehrere labels haben oder wiederrum subdomänen.
 Im Beispiel von Abbildung-\ref{fig:dns-baum} haben org und de, jeweils ein label namens example.
 Das der Name example in beiden Domänen vorkommt, führt zu keinem Konflikt.
@@ -96,23 +98,22 @@ Es gibt unterschiedliche Ressourcen, mit unterschiedlichen Ressource Records, wi
   \label{tab:rr-types}
 \end{table}
 
-\section{Namensserver}
+\section{Namensserver und Namensauflösung}
 Diese Server besitzen DNS Informationen über ihre Zone und über die anderen Namensserver im Namensraum, falls auf diese verwiesen werden soll.
-Der haupsächliche Zweck eines Namensservers, ist die nutzung der Daten, die in ihren Zonen vorliegen, um damit Anfragen beantworten zu können.
-Es gibt verschiedene Arten von Namensservern.
+Der haupsächliche Zweck eines Namensservers, ist die Nutzung der Daten, die in ihren Zonen vorliegen, um damit Anfragen beantworten zu können.
+Es gibt verschiedene Arten der Namensauflösung.
 
 Die einfachste Art von Anfrage für den Server, ist eine \textbf{nicht-rekursive}, auf diese Weise werden Anfragen, nur anhand von lokalen Daten beantwortet.
 Wenn keine Daten vorhanden sind, wird entweder mit einem Fehler geantwortet oder auf einen anderen Namensserver referenziert.
 Dieser Modus der Verarbeitung ist notwendig, implementiert zu werden.
 
+Das Schrittweise Anfragen von Namensservern durch nicht-rekursive Anfragen, wird als \textbf{iterative} Namensauflösung bezeichnet, dabei muss der Resolver selbst für jeden Namensserver eine Anfrage stellen, bis der entsprechende Namensserver gefunden wird.
+Der Unterschied zu nicht-rekursiv ist, dass nicht nur eine Anfrage damit gemeint ist, sondern der Resolver verfolgt den gesamten Auflösungsprozess selbst.
+
 Für den Client ist die \textbf{rekursive} Verarbeitung die einfachste.
 Als Antwort kann an den Client nur ein Fehler oder eine Antwort geliefert werden.
 Dieser Modus ist optional, es kann eingestellt werden, wer Anfragen stellen darf, es muss nicht jedem geantwortet werden.
-
-Bei einer \textbf{iterativen} Anfrage, muss der Client selbst für jeden Namensserver eine Anfrage stellen, bis der entsprechende Namensserver gefunden wird.
-Der Unterschied zu nicht-rekursiv ist, dass nicht nur eine Anfrage damit gemeint ist, sondern der Resolver verfolgt den gesamten Auflösungsprozess selbst.
-
-Auf die Art der Anfragen Verarbeitung wird nicht weiter eingegangen, es ist aber interessant zu wissen, wie der Server damit umgeht, deshalb sollte es erwähnt sein.
+Der Resolver übernimmt den gesamten Prozess, Anfragen zu stellen, bis die Domäne gefunden wurde, oder ein Fehler aufgetreten ist.
 
 \section{Resolver}
 Sie sind die Schnittstelle zwischen dem Anwender Programm und dem DNS Server.
@@ -120,18 +121,28 @@ Das Anwenderprogramm schickt eine Anfrage an der Resolver und dieser verarbeitet
 Der Resolver selbst übernimmt die Verarbeitung der Anfrage zwischen dem DNS Dienst und dem Programm, welches die Antwort benötigt \cite{ietf-rfc-1034}.
 
 \section{Ablauf einer DNS-Abfrage}
-Wenn ein Anwendungsprogramm eine DNS-Anfrage schickt, werden in den meisten Fällen, folgende Schritte durchlaufen.
+Wenn ein Anwendungsprogramm eine DNS-Anfrage schickt, werden in den meisten Fällen, wie in \ref{fig:dns-lookup} zu sehen ist, in folgenden Schritte durchlaufen.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{bilder/dns-lookup.pdf}
+  \caption{Ablauf einer DNS-Anfrage nach \cite{WhatDNSLearning} erstellt von claude}
+  \label{fig:dns-lookup}
+\end{figure}
+
 \begin{enumerate}
   \item Das Anwendungsprogramm schickt eine Anfrage an den Resolver.
   \item Der Resolver schickt eine DNS-Anfrage an den root-Namensserver.
-  \item Der root-Namensserver Antwortet dem Resolver mit der Adresse einem TLD DNS-Server.
-  \item Der Resolver sendet dann die Anfrage an den gegebenen TLD DNS-Server.
-  \item Die TLD antwortet mit der IP-Adresse der des Namensservers, der die gesuchte Domäne verwaltet.
-  \item Nun schickt der Resolver eine Anfrage an den Namensserver.
-  \item Der Namensserver antwortet mit der IP-Adresse der gesuchten Domäne.
+  \item Der root-Namensserver verweist den Resolver an den zuständigen TLD Server.
+  \item Der Resolver sendet dann die Anfrage an den gegebenen TLD Server.
+  \item Die TLD antwortet mit einem Verweis auf den autoritativen Namensservers, der die gesuchte Domäne verwaltet.
+  \item Nun schickt der Resolver eine Anfrage an den autoritativen Namensserver der Zone.
+  \item Der autoritative Namensserver antwortet mit dem Resource Record, der gesuchten Domäne.
   \item Der Resolver schickt die IP-Adresse der gesuchten Domäne, zurück an das Anwendungsprogramm, welches die ursprüngliche Anfrage geschickt hat.
 \end{enumerate}
-Das Anwendungsprogramm kann nun mit der IP-Adresse mit der gesuchten Domäne eine Verbindung aufbauen \cite{WhatDNSLearning}.
+Das Anwendungsprogramm kann nun mit der IP-Adresse, mit dem Server eine Verbindung aufbauen \cite{WhatDNSLearning}.
+
+Interessant ist, dass diese Namensauflösung auch ohne rekursive Abfragen funktioniert, es ist aber eleganter, bzw. einfacher für den Client.
 
 %DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
 %Das DNS Protokoll läuft standartmäßig auf UDP mit Port 53. TPC-fallback ist möglich, wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit\cite{ietf-rfc-1034,ServiceNameTransport}.
