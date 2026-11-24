@@ -1,48 +1,67 @@
 \chapter{DNS und DNSSEC}
 \label{section-DNSSEC}
-test
 %Domain Name System oder kurz DNS ist ein dienst, der es ermöglicht über Datenbanken einen Host Namen in eine IP Adresse aufzulösen und umgekehrt.
 %Es ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen.
 %DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
 %Das DNS Protokoll läuft standartmäßig auf UDP. TPC-fallback ist möglich wenn die Nachrichten wegen der Größe fehlschlagen sollten, es ist aber auch möglich direkt DNS Pakete über TCP zu senden, mit gesetztem Bit.\cite{ietf-rfc-1034}
 %Die UPD Nachrichtengröße ist auf 512 Byte beschränkt, für DNS Nachrichten reicht das eigentlich aus.\cite{ietf-rfc-1034}\cite{ietf-rfc-1035}
-%
-Der standart DNS Service ist anfällig gegen eine vielzahl von Angriffen.
-Z.B. durch manipulation der DNS Pakete lassen sich andere Zielrechner ansteuern als gedacht.
-Dadurch dass DNS Einträge aus dem Cache lesen kann, um Latenz zu sparen, sind sogenannte Cache Poisoning Angrifffe möglich, bei dem falsche Adressen in den Cache geladen werden, um künftige Anfragen, falsch weiter zuleiten.
-Ein DNS Cache poisoning Angriff, läuft folgendermaßen ab:
+%DNS wurde entworfen möglichst leichtgewichtig zu sein, mit kleinen Paketen und wenig overhead (durch UDP), und dadurch auch geringeren Latenzen.
+DNS ermöglicht eine effiziente und hierarchisch strukturierte Namensauflösung.
+Allerdings bietet DNS standartmäßig kaum Sicherheitsfeatures.
+DNS geht immer davon aus, dass alle Antworten vertrauenswürdig sind, dadurch ist es möglich gefälschte DNS-Antworten einzuschleußen und Clients, die diese Adresse abfragen wollen, auf eine beliebige Adresse umzuleiten.
+Ein Angriff, mit gefälschten DNS-Antwort die Verkehr umzuleiten, ist DNS-Cache-Poisoning.
+
+\section{DNS-Cache-Poisoning Angriff}
+DNS nimmt alle DNS-Antworten entgegen, ohne diese zu auf Echtheit zu überprüfen.
+Dadurch kann ein Angreifer, gefälschte Resource Records an den DNS-Server senden, die anstelle der angegebenen Website, auf eine eine schädliche, vom Angreifer kontrollierten Seite, verweisen.
+
+DNS nimmt diesen Eintrag einfach entgegen und speichert ihn im Cache.
+Wenn nun jemand eine Anfrage an den DNS Server nach diesem RR stellt, schickt DNS den manipulierten Eintrag aus dem Cache, unwissentlich, dass dieser gefälscht ist und auf einen schädlichen Server verweist.
+
+Ein DNS DNS-Cache-Poisoning Angriff, läuft folgendermaßen ab:
 
 \begin{description}
-    \item[Angreifer schickt einen gefälschten Eintrag] Der Angreifer schickt dem DNS-Server einen vermeintlichen Eintrag für eine Website,
-    dieser Eintrag ist aber nicht die richtige Seite, sondern eine vom Angreifer kontrollierte Seite.
-    \item[Der DNS-Server nimmt diese an] Der DNS-Server hat keinen Beweis für die gütligkeit des Eintrags und nimmt diesen einfach an.
-    \item[Client fragt nach dem Eintrag] Der Client frag nach der Adresse für den gefälschten Eintrag. Der Server antwortet mit dem Eintrag aus seinem Cache.
-    \item[Erfolgreicher Angriff] Das Opfer wurde nun auf die Seite des Angreifers gelockt\cite{asudbringUebersichtUeberDNSSEC}.
+    \item[Angreifer schickt einen gefälschten Eintrag] Der Angreifer schickt dem DNS-Server einen vermeintlichen Eintrag, der vorgibt von der zuständigen Zone zu stammen.
+    \item[Die Antwort wird angenommen] Da die Herkunft und somit auch die Integrität der Antwort nicht überprüft werden kann, wird sie einfach vom Resolver angenommen.
+    \item[RR wird im Cache zwischengespeichert] Damit der Resolver nicht jedes Mal erneut nach einem RR suchen muss, wird dieser zum schnelleren Zugriff, im Cache zwischengespeichert.
+    \item[Client fragt nach dem Eintrag] Ein Client fragt nach dem RR. Der Server antwortet mit dem gefälschten RR aus seinem Cache.
+    \item[Erfolgreicher Angriff] Das Opfer wurde nun durch den, vom Angreifer gefälschten RR, unwissentlich mit dem Server des Angreifers \cite{asudbringUebersichtUeberDNSSEC}.
 \end{description}
+Damit wurde ein erfolgreicher Angriff durchgeführt und der Angreifer kann sich somit, einfach als den angegebene Server ausgeben.
+Dadurch sind nun weitere Angriffe oder sonstige schädliche Vorhaben möglich.
 
+
+\section{Die DNSSEC Erweiterungen}
 Um die Authentizität und Integrität der DNS Einträge zu gewährleisten, gibt es die DNS Security Extensions (DNSSEC).
-Es muss berücksichtigt werden, dass dadurch aber keine Vertraulichkeit der Daten gewährleistet wird und Angriffe wie DNS-Rebinding Angriffe und D(DoS) Angriffe weiterhin möglich sind.
+DNSSEC signiert Resource Records und gewährt somit Authentizität und Integrität, die von einem Resolver geprüft werden können.
+Es muss berücksichtigt werden, dass dadurch aber keine Vertraulichkeit der Daten gewährleistet wird und auch Angriffe wie DNS-Rebinding Angriffe und D(DoS) Angriffe sind weiterhin möglich.
 
-Durch die DNSSEC Erweiterung kommt folgendes hinzu:
-Zwei öffentliche Schlüssel:
+
+\section{DNSSEC Resource Record Typen}
+Um eine PKI für DNS möglich zu machen, müssen zusätzlich neue RR und Schlüssel hinzukommen.
+Die wichtigsten sind, DNSKEY, RRSIG sowie DS und NSEC(3).
+
+\subsection{ZSK und KSK}
+Für DNSSEC sind zwei neue Schlüssel erforderlich:
 \begin{itemize}
-    \item Key Signing Keys (KSK)\\
-    signieren die DNS-Einträge innerhalb einer Zone
-    \item Zone Signing Keys (ZSK)\\
-    signieren die KSK
+    \item \textbf{Zone Signing Key (ZSK)} ein privater Schlüssel um die RR der Zone zu signieren.
+    \item \textbf{Key Signing Key (KSK)} ein privater Schlüssel um den Schlüssel einer Zone (ZSK) zu signieren, dieser hat oftmals eine längere Gültigkeitsdauer, als ein ZSK.
 \end{itemize}
+Die beiden Schlüssel zum Verifizieren, die öffentlichen Schlüssel, für ZSK und KSK sind im DNSKEY Record enthalten.
 
-Zudem auch neue Ressource Record Typen:
-\begin{itemize}%{DNSSEC Ressource Record Typen}{2pt}
-    \item Resource Record Signature (RRSIG)
-    \item DNS Public Key (DNSKEY)
-    \item Delegation Signer (DS)
-    \item Next Secure (NSEC)
-\end{itemize}
+\subsection{DNSKEY}
+Dieser Record enthält die öffentlichen Schlüssel für ZSK und KSK, dadurch können sich diese verfizieren lassen.
+Zum Verfizieren einer Kinderzone, hat die Kinderzone auch einen CDNSKEY \cite{asudbringUebersichtUeberDNSSEC}.
 
-\subsubsection{Resource Record Signature (RRSIG)}
-Dieser Resource Record (RR) enthält die Signaturen über ein bestimmtes RR Set.
-Die Signatur, die darin gespeichert ist, ist für einen bestimmten Namen und Typ gültig.
+\subsection{RRSIG}
+Wenn eine Signatur für eine Zone erstellt wird, wird nicht nur ein einzelner RR signiert, sondern alle RR der Zone werden zusammen signiert und zu einem RRSET zusammengefasst.
+Die Sinatur wird nach RFC-4033, durch die konkatenation der RRSIG Daten und aller RR berechnet:
+\begin{align*}
+    signatur=sign(RRSIG\_DATA\ |\ RR(1)\ |\ RR(2)\ldots)
+\end{align*}
+Diese Signatur, aus allen RR wird dann in einem RRSIG der Zone gespeichert \cite{ietf-rfc-4033,WhatAreRRSETs2026}.
+
+In \ref{fig:rrsig} ist der RR von example.com als Output von \textbf{dig example.com RRSIG} zu sehen.
 
 \begin{figure}[htbp]
     \lstinputlisting{src/rr_rrsig.txt}
@@ -50,23 +69,70 @@ Die Signatur, die darin gespeichert ist, ist für einen bestimmten Namen und Typ
     \label{fig:rrsig}
 \end{figure}
 
+\newpage
+
+\subsection{DS}
+Wird zum Schützen einer Delegierung verwendet.
+
+\subsection{NSEC}
+Dieser Eintrag ist eine Nichtexistesbestätigung.
+Ohne dieser, wäre eine Zonenaufzählung möglich oder ein offline-Wörterbuchangriff.
+
+\section{ab hier ist alt}
+
+\subsubsection{Resource Record Signature (RRSIG)}
+Dieser Resource Record (RR) enthält die Signaturen über ein bestimmtes RR Set.
+Die Signatur, die darin gespeichert ist, ist für einen bestimmten Namen und Typ gültig.
+
+
 In Abbildung-\ref{fig:rrsig} ist der Output von \textbf{dig example.com RRSIG} zu sehen. Das ist ein RRSIG Eintrag der Domäne example.com.
 
-\subsubsection{DNS Public Key (DNSKEY)}
+\subsection{DNS Public Key (DNSKEY)}
 Der öffentliche Schlüssel für die Zone. Mit diesem RR kann der Resolver die digitalen Signaturen der Zone prüfen.
 Dieser Eintrag speichert einen Schlüssel und keine Signatur, anderst als RRSIG.
 Für untergeordnete Zonen wird dieser Eintrag als child DNSKEY (CDNSKEY) bezeichnet.
-\subsubsection{Delegation Signer (DS)}
+\subsection{Delegation Signer (DS)}
 Verknüpft eine delegierte Kindzone mit der übergeordneten Zone.
 Es ist ein RR der zum Schützen Delegierung verwendet wird.
 Es gibt diesen RR auch für untergeordnete Delegierungssignaturgeber, sog. child delegation signer (CDS).
-\subsubsection{Next Secure (NSEC)}
+\subsection{Next Secure (NSEC)}
 NSEC ist ein Beweis der nicht-existenz einer Zone oder eines Domänennamens.
 Er verhindert einen Angriff durch Zonenaufzählungen.
 Die neuste Version des NSEC ist durch RFC 9824 \cite{ietf-rfc-9824} beschrieben
 \cite{ietf-rfc-4033,ietf-rfc-4034,ietf-rfc-4035,asudbringUebersichtUeberDNSSEC}.
 
-\subsubsection{Signatur Algorithmen für DNSSEC}
+\section{DNSSEC trust chain}
+
+Wenn der DNS-Namensraum aus \ref{fig:dns-baum} um die DNSSEC Erweiterungen ergänzt wird, dann könnte er aussehen, wie in \ref{fig:dnssec-baum} dargestellt.
+
+\begin{figure}[htbp]
+\centering
+\begin{forest}
+for tree={
+  rectangle, draw, rounded corners=2pt, align=center, font=\small,
+  minimum height=1.6em, l sep=32pt, s sep=12pt,
+  edge={-{Stealth[length=4pt]}}
+}
+[{. (Root)\\\scriptsize KSK, ZSK}, fill=yellow!20
+  [{com\\\scriptsize KSK, ZSK}, edge label={node[midway,left,font=\scriptsize]{DS}}
+    [{example.com\\\scriptsize KSK, ZSK}, edge label={node[midway,left,font=\scriptsize]{DS}}
+      [{www.example.com\\\scriptsize A, RRSIG}]
+      [{mail.example.com\\\scriptsize MX, RRSIG}]
+    ]
+  ]
+  [{de\\\scriptsize KSK, ZSK}, edge label={node[midway,left,font=\scriptsize]{DS}}
+    [{example.de\\\scriptsize KSK, ZSK}, edge label={node[midway,left,font=\scriptsize]{DS}}]
+  ]
+  [{org\\\scriptsize KSK, ZSK}, edge label={node[midway,right,font=\scriptsize]{DS}}
+    [{example.org\\\scriptsize KSK, ZSK}, edge label={node[midway,right,font=\scriptsize]{DS}}]
+  ]
+]
+\end{forest}
+\caption{DNS-Namensraum aus \ref{fig:dns-baum} mit DNSSEC Erweiterung}
+\label{fig:dnssec-baum}
+\end{figure}
+
+\subsection{Signatur Algorithmen für DNSSEC}
 Durch diese Erweiterungen von DNSSEC ist eine vergrößerung der UDP Pakete (Extension Mechanisms for DNS (EDNS0)) notwendig.\cite{ietf-rfc-2671}
 von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit unterstützt.\cite{roseSecureDomainName2026}
 \begin{table}[htbp]
@@ -92,7 +158,7 @@ von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit un
 
 Wie aus Abbildung-\ref{fig:rrsig} anhand des DNS Code 13 entnehmen kann wird, in diesem Paket, ECDSA P-256 mit SHA-256 als Signatur Algorithmus verwendet.
 
-\section{Upgrade auf PQC}
+\subsubsection{Upgrade auf PQC}
 Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
 Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in Abbildung-\ref{fig:NIST-PQC-Standarts}, die aus Runde 4 standartisierten NIST-Standarts für Digitale Signaturen und deren Varianten.
 \begin{table}[htbp]
