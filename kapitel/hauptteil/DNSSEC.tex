@@ -12,7 +12,7 @@ DNS geht immer davon aus, dass alle Antworten vertrauenswürdig sind, dadurch is
 Ein Angriff, mit gefälschten DNS-Antwort die Verkehr umzuleiten, ist DNS-Cache-Poisoning.
 
 \section{DNS-Cache-Poisoning Angriff}
-DNS nimmt alle DNS-Antworten entgegen, ohne diese zu auf Echtheit zu überprüfen.
+DNS nimmt alle DNS-Antworten entgegen, ohne diese kryptografisch auf Echtheit zu überprüfen.
 Dadurch kann ein Angreifer, gefälschte Resource Records an den DNS-Server senden, die anstelle der angegebenen Website, auf eine eine schädliche, vom Angreifer kontrollierten Seite, verweisen.
 
 DNS nimmt diesen Eintrag einfach entgegen und speichert ihn im Cache.
@@ -44,24 +44,25 @@ Die wichtigsten sind, DNSKEY, RRSIG sowie DS und NSEC(3).
 \subsection{ZSK und KSK}
 Für DNSSEC sind zwei neue Schlüssel erforderlich:
 \begin{itemize}
-    \item \textbf{Zone Signing Key (ZSK)} ein privater Schlüssel um die RR der Zone zu signieren.
+    \item \textbf{Zone Signing Key (ZSK)} ein privater Schlüssel um die DNSKEY-Record der Zone zu signieren.
     \item \textbf{Key Signing Key (KSK)} ein privater Schlüssel um den Schlüssel einer Zone (ZSK) zu signieren, dieser hat oftmals eine längere Gültigkeitsdauer, als ein ZSK.
 \end{itemize}
 Die beiden Schlüssel zum Verifizieren, die öffentlichen Schlüssel, für ZSK und KSK sind im DNSKEY Record enthalten.
 
-\subsection{DNSKEY}
-Dieser Record enthält die öffentlichen Schlüssel für ZSK und KSK, dadurch können sich diese verfizieren lassen.
-Zum Verfizieren einer Kinderzone, hat die Kinderzone auch einen CDNSKEY \cite{asudbringUebersichtUeberDNSSEC}.
+\subsection{DNS Public Key (DNSKEY)}
+Der öffentliche Schlüssel für die Zone. Mit diesem RR kann der Resolver die digitalen Signaturen der Zone prüfen.
+Dieser Eintrag speichert einen Schlüssel und keine Signatur, anderst als RRSIG.
+Für untergeordnete Zonen wird dieser Eintrag als child DNSKEY (CDNSKEY) bezeichnet.
 
 \subsection{RRSIG}
-Wenn eine Signatur für eine Zone erstellt wird, wird nicht nur ein einzelner RR signiert, sondern alle RR der Zone werden zusammen signiert und zu einem RRSET zusammengefasst.
-Die Sinatur wird nach RFC-4033, durch die konkatenation der RRSIG Daten und aller RR berechnet:
+Wenn eine Signatur für eine Zone erstellt wird, wird nicht nur ein einzelner RR signiert, sondern alle RR der Zone werden zu einem RRSET zusammengefasst und dieses RRSET wird zusammen mit den RRSIG-Daten signiert.
+Die Signatur wird nach RFC-4033, durch die konkatenation der RRSIG Daten und aller RR berechnet:
 \begin{align*}
-    signatur=sign(RRSIG\_DATA\ |\ RR(1)\ |\ RR(2)\ldots)
+    signature = sign(RRSIG\_RDATA\ |\ RR(1)\ |\ RR(2)\ldots\ )
 \end{align*}
-Diese Signatur, aus allen RR wird dann in einem RRSIG der Zone gespeichert \cite{ietf-rfc-4033,WhatAreRRSETs2026}.
+Diese Signatur wird dann in einem RRSIG der Zone gespeichert \cite{ietf-rfc-4033,WhatAreRRSETs2026}.
 
-In \ref{fig:rrsig} ist der RR von example.com als Output von \textbf{dig example.com RRSIG} zu sehen.
+In Abbildung-\ref{fig:rrsig} ist der Output von \textbf{dig example.com RRSIG} zu sehen. Das ist ein RRSIG Eintrag der Domäne example.com.
 
 \begin{figure}[htbp]
     \lstinputlisting{src/rr_rrsig.txt}
@@ -69,37 +70,14 @@ In \ref{fig:rrsig} ist der RR von example.com als Output von \textbf{dig example
     \label{fig:rrsig}
 \end{figure}
 
-\newpage
-
-\subsection{DS}
-Wird zum Schützen einer Delegierung verwendet.
-
-\subsection{NSEC}
-Dieser Eintrag ist eine Nichtexistesbestätigung.
-Ohne dieser, wäre eine Zonenaufzählung möglich oder ein offline-Wörterbuchangriff.
-
-\section{ab hier ist alt}
-
-\subsubsection{Resource Record Signature (RRSIG)}
-Dieser Resource Record (RR) enthält die Signaturen über ein bestimmtes RR Set.
-Die Signatur, die darin gespeichert ist, ist für einen bestimmten Namen und Typ gültig.
-
-
-In Abbildung-\ref{fig:rrsig} ist der Output von \textbf{dig example.com RRSIG} zu sehen. Das ist ein RRSIG Eintrag der Domäne example.com.
-
-\subsection{DNS Public Key (DNSKEY)}
-Der öffentliche Schlüssel für die Zone. Mit diesem RR kann der Resolver die digitalen Signaturen der Zone prüfen.
-Dieser Eintrag speichert einen Schlüssel und keine Signatur, anderst als RRSIG.
-Für untergeordnete Zonen wird dieser Eintrag als child DNSKEY (CDNSKEY) bezeichnet.
 \subsection{Delegation Signer (DS)}
 Verknüpft eine delegierte Kindzone mit der übergeordneten Zone.
 Es ist ein RR der zum Schützen Delegierung verwendet wird.
 Es gibt diesen RR auch für untergeordnete Delegierungssignaturgeber, sog. child delegation signer (CDS).
 \subsection{Next Secure (NSEC)}
 NSEC ist ein Beweis der nicht-existenz einer Zone oder eines Domänennamens.
-Er verhindert einen Angriff durch Zonenaufzählungen.
-Die neuste Version des NSEC ist durch RFC 9824 \cite{ietf-rfc-9824} beschrieben
-\cite{ietf-rfc-4033,ietf-rfc-4034,ietf-rfc-4035,asudbringUebersichtUeberDNSSEC}.
+NSEC3 verhindert durch hashing einen Angriff durch Zonenaufzählungen, der durch NSEC möglich wird
+\cite{ietf-rfc-4033,ietf-rfc-4034,ietf-rfc-4035,asudbringUebersichtUeberDNSSEC,HowDoesDNSSEC}.
 
 \section{DNSSEC trust chain}
 
@@ -132,9 +110,15 @@ for tree={
 \label{fig:dnssec-baum}
 \end{figure}
 
+Jede Zone besitzt einen ZSK und KSK, sie erzeugen ein RRSIG aus ihren RR und RR-Daten.
+Der öffentliche Schlüssel, der obersten Zone, ist der \textbf{Vertrauensanker (trust anchor)} des gesamten Namensraumes, von diesem aus, werden alle weiteren Schlüssel verifiziert.
+Alle Elternzonen enthalten DS Records, um zu bestätigen, welche Kinderzonen zu ihnen gehören \cite{asudbringUebersichtUeberDNSSEC,ietf-rfc-4033,HowDoesDNSSEC}.
+
+\newpage
+
 \subsection{Signatur Algorithmen für DNSSEC}
-Durch diese Erweiterungen von DNSSEC ist eine vergrößerung der UDP Pakete (Extension Mechanisms for DNS (EDNS0)) notwendig.\cite{ietf-rfc-2671}
-von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit unterstützt.\cite{roseSecureDomainName2026}
+Durch diese Erweiterungen von DNSSEC ist eine vergrößerung der UDP Pakete (Extension Mechanisms for DNS (EDNS0)) notwendig \cite{ietf-rfc-6891}.
+von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit unterstützt \cite{roseSecureDomainName2026}.
 \begin{table}[htbp]
 \centering
 \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|}
@@ -160,7 +144,7 @@ Wie aus Abbildung-\ref{fig:rrsig} anhand des DNS Code 13 entnehmen kann wird, in
 
 \subsubsection{Upgrade auf PQC}
 Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
-Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in Abbildung-\ref{fig:NIST-PQC-Standarts}, die aus Runde 4 standartisierten NIST-Standarts für Digitale Signaturen und deren Varianten.
+Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in \ref{fig:NIST-PQC-Standarts}, die NIST-Standarts für Digitale Signaturen und deren Varianten.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|c|}
