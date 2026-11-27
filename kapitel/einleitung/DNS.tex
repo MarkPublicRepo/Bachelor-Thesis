@@ -7,7 +7,7 @@ Bevor es DNS gab, wurde eine HOSTS.TXT Datei verwendet, in der alle Namen der Co
 Weil durch die wachstende Größe des Internets, die Anzahl nicht mehr überschaubar und das heraussuchen der Namen zu uneffizient wurde,
 wurde DNS eingeführt.
 
-DNS ist ein ein System, das dazu da ist, IP-Adressen in Namen umzuwandeln die für Menschbar lesbar und umgänglich sind.
+DNS ist ein System, das dazu da ist, IP-Adressen in Namen umzuwandeln, die für Menschbar lesbar und umgänglich sind.
 Ebenso kann DNS auch Namen in IP-Adressen umwandeln, was als reverse-DNS bezeichnet wird.
 In \ref{fig:output-host-example.com} lässt sich sehen, dass zum Beispiel zu der IP-Adresse 104.20.23.154 der Computername example.com gehört.
 
@@ -20,18 +20,18 @@ Mit \enquote{dig example.com} enthält man einen Resource Record, worauf noch ei
   \label{fig:output-host-example.com}
 \end{figure}
 
-DNS ist ein wichtiger Dienst um kommunikation im Internet zu ermöglichen, meistens ist es sogar einer der ersten Dienste die überhaupt die Kommunikation im Internet unter Computern ermöglicht.\\
+DNS ist ein wichtiger Dienst um die Kommunikation im Internet zu ermöglichen, meistens ist es sogar einer der ersten Dienste überhaupt, der die Kommunikation von Computern im Internet ermöglicht.\\
 
 \section{Domain Name Space und Ressource Records}
 Der Domain Name Space (DNS-Namespace, (DNS-)Namensraum) beschreibt den kompletten Baum aller vorhandenen Domänen.
 
 Der DNS Baum teilt sich anhand dessen Domänen auf. Die oberste Domäne ist die sogenannte root-Domain und wird mit einem \enquote{.} gekennzeichnet.
 Unter der root-Domain liegen die Top-Level-Domains (TLD).
-In Abbildung-\ref{fig:dns-baum} sind com, de und org die TLDs, es sind immer die Domänen, die unmittelbar unter der root-Domain liegen.
-Die Knoten darunter, die keine Blätter sind, sind weitere Domänen, wenn sie weitere Kinder haben, wie in Abbildung-\ref{fig:dns-baum}, com, de, org und auch example.com, dann werden diese als Subdomänen bezeichnet.
+In \ref{fig:dns-baum} sind com, de und org die TLDs, es sind immer die Domänen, die unmittelbar unter der root-Domain liegen.
+Die Knoten darunter, die keine Blätter sind, sind weitere Domänen, wenn sie weitere Kinder haben, wie in \ref{fig:dns-baum}, com, de, org und auch example.com, dann werden diese als Subdomänen bezeichnet.
 Jeder Bestandteil eines Domänennamens, zwischen zwei Punkten, wie in www.example.com, \enquote{www}, \enquote{example} und \enquote{com}, wird als Label bezeichnet.
 
-Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, Domänen-Server sind verteilte Datenbanksysteme und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein\cite{baunComputernetzeKompaktPraxisorientierte2025}.
+Wie die DNS-Server verteilt sind ist unterschiedlich, ihre zuordnung ist rein logisch, Domänen-Server sind verteilte Datenbanksysteme und die einzelnen Computer können unterschiedlich auf der ganzen Welt verteilt sein \cite{baunComputernetzeKompaktPraxisorientierte2025}.
 
 % diese figure ist von claude generiert worden. Muss erwähnt werden!
 \begin{figure}[htbp]
@@ -62,7 +62,7 @@ for tree={
 
 Die Hirarchie der Domänen wird von rechts nach links gelesen.
 Die jeweilige Zone kann mehrere labels haben oder wiederrum subdomänen.
-Im Beispiel von Abbildung-\ref{fig:dns-baum} haben org und de, jeweils ein label namens example.
+Im Beispiel von \ref{fig:dns-baum} haben org und de, jeweils ein label namens example.
 Das der Name example in beiden Domänen vorkommt, führt zu keinem Konflikt.
 Trotz dass der Name der gleiche ist, kann unterschieden werden, weil dieser nicht in der selben Domäne ist.
 Im Fall von der com Domäne ist example wieder eine subdomäne, die die labels \enquote{www} und \enquote{mail} besitzt.
@@ -93,10 +93,14 @@ Es gibt unterschiedliche Ressourcen, mit unterschiedlichen Ressource Records, wi
     \hline
     SOA & Identifiziert den Beginn einer Authoritätszone\\
     \hline
+    TXT & Reiner Text\\
+    \hline
   \end{tabular}
   \caption{Ressource Record Typen}
   \label{tab:rr-types}
 \end{table}
+
+In Ressource Records (RR) werden Informationen über die Domänen gespeichert.
 
 \section{Namensserver und Namensauflösung}
 Diese Server besitzen DNS Informationen über ihre Zone und über die anderen Namensserver im Namensraum, falls auf diese verwiesen werden soll.
