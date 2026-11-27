@@ -15,11 +15,11 @@
 \chapter{Quantenalgorithmen}
 \label{section-Quantenalgorithmen}
 Um einen Quantenalgorithmus zu entwickeln, sind fundamental neue logische Operatoren notwendig.
-Damit ein Algorithmus effizient ist, müssen die Prinzipen, Quantenverschränkung, interferenz und Dekohärenz, effektiv eingesetzt werden.
+Damit ein Algorithmus effizient ist, müssen die Prinzipen, Quantenverschränkung und interferenz, effektiv eingesetzt werden und Dekohärenz minimiert werden.
 
 \section{Logische Gatter und Komponenten}
 Quantengatter können durch Matrizen als das mathematische Äquivalent dargestellt werden.
-Eine wichtige Maßnahme dazu ist, dass die Gatter eine Unitäre Matrix sind und das alle Amplituden a, $\sum_{i}{|a_i|}^2=1$.
+Eine wichtige Maßnahme dazu ist, dass die Gatter eine Unitäre Matrix sind und das alle Amplituden $a$ gilt, $\sum_{i}{|a_i|}^2=1$.
 Ein wichtiges Gatter ist das Hadamard-Gatter, dieses wird an den Qubits $|0\rangle=\qubitnull$ und $|1\rangle=\qubiteins$ verdeutlicht:
 \begin{equation}
     H = \frac{1}{\sqrt{2}}
@@ -29,13 +29,13 @@ Ein wichtiges Gatter ist das Hadamard-Gatter, dieses wird an den Qubits $|0\rang
     \end{pmatrix}
     \label{eq:Hadamard-matrix}
 \end{equation}
-Mathematische Definition aus Gleichung-\ref{eq:Hadamard-matrix}, mit ihr kann eine Qubit in eine Superposition gebracht und auch wieder in eine feste Position gebracht werden.
-Angewandt auf Qubits, bringen sie folgende Resultate:
+Die mathematische Darstellung eines Hadamard-Gatters ist \ref{eq:Hadamard-matrix}, mit ihr kann eine Qubit in eine Superposition gebracht und auch wieder in eine feste Position gebracht werden.
+Angewandt auf die Qubits $|0\rangle$ und $|1\rangle$, bringt sie folgende Resultate:
 \begin{align}
     H|0\rangle = \hadamard \qubitnull = \plusspin = |+\rangle\\
     H|1\rangle = \hadamard \qubiteins = \minusspin = |-\rangle
 \end{align}
-Die Zustände haben zwar die gleiche Wahrscheinlichkeit aus 0 oder 1, allerdings unterscheidet sich ihre phase, welcher entscheident ist für Interferenz.
+Die Zustände haben zwar die gleiche Wahrscheinlichkeit aus 0 oder 1, allerdings unterscheidet sich ihre Phase, welche entscheident ist für Interferenz.
 Wenn die Hadamard-Matrix erneut auf $|-\rangle$ oder $|+\rangle$ angewandt wird, ergibt sich wieder der ursprüngliche Zustand 0 oder 1.
 Wichtig für einen Quantenalgorithmus ist zudem das Orakel / die Blackbox.
 Quantenalgorithmen wie der Deutsch- oder Deutsch-Jozsa-Algorithmus funktionieren nach dem query model.
@@ -45,8 +45,8 @@ Ein Quantencomputer kann mehrere Eingabe auf einmal an das Orakel stellen, damit
 
 \section{Deutsch-Algorithmus}
 Der Deutsch Algorithmus ist einer der ersten Quantenalgorithmen, der gezeigt hat, dass ein Quantencomputer theoretisch einen Vorteil gegenüber einem klassischen Computern haben kann.
-Dieser Algorithmus hat keinen praktischen nutzen, ist aber ein gutes Beispiel wie so ein Algorithmus funktionieren kann.
-Das Problem ist, wir haben eine Funktion f, die entweder konstant oder balanciert ist.
+Dieser Algorithmus hat keinen praktischen nutzen, ist aber ein gutes Beispiel wie ein Quantenalgorithmus funktionieren kann.
+Das zu-lösende Problem ist, wir haben eine Funktion f, die entweder konstant oder balanciert ist.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{c|c|c|c|c}
@@ -60,7 +60,7 @@ Das Problem ist, wir haben eine Funktion f, die entweder konstant oder balancier
     \label{fig:deutsch-algorithmus}
 \end{table}
 
-Die Funktion aus Abbilung-\ref{fig:deutsch-algorithmus} ist balanciert wenn sie wie $f_2$ und $f_3$ gleich häufig 0 wie 1 als Ergebnis liefert, im Fall von $f_1$ und $f_4$ ist sie konstant.
+Die Funktion aus \ref{fig:deutsch-algorithmus} ist balanciert wenn sie wie $f_2$ und $f_3$ gleich häufig 0 wie 1 als Ergebnis liefert, im Fall von $f_1$ und $f_4$ ist sie konstant.
 Der Deutsch-Algorithmus funktioniert nur genau für dieses Problem, in dem wir die Funktion $f\colon\Sigma\to\Sigma$ mit $\Sigma\in\{0,1\}$ haben.
 
 \begin{problem}{Deutsch-Problem}
@@ -69,24 +69,25 @@ Der Deutsch-Algorithmus funktioniert nur genau für dieses Problem, in dem wir d
   \Output  \enquote{konstant} oder \enquote{balanciert}.
 \end{problem}
 
-der Deutsch Algorithmus kann folgendermaßen dargestellt werden:
+der Deutsch Algorithmus kann folgendermaßen als Qiskit-Schaltkreis dargestellt werden:
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{bilder/Deutsch_algo.png}
+    \includegraphics[width=0.7\textwidth]{bilder/Deutsch_algo.png}
     \caption{Schaltkreis des Deutsch-Algorithmus \cite{DeutschsAlgorithm}}
     \label{fig:deutsch-schaltkreis}
 \end{figure}
 
-Wie in Abbildung-\ref{fig:deutsch-schaltkreis} zu sehen ist, werden zuerst zwei Qubits initialisiert mit den Werten 0 und 1.
-in einem n-qubit system, werden die Qubits über das tensor produkt verbunden.
-Die Qubits werden absichtlich mit $|0\rangle$ und $|1\rangle$ initialisiert, in das erste Qubit $|0\rangle$ wird der Wert für x rein geschrieben, das andere Qubit wird als hilfsregister verwendet, es wird mit dem Ergebnis der Funktion beschrieben.
+Wie in \ref{fig:deutsch-schaltkreis} zu sehen ist, werden zuerst zwei Qubits initialisiert in den Zuständen $|0\rangle$ und $|1\rangle$.
+in einem n-Qubit system, werden die Qubits über das tensor produkt verbunden.
+Die Qubits werden absichtlich mit $|0\rangle$ und $|1\rangle$ initialisiert, in das erste Qubit $|0\rangle$ wird der Wert für $x$ geschrieben, das andere Qubit wird als hilfsregister verwendet, es wird mit dem Ergebnis der Funktion beschrieben.
+
 Wenn wir bei der initialisierung der Qubits, den Zustand $|\pi_1\rangle$ haben, dann wäre dieser:
 \begin{align}
     |\pi_0\rangle=|1\rangle|0\rangle\\
     |\pi_0\rangle=|10\rangle
 \end{align}
 
-Als erster Schritt, wird auf beide Qubits jeweils ein Hadamard-Gatter angewandt, im in Abbildung-\ref{fig:deutsch-schaltkreis} beschriebenen Zustand $|\pi_1\rangle$ bilden die Qubits den Zustand:
+Als erster Schritt, wird auf beide Qubits jeweils ein Hadamard-Gatter angewandt, im in \ref{fig:deutsch-schaltkreis} beschriebenem Zustand $|\pi_1\rangle$ bilden die Qubits den Zustand:
 \begin{align}
     &H|0\rangle=\plusspin=|+\rangle\\
     &H|1\rangle=\minusspin=|-\rangle\\
@@ -97,9 +98,9 @@ Durch ausmultiplizieren erhalten wir:
     |\pi_1\rangle=\frac{1}{2}(|0\rangle-|1\rangle)|0\rangle+\frac{1}{2}(|0\rangle-|1\rangle)|1\rangle
 \end{align}
 Nachdem sich die Qubits in superposition befinden, wird das Orakel befragt.
-Das ist der Vorteil eines Quantencomputers, dieser kann mit nur einer Abfrage des zwei-Qubit Systems eine Antwort enthalten, ein klassischer Computer müsste zwei seperate Anfragen für die Fälle 0 oder 1 machen.
-Das Orakel $U_f$ ist ebenfalls eine unitäre Matrix und wird durch $U_f|x\rangle|y\rangle=|x\rangle|y\otimes f(x)\rangle$ definiert.
-Durch das Orakel wird das 0-Qubit nicht verändert, das 1-Qubit wird abhängig vom 0-Qubit verändert, wie in \ref{fig:orakel-deutsch-algorithmus} zu sehen ist.
+Das ist der Vorteil eines Quantencomputers, dieser kann mit nur einer Abfrage des zwei-Qubit Systems eine Antwort enthalten, ein klassischer Computer müsste zwei seperate Anfragen für die Fälle 0 oder 1 stellen.
+Das Orakel $U_f$ ist ebenfalls eine unitäre Matrix und wird durch $U_f|x\rangle|y\rangle=|x\rangle|y\oplus f(x)\rangle$ definiert.
+Durch das Orakel wird das $|0\rangle$-Qubit nicht verändert, das $|1\rangle$-Qubit wird abhängig vom $|0\rangle$-Qubit verändert, wie in \ref{fig:orakel-deutsch-algorithmus} zu sehen ist.
 
 \begin{figure}[htbp]
     \centering
@@ -125,7 +126,7 @@ Nachdem wir $|\pi_1\rangle$ darauf ausgeführt haben, erhalten wir den Zustand:
 )|1\rangle
 \end{align}.
 
-Wenn wir betracht ziehen, dass man auch noch folgendes vereinfachen kann:
+Wenn man in betracht zieht, dass man auch noch folgendes vereinfachen kann:
 \begin{align}
     |0\oplus a\rangle - |1\oplus a\rangle=(-1)^a(|0\rangle-|1\rangle)
 \end{align}
@@ -139,7 +140,7 @@ Dann lässt sich $|\pi_2\rangle$ auch so schreiben:
 Interessanterweise hat dabei das Hilfs-Qubit seinen Zustand $|-\rangle$ behalten.
 Das Eingabe-Qubit erhält abhängig von $f(x)$ eine Phase von $(-1)^{f(x)}$, dadurch wird die Phase auf das Eingabe-Qubit \enquote{zurückübertragen}, das wird als \textbf{Phase Kickback} bezeichnet und ist wichtig für die Interferenz der verschiedenen Rechenpfade.
 
-Vereinfacht lässt sich dann $|\pi_2\rangle$ noch wie in Gleichung-\ref{eq:vereinfacht-pi-zwei} darstellen.
+Vereinfacht lässt sich dann $|\pi_2\rangle$ noch wie in \ref{eq:vereinfacht-pi-zwei} darstellen.
 \begin{equation}
     |\pi_2\rangle=|-\rangle\left(\frac{
         (-1)^{f(0)}|0\rangle+(-1)^{f(1)}|1\rangle
@@ -150,7 +151,7 @@ Vereinfacht lässt sich dann $|\pi_2\rangle$ noch wie in Gleichung-\ref{eq:verei
     \label{eq:vereinfacht-pi-zwei}
 \end{equation}
 
-Wenn der Faktor $(-1)^{f(0)}$ aus der Summe von Gleichung-\ref{eq:vereinfacht-pi-zwei} gezogen wird, erhalten wir:
+Wenn der Faktor $(-1)^{f(0)}$ aus der Summe von \ref{eq:vereinfacht-pi-zwei} gezogen wird, erhalten wir:
 \begin{equation}
     |\pi_2\rangle=
     (-1)^{f(0)}|-\rangle\left(\frac{
@@ -170,7 +171,7 @@ Wenn der Faktor $(-1)^{f(0)}$ aus der Summe von Gleichung-\ref{eq:vereinfacht-pi
 \end{equation}
 
 Nach der Anwendung des letzten Hadamard-Gatters auf das erste Qubit, erhalten wir den Zustand $|\pi_3\rangle$.
-Der Zustand $|\pi_3\rangle$ sieht so aus wie in Gleichung-\ref{eq:pi-drei}:
+Der Zustand $|\pi_3\rangle$ sieht so aus wie in \ref{eq:pi-drei}:
 \begin{equation}
 |\pi_3\rangle =
 \begin{cases}
@@ -183,10 +184,10 @@ Der Zustand $|\pi_3\rangle$ sieht so aus wie in Gleichung-\ref{eq:pi-drei}:
 \end{equation}
 
 Dabei steht das $|-\rangle$ für das Hilfsbit und das andere/rechte Qubit für das Eingabe-Qubit.
-Nun kann zuletzt die Messung des rechten Qubits erfolgen, dadurch bricht die Superposition zusammen und das Qubit nimmt den Wert 0 oder 1 an.
+Nun kann zuletzt die Messung des rechten Qubits erfolgen, dadurch bricht die Superposition zusammen und das Qubit nimmt eine Wahrscheinlichkeit für den Wert 0 oder 1 an.
 Bei einer konstanten Funktion nimmt das Qubit den Wert 0 an und bei einer balancierten den Wert 1.
 
-Mit einem klassischen Computer müsste man f(0) und f(1) prüfen, um festzustellen ob f konstant oder balanciert ist, mit einem Quantencomputer und dem Deutsch-Algorithmus genügt eine Anfrage.
+Mit einem klassischen Computer müsste man $f(0)$ und $f(1)$ prüfen, um festzustellen ob $f$ konstant oder balanciert ist, mit einem Quantencomputer und dem Deutsch-Algorithmus genügt eine Anfrage.
 Der Vorteil ist realistisch nicht wahrnehmbar, aber es zeigt das es theoretisch möglich ist einen Quantenvorteil zu schaffen.
 
 Dieser Algorithmus ist bereits kompliziert und abstrakt, er ist aber noch ziemlich simpel im Vergleich zu anderen, die folgend nicht mehr ausführlich erklärt werden.
@@ -209,7 +210,7 @@ Der Algorithmus kann bei einer Funktion $f\colon\Sigma^n\to\Sigma$ für alle $n\
 
 Interressant zu sehen, ist auch das in \ref{fig:deutsch-jozsa-algorithmus} ein Qubit als $|1\rangle$ initialisiert wird, damit der Phase Kickback später wirken kann.
 
-Wenn alle ouput Qubits 0 sind, dann ist die Funktion f balanciert, falls mindestens ein Qubit des Output den Wert 1 hat, ist sie konstant.
+Wenn alle ouput Qubits 0 sind, dann ist die Funktion $f$ balanciert, falls mindestens ein Qubit des Output den Wert 1 hat, ist sie konstant.
 Funktionen, die weder balanciert noch konstant sind, werden nicht berücksichtigt und als sogenannten \enquote{dont-care input} bezeichnet.
 Dieser Quantenalgorithmus benötigt $O(1)$ Operationen um das Problem zu lösen, ein klassischer determisitischer Algorithmus liegt im schlechtesten Fall bei $2^{n-1}+1$ Anfragen.
 
@@ -249,7 +250,7 @@ Die Orakel Funktion ist die selbe query model wie bei den vorher genannten:
 \end{equation}
 Der gesamte Algorithmus wird aber mehrfach eingesetzt.
 Es werden $2n$ Qubits initialisiert.
-Nur n- von 2n-Qubits, werden durch ein Hadamard-Gatter geleitet, alle 2n durch die Orakel Funktion, die ersten n wieder durch ein Hadamard-Gatter und eine Messung der n-Qubits, die durch Hadamard-Gatter geleitet wurden.
+Nur $n$ von $2n$-Qubits, werden durch ein Hadamard-Gatter geleitet, alle $2n$ durch die Orakel Funktion, die ersten $n$ wieder durch ein Hadamard-Gatter und eine Messung der $n$-Qubits, die durch Hadamard-Gatter geleitet wurden.
 Dieses Vorgehen wird solange ausgeführt, bis sich mit einer ausreichenden Wahrscheinlichkeit der String bestimmen lassen kann.
 Dieser Algorithmus ist auch wichtig für heutige NISQ-Quantencomputer, da einige angepasste Versionen, sich mit diesen Computern benutzen lassen.
 Er war auch die Inspiration für Shor's Algorithmus zum effizienten Faktorisieren von Primfaktoren.
@@ -262,7 +263,7 @@ Klassische Verfahren brauchen für n Strings, durchschnittlich $O(\frac{n}{2})$ 
 Grover's Algorithmus lässt sich folgendermaßen definieren:
 \begin{problem}{Unstrukturierte Suche}
     \Input $f:\Sigma^n\to \Sigma$
-    \Output ein String $x\in \Sigma^n$ für den gilt f(x)=1 oder \enquote{keine Lösung}, falls kein solcher String existiert
+    \Output ein String $x\in \Sigma^n$ für den gilt $f(x)=1$ oder \enquote{keine Lösung}, falls kein solcher String existiert
 \end{problem}
 
 Anstelle ein Hilfs-Qubit zu verwenden um Nutzen des Phase Kickback zu machen, kann dies durch ein \textit{Phase Query Gate} implementiert werden.
@@ -329,13 +330,12 @@ Nun wird der Grover Operator t-mal angewendet:
 
 Dann erfolgt die Messung und mit hoher Wahrscheinlichkeit sollte der String gefunden worden sein, falls dieser existiert.
 für $t\approx\frac{\pi}{4}\sqrt{n}$ haben wir eine Laufzeitkomplexität von $O(\sqrt{N})$, es wird vermutet dass es unmöglich ist, dieses Problem in weniger als $O(\sqrt{N})$ Schritten zu lösen \cite{groverFastQuantumMechanical1996}.
-Dieses Problem lässt sich nicht mit randomisierten Algorithmen lösen, in $O(\sqrt{N})$.
+Dieses Problem lässt sich nicht mit randomisierten Algorithmen in $O(\sqrt{N})$ lösen.
 Dieser Algorithmus auf einem Quantencomputer, ist einem klassischen bei unstrukturierter Suche, überlegen.
 
 \section{Shor's Algorithmus}
 Wegen diesem Algorithmus besteht die Notwendigkeit der Post-Quanten-Kryptografie und folglich diese Bachelorarbeit.
-Shor's Algorithmus ist ein hybrider Algorithmus, teile davon werden klassisch berechnet und der rechenintensive Teil wird auf einem Quantencomputer ausgeführt,
-nämlich das unterliegende Problem der Periodenfindung.
+Shor's Algorithmus ist ein hybrider Algorithmus, teile davon werden klassisch berechnet und der rechenintensive Teil, nämlich das unterliegende Problem der Periodenfindung, wird auf einem Quantencomputer ausgeführt.
 Es ist möglich herauszufinden, ob eine Funktion periodisch ist oder nicht.
 Wenn mit der Periode $\omega$ eine Funktion gesucht wird, für:
 \begin{equation}
@@ -343,10 +343,10 @@ Wenn mit der Periode $\omega$ eine Funktion gesucht wird, für:
     \label{eq:shors-problem}
 \end{equation}
 Dann kann shor's Algorithmus, effizient die Periode $\omega$ finden, wenn diese existiert.
-Aus der Gleichung-\ref{eq:shors-problem} macht sich die Ähnlichkeit zu Simon's Problem sichbar, tatsächlich war Simon's Algorithmus auch eine Inspiration für Shor's Algorithmus.
+Durch die Gleichung von \ref{eq:shors-problem} wird die Ähnlichkeit zu Simon's Problem sichbar, tatsächlich war Simon's Algorithmus auch eine Inspiration für Shor's Algorithmus.
 
 Um grob zu verstehen, wie Shor's Algorithmus funktioniert, wird das finden von Primfaktoren am Bespiel von $N=15$, $p=3$ und $q=5$ gezeigt.
-Angenommen wir wissen nur das $N=15$ ist, p und q sind unbekannt.
+Angenommen wir wissen nur das $N=15$ ist, $p$ und $q$ sind unbekannt.
 Als erstes wird eine Zahl $a$ mit $1<a<N$ gewählt. Wenn $gcd(a,N) > 1$ gilt, dann ist bereits ein nicht-trivialer Teiler von $N$ gefunden, ansonsten muss ein $r$ (hier für $\omega$) berechnet werden, für das gilt:
 \begin{equation}
     a^r \equiv 1 \bmod N
@@ -361,9 +361,9 @@ Dann liefern:
     gcd\left(a^{r/2}-1, N\right)\\
     gcd\left(a^{r/2}+1, N\right)
 \end{align}
-jeweils, nicht-triviale Teiler von N.
+jeweils, nicht-triviale Teiler von $N$.
 
-Wenn diese Bedingungen erfüllt sind, dann wissen wir auch dass $a^2-1 \equiv 0 \bmod N$ dann gelten muss und dass dadurch $a^2-1$ ein vielfaches von N ist.
+Wenn diese Bedingungen erfüllt sind, dann wissen wir auch dass $a^2-1 \equiv 0 \bmod N$ dann gelten muss und dass dadurch $a^2-1$ ein vielfaches von $N$ ist.
 Deshalb gibt es auch eine ganze Zahl $l$, für die gilt:
 \begin{equation}
     a^r-1 = lN
@@ -376,7 +376,7 @@ Nach der dritten Binomischen Formel, können wir es auch so umschreiben:
 
 Das bedeutet, es muss $p=gcd(a^2-1, N)\ \text{und}\ q=gcd(a^2+1, N)$ gelten, oder umgekehrt.
 
-Um den größten gemeinsamen Teiler zwischen zwei Zahlen, a und b, zu nennen, verwenden wir die Bezeichnung $\gcd(a,b)$.
+Um den größten gemeinsamen Teiler zwischen zwei Zahlen, $a$ und $b$, zu nennen, verwenden wir die Bezeichnung $\gcd(a,b)$.
 \begin{algorithm}[htbp]
 \caption{shor's Algorithmus}
 \label{alg:shors-algorithmus}
@@ -424,9 +424,9 @@ An einem Funktionsgrafen lässt sich das deutlicher sehen.
     \label{fig:funktionsgrafen}
 \end{figure}
 
-Wie in Abbildung-\ref{fig:funktionsgrafen} zu sehen ist, weißt die Funktion ein Muster auf.
+Wie in \ref{fig:funktionsgrafen} zu sehen ist, weißt die Funktion ein Muster auf.
 Sie wiederholt sich nach einer bestimmten Anzahl an Schritten, dadurch lässt sich der Algorithmus der Periodenfindung ebenfalls auf sie anwenden.
-Die Funktion aus Abbildung-\ref{fig:funktionsgrafen}, wiederholt sich immer nach 4 Schritten, dabei spricht man von einer Ordnung ($r$) von $r=4$.
+Die Funktion aus \ref{fig:funktionsgrafen}, wiederholt sich immer nach 4 Schritten, dabei spricht man von einer Ordnung ($r$) von $r=4$.
 
 Der Algorithmus zur Periodenfindung, lässt sich mit IBM's Qiskit, folgendermaßen als Schaltkreis darstellen:
 \begin{figure}[htbp]
@@ -436,7 +436,8 @@ Der Algorithmus zur Periodenfindung, lässt sich mit IBM's Qiskit, folgendermaß
     \label{fig:periodenfindung-schaltkreis}
 \end{figure}
 
-In Abbildung-\ref{fig:periodenfindung-schaltkreis} sind gleich einige Qubit Zustände zu sehen und Unitäre Operatoren, die vereinfacht der Reihe nach erklärt werden sollen.
+In \ref{fig:periodenfindung-schaltkreis} sind gleich einige Qubit Zustände zu sehen und Unitäre Operatoren, die vereinfacht der Reihe nach erklärt werden sollen.
+
 Die Qubits in $|0^m\rangle$ sind da für die Phasenabschätzung, durch die steigende Anzahl an verwendeten Qubits, steigt die genauigkeit der Phasenabschätzung.
 Die eigentlichen Zustände werden in $|\psi\rangle$ berechnet, durch die Parallelisierung von Quantenprozessoren kann eine sehr große Menge an Zuständen gleichzeitig berechnet werden.
 
