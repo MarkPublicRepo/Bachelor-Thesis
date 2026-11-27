@@ -34,7 +34,7 @@ Dadurch sind nun weitere Angriffe oder sonstige schädliche Vorhaben möglich.
 \section{Die DNSSEC Erweiterungen}
 Um die Authentizität und Integrität der DNS Einträge zu gewährleisten, gibt es die DNS Security Extensions (DNSSEC).
 DNSSEC signiert Resource Records und gewährt somit Authentizität und Integrität, die von einem Resolver geprüft werden können.
-Es muss berücksichtigt werden, dass dadurch aber keine Vertraulichkeit der Daten gewährleistet wird und auch Angriffe wie DNS-Rebinding Angriffe und D(DoS) Angriffe sind weiterhin möglich.
+Es muss berücksichtigt werden, dass dadurch aber keine Vertraulichkeit der Daten gewährleistet wird und auch Angriffe wie DNS-Rebinding und D(DoS) weiterhin möglich sind.
 
 
 \section{DNSSEC Resource Record Typen}
@@ -53,8 +53,9 @@ Die beiden Schlüssel zum Verifizieren, die öffentlichen Schlüssel, für ZSK u
 Der öffentliche Schlüssel für die Zone. Mit diesem RR kann der Resolver die digitalen Signaturen der Zone prüfen.
 Dieser Eintrag speichert einen Schlüssel und keine Signatur, anderst als RRSIG.
 Für untergeordnete Zonen wird dieser Eintrag als child DNSKEY (CDNSKEY) bezeichnet.
+Für den KSK, gibt es ebenfalls einen DNSKEY Eintrag zur Verifizierung.
 
-\subsection{RRSIG}
+\subsection{Resource Record Signature (RRSIG)}
 Wenn eine Signatur für eine Zone erstellt wird, wird nicht nur ein einzelner RR signiert, sondern alle RR der Zone werden zu einem RRSET zusammengefasst und dieses RRSET wird zusammen mit den RRSIG-Daten signiert.
 Die Signatur wird nach RFC-4033, durch die konkatenation der RRSIG Daten und aller RR berechnet:
 \begin{align*}
@@ -111,14 +112,15 @@ for tree={
 \end{figure}
 
 Jede Zone besitzt einen ZSK und KSK, sie erzeugen ein RRSIG aus ihren RR und RR-Daten.
-Der öffentliche Schlüssel, der obersten Zone, ist der \textbf{Vertrauensanker (trust anchor)} des gesamten Namensraumes, von diesem aus, werden alle weiteren Schlüssel verifiziert.
+Der öffentliche Schlüssel, der obersten Zone, ist der \textbf{Vertrauensanker (trust anchor)} des gesamten Namensraumes.
+Von diesem aus, werden alle weiteren Schlüssel verifiziert.
 Alle Elternzonen enthalten DS Records, um zu bestätigen, welche Kinderzonen zu ihnen gehören \cite{asudbringUebersichtUeberDNSSEC,ietf-rfc-4033,HowDoesDNSSEC}.
 
 \newpage
 
 \subsection{Signatur Algorithmen für DNSSEC}
 Durch diese Erweiterungen von DNSSEC ist eine vergrößerung der UDP Pakete (Extension Mechanisms for DNS (EDNS0)) notwendig \cite{ietf-rfc-6891}.
-von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit unterstützt \cite{roseSecureDomainName2026}.
+von DNNSEC werden die Algorithmen aus \ref{fig:DNSSECalgos}, für digitale Signaturen, derzeit unterstützt \cite{roseSecureDomainName2026}.
 \begin{table}[htbp]
 \centering
 \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|}
@@ -140,11 +142,11 @@ von DNNSEC werden die Algorithmen aus Abbildung-\ref{fig:DNSSECalgos} derzeit un
 \label{fig:DNSSECalgos}
 \end{table}
 
-Wie aus Abbildung-\ref{fig:rrsig} anhand des DNS Code 13 entnehmen kann wird, in diesem Paket, ECDSA P-256 mit SHA-256 als Signatur Algorithmus verwendet.
+Wie aus \ref{fig:rrsig} anhand des DNS Code 13 zu entnehmen ist, wird in \ref{fig:rrsig}, ECDSA P-256 mit SHA-256 als Signatur Algorithmus verwendet.
 
 \subsubsection{Upgrade auf PQC}
-Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt eine Erweiterung der UDP Pakete.\cite{ietf-rfc-2671}
-Die Post-Quantum Signatur Algorithmen gehen teilweise bereits in den KB Bereich. Zum Vergleich in \ref{fig:NIST-PQC-Standarts}, die NIST-Standarts für Digitale Signaturen und deren Varianten.
+Die klassischen Signatur Algorithmen haben bereits große Schlüssel- und Signaturlängen und DNSSEC benötigt dadurch eine Erweiterung der UDP Pakete \cite{ietf-rfc-2671}.
+Die Post-Quantum Signatur Algorithmen gehen allerdings teilweise bereits in den KB Bereich. Zum Vergleich in \ref{fig:NIST-PQC-Standarts}, die NIST-PQC-Standarts für Digitale Signaturen und deren Varianten.
 \begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|>{\centering\arraybackslash}p{3.5cm}|c|c|}
