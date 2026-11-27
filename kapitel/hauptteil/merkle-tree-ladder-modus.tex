@@ -1,13 +1,13 @@
 \chapter{Merkle Tree Ladder (MTL) Modus}
 \label{section-merkle-tree-ladder}
-Anstelle davon jede Nachricht einzeln zu signieren, kann man die Nachrichten auch als, fortschreitende Folge von Nachrichten betrachten.
+Anstelle davon jede Nachricht einzeln zu signieren, lassen sich die Nachrichten auch als, fortschreitende Folge von Nachrichten betrachten.
 Das ist die Idee des MTL-Modus.
-Nicht nur PQC-Signaturen wie SLH-DSA oder CROSS verwenden intern Merkle-Trees sonders wie lassen sich auch in sonstiger Software effizient einsetzen.
+Nicht nur PQC-Signaturen wie SLH-DSA oder CROSS verwenden intern Merkle-Trees, sonders wie lassen sich auch in sonstiger Software effizient einsetzen.
 Im Fall von DNSSEC, lässt sich damit ein effizientes Signatur Schema erstellen.
 
 Nicht jede neue Nachricht wird mit einem PQC-Algorithmus wie ML-DSA, FN-DSA oder SLH-DSA signiert.
 Es werden Nachrichten, jeh nach deren Anzahl in einem Baum \enquote{Rung} angeordnet. Die Bäume ergeben zusammen die \enquote{Ladder}. Diese Ladder wird dann mit einem Algorithmus wie ML-DSA signiert.
-Der Baum verwendet für Nachrichten eine PQC-sichere Hashfunktion mit dieser die Knoten der Nachrichten signiert werden.\cite{freglyMerkleTreeLadder2023}
+Der Baum verwendet für Nachrichten eine PQC-sichere Hashfunktion mit dieser die Knoten der Nachrichten signiert werden \cite{freglyMerkleTreeLadder2023}.
 Die \enquote{Ladder}, die aus den einzelnen Bäumen besteht, wird dann nicht nach jeder neuen Nachricht signiert, sondern nur nach einer bestimmten Anzahl an Nachrichten wird der Rung mit dem PQC-Algorithmus neu signiert.
 Insgesamt verringert das den Aufwand zum Signieren, durch das hashen deutlich und es bleibt Quantensicher.
 
@@ -43,7 +43,7 @@ Für sieben Nachrichten sehen die Bäume, nach eigener Darstellung, folgenderma�
 \end{figure}
 
 Unterstützte Hash Funktionen sind aus der SHAKE oder SHA2 Familie.\cite{harveyMerkleTreeLadder2026}
-Es werden folgende Hashes h für die Knoten und Blätter mit der Hashfunktion H berechnet:
+Es werden folgende Hashes $h$ für die Knoten und Blätter mit der Hashfunktion $H$ berechnet:
 \begin{align}
 &h_{1}=H(1);\ h_{2}=H(2);\ h_{3}=H(3);\ h_{4}=H(4);\ h_{5}=H(5);\ h_{6}=H(6);\ h_{7}=H(7)\\
 &h_{1:2}=H(h_{1}||h_{2});\ h_{3:4}=H(h_{3}||h_{4});\ h_{5:6}=H(h_{5}||h_{6});\ h_{7:7}=H(7)
@@ -58,7 +58,7 @@ Die Ladder $\Lambda_{7}$ sieht so aus:
     \label{Ladder sieben Nachrichten}
 \end{figure}
 
-Die Ladder wird dann mit einer PQC-Signatur $\sigma$ wie ML-DSA oder SLH-DSA signiert. Die Signatur $\sigma(\Lambda_{N})$ wird nach N Nachrichten ausgeführt, nicht nach jeder einzelnen, weil dann wäre keine Performance verbesserung vorhanden.
+Die Ladder wird dann mit einer PQC-Signatur $\sigma$ wie ML-DSA oder SLH-DSA signiert. Die Signatur $\sigma(\Lambda_{N})$ wird nach $N$ Nachrichten ausgeführt, nicht nach jeder einzelnen, weil dann wäre keine Performance verbesserung vorhanden.
 Wenn eine weitere Nachricht aufgenommen wird, erhöht sich die Gesammtzahl auf acht. Dann ändert sich die Baumstruktur mit $8_{10} = 1000_{2}$ folgendermaßen:
 
 \begin{figure}[htbp]
@@ -86,7 +86,7 @@ Die Hashes müssen nicht alle neu berechnet werden, nur diejenigen die betroffen
 und die Berechnungen der Hashfunktionen sind performanter als die Signatur.
 
 Die Merkle-Tree-Ladder besteht aus einem Wald von Binärbaumen, die Baume können aber nicht genau die Domänen abbilden.
-Folgend, ein Beweis durch wiederspruch, dass eine Domäne nicht immer durch einen Merkle-Tree abgebildet werden kann.
+Folgend, ein Beweis durch Wiederspruch, dass eine Domäne nicht immer durch einen Merkle-Tree abgebildet werden kann.
 
 \newtheorem{satz}{Satz}
 \newtheorem{bem}{Bemerkung}
@@ -117,11 +117,11 @@ Ein gültiger DNS-Domänenbaum kann immer durch einen Merkle-Tree abgebildet wer
     \label{fig:DNS-Domänenbaum}
 \end{figure}
 
-Ein gültiger DNS-Domänenbaum in Abbildung-\ref{fig:DNS-Domänenbaum} mit $n=1$ und $\left|V\right| = 4$, somit $\left|V\right| \neq 2^{n+1}-1 = 3$.\\
+Ein gültiger DNS-Domänenbaum in \ref{fig:DNS-Domänenbaum} mit $n=1$ und $\left|V\right| = 4$, somit $\left|V\right| \neq 2^{n+1}-1 = 3$.\\
 
 Der Baum besteht nicht aus einem einzelnen Blatt: $\left|V\right| = 4 \neq 1$.\\
 
-Somit ist der Baum in Abbildung-\ref{fig:DNS-Domänenbaum} kein gültiger Rung.
+Somit ist der Baum in \ref{fig:DNS-Domänenbaum} kein gültiger Rung.
 \end{proof}
 
 Die Struktur der Merkle-Tree-Ladder entsteht nach der Anzahl von Nachrichten, die darin liegen, sie entspricht nicht der der (Sub-) Domäne.
