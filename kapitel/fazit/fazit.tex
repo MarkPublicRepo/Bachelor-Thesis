@@ -1,25 +1,24 @@
 \label{chapter-fazit}
 
-\subsubsection{Zusammenfassung}
-Quantencomputer sind noch lange nicht auf dem Stand akut eine Gefahr darszustellen.
+Quantencomputer sind noch lange nicht auf dem Stand, eine akute Gefahr darszustellen.
 Es ist nicht bewusst, zu was NISQ Quantencomputer in der Lage sind, es ist aber klar, dass sie keine exponetielle Beschleunigung wie Grover's Algorihmus bringen können
-und sie sind nicht in der Lage, in mittlerer größe, tatsächlich durch Shor's Algorithmus, wirklich Kryptografie zu brechen.
-Quantenalgorithmen existieren bereits, man weiß aber auch nicht ob z.B. Regev's Algorithmus in der Realität hinsichtlich Interferenz, Dekohärenz und rauschen wirklich effizienter als der von Shor ist.
+und sie sind nicht in der Lage, in mittel großer Anzahl Qubit, durch Shor's Algorithmus, wirklich Kryptografie zu brechen.
+Quantenalgorithmen existieren bereits, man weiß aber auch nicht ob z.B. Regev's Algorithmus in der Realität hinsichtlich Interferenz, Dekohärenz und rauschen wirklich effizienter als der von Shor ist, oder überhaupt effizient unzusetzen ist.
 
-Zudem basieren die Auswertungen von Ergebnissen bisher stärker aus heuristiken als tatsächlich auf mathematischen Modellen (siehe Abbildung-\ref{fig:EntwicklungsstandQuantencomputer}).
-Damit Quantencomputer praktisch relevant für Berechnungen werden, müssen verlässlicher werden oder Fortschritte in der Fehlerkorrektur erziehlen,
-um wirklich kryptoanalytisch relevant zu werden, müssen sie viel größer werden, im Bereich von millionen von Qubits.
+Zudem basieren die Auswertungen von Ergebnissen bisher stärker auf heuristiken als tatsächlich auf mathematischen Modellen (siehe \ref{fig:EntwicklungsstandQuantencomputer}).
+Damit Quantencomputer praktisch relevant für Berechnungen werden, müssen sie verlässlicher werden oder Fortschritte in der Fehlerkorrektur erziehlen.
+Um wirklich kryptoanalytisch relevant zu werden, müssen sie viel größer werden, im Bereich von millionen von (physischen) Qubits.
 
-Was DNSSEC betrifft, ist die Umstellung aus PQC-Signaturverfahren zwar ein notwendiger Schritt, aber wohl nicht die akuteste Bedrohung.
+Was DNSSEC betrifft, ist die Umstellung auf PQC-Signaturverfahren zwar ein notwendiger Schritt, aber wohl nicht die ernsthafteste Bedrohung.
 Signaturen sind nicht so stark gefärdet wie die Vertraulichkeit von Nachrichten über symmetrische Verfahren.
-Eine Signatur kann wenn sie in den kritischen zeitlichen Bereich fällt, berechnet zu werden, kann einfach eine neue angefordert werden.
-Da mit einen Quantencomputer, der in der Lage ist, mit Shor's/Regev's-  Algorithmus eine Signatur zu verfälschen, würde das immer noch Tage bis Wochen in Anspruch nehmen,
-mit einer gültigkeit der Signatur von wenigen Stunden, würde das notfalls vermutlich sogar noch ausreichen, als Notlösung.
+Wenn eine Signatur in den kritischen zeitlichen Bereich fällt, berechnet zu werden, kann einfach eine neue angefordert werden.
+Da mit ein Quantencomputer, der in der Lage ist, mit Shor's/Regev's-  Algorithmus eine Signatur zu verfälschen, würde das immer noch Tage bis Wochen in Anspruch nehmen,
+mit einer gültigkeit der Signatur von wenigen Stunden, würde das beibehalten klassischer Verfahren, notfalls vermutlich sogar noch als Notlösung ausreichen.
 Andererseits für gelagerte und verschlüsselte Nachrichten, basierend auf Schlüsseln von Asymmetrischen Verfahren, sind Angriffe eine größere Gefahr.
 
-Wenn die Umstellung auf PQC geschieht, dann werden mit hoher Wahrscheinlichkeit die ersten Probleme vermehrt implementierungsfehler, zero-days, etc. sein.
+Wenn die Umstellung auf PQC geschieht, dann werden mit hoher Wahrscheinlichkeit die ersten Probleme vermehrt Implementierungsfehler, zero-days, etc. sein.
 Wenn die Entwicklung von Quantencomputern voranschreitet, wird ebenso die PQC ihren Platz einnehmen.
-Wie lange das geht, ist im optimistischen Fall, aus der Sicht des Quantencomputers, von circa 10, 15 oder Jahren auszugehen.
+Wie lange das geht, ist im optimistischen Fall, aus der Sicht des Quantencomputers, von circa 5, 10 oder 15 Jahren auszugehen.
 Eine Post-Quanten Alternative muss denoch gefunden werden, auch wenn der Fortschritt erstmals stagnieren sollte.
 Das Risiko ist noch gering, im Ernstfall ist der worst-case aber nicht akzeptabel.
 Die Lösung sollte gefunden werden, bevor das Problem eingetreten ist.
