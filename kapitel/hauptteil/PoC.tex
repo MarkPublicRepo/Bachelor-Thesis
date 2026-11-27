@@ -1,15 +1,16 @@
 \chapter{Proof-of-Concept: Performance testing der PQC-Algorithmen}
 \label{section-poc}
-Um zu zeigen, wie die PQC-Signaturalgorithmen im einem echten DNS-Server implementiert werden können, wie die Auswirkungen sind und was sich generell ändert, wurde ein Proof-of-Concept entwickelt.
-In diesem Proof-of-Concept wurden die standartisierten Signaturalgorithmen implementiert und weitere, die in der liboqs Bibliothek vorhanden sind, siehe Tabelle-\ref{fig:PQC-in-PoC}.
-Um die Signaturverfahren zu vergleichen ist ebenfalls ein benchmarking vorhanden.
+Um zu zeigen, wie die PQC-Signaturalgorithmen in einem echten DNS-Server implementiert werden können und welche Auswirkungen das hat, wurde ein Proof-of-Concept entwickelt.
+In diesem Proof-of-Concept wurden die standartisierten Signaturalgorithmen implementiert und weitere, die in der liboqs Bibliothek vorhanden sind, siehe Tabelle \ref{fig:PQC-in-PoC}.
+Um die Signaturverfahren zu vergleichen wurde zusätzlich ein benchmarking durchgeführt.
 
 %Mit der liboqs Bibliothek wurde anhand von wiederholten Messungen ein statistischer Vergleich der Performance, verschiedener POC-Algorithmen, gemessen.
-Zur durchführung des PoC wurde mit der open-source Bibliothek liboqs (\url{https://github.com/open-quantum-safe/liboqs}) pqc in den DNS Server powerDNS (\url{https://github.com/PowerDNS/pdns}) integriert und dessen Performance gemessen.
+Zur durchführung des PoC wurde mit der open-source Bibliothek liboqs (\url{https://github.com/open-quantum-safe/liboqs}) PQC in den DNS Server, powerDNS (\url{https://github.com/PowerDNS/pdns}) integriert und dessen Performance gemessen.
 Die Implementierung dieser des PoC und des benchmarkings wurde mit Hilfe des LLM Kimi-K3 geschrieben \cite{MoonshotaiKimiK3Hugging2026}.
+
 Das PoC ist ein Fork des powerDNS Servers.
 Es wurde eine neue Datei \enquote{oqssigners.cc} erstellt, sie bietet ein template für die PQC-Algorithmen.
-Die Datei dnssec.hh wurde um die enum-Werte 240-245 ergäänzt.
+Die Datei dnssec.hh wurde um die enum-Werte 240-245 ergänzt.
 Die Dateien dbdnsseckeeper.cc und dnssecinfra.cc wurden angepasst, damit die Bits-default (128, NIST-Level 1) verfügbar sind.
 Noch zusätzlich wurden weitere Autotools hinzugefügt um die verwendung der neuen Algorithmen zu ermöglichen.
 Es wurden keine angepassten NSEC-Versionen implementiert, das PoC wurde auf die einfache Erweiterung der Signaturalgorithmen beschränkt.
@@ -67,7 +68,7 @@ Zu beachten ist, dass wegen der starken Unterschiede in den Messergebnissen, fü
 In Abbildung-\ref{fig:auswertung-keypair} lässt sich ablesen, dass die Laufzeit für die klassischen Verfahren die deutlich längste Laufzeit für keypair haben.
 Ebenso haben sie eine signifikant höhere Standartabweichung im Gegensatz zu den PQC-Signaturverfahren.
 Die längste Laufzeit hat allerdings SLHDSASHA2128S bei Keypair/Schlüsselerzeugung, mit 71496.01 µs im Mittel $\sigma^2$ gefolgt von RSASHA512 mit 71496.01 µs.
-Was sich anhand der Boxplots gut ablesen lässt, ist das die klassischen Verfahren auch im unteren Berecih noch neben SLHDSASHA2128S die längsten Laufzeiten haben.
+Was sich anhand der Boxplots gut ablesen lässt, ist das die klassischen Verfahren auch im unteren Bereich noch neben SLHDSASHA2128S die längsten Laufzeiten haben.
 Mit Abstand hat danach, hat FALCON512 die längste Laufzeit.
 Die Schnellsten Verfahren sind die Elliptische Kurven Varianten und der schnellste ist ED25519, was nicht überrascht, da dieser extra auf geschwindigkeit ausgelegt ist.
 
@@ -80,10 +81,10 @@ Die Schnellsten Verfahren sind die Elliptische Kurven Varianten und der schnells
     \label{fig:auswertung-sign}
 \end{table}
 
-Auf den ersten Blick lässt sich in Abbildung-\ref{fig:auswertung-sign} die deutlich geringere Streuung im Gegensatz zu Abbildung-\ref{fig:auswertung-keypair} sehen.
+Auf den ersten Blick lässt sich in \ref{fig:auswertung-sign} die deutlich geringere Streuung im Gegensatz zu \ref{fig:auswertung-keypair} sehen.
 Bis auf ML-DSA44 liegt hier nur geringe Streuung vor.
 Unter den Post-quanten Verfahren sind , FALCON512, MAYO1, SNOVAIK, teilweise ML-DSA44 und MQOM3GF16 (annähern) so effizient wie die RSA Varianten.
-Ebenso wie bei der Schlüsselerzeugung, siehe Abbildung-\ref{fig:auswertung-keypair}, ist SLHDSASHA2128S, exponentiell langsamer als die restlichen Verfahren.
+Ebenso wie bei der Schlüsselerzeugung, siehe \ref{fig:auswertung-keypair}, ist SLHDSASHA2128S, exponentiell langsamer als die restlichen Verfahren.
 
 \begin{table}[htbp]
     \centering
@@ -114,7 +115,7 @@ sind aber für DNSSEC der falsche Einsatz.
 Trotz dass SLHDSASHA2128S konsistent in Schlüsselerzeugung, Signieren und in Verifikation ist, sind die Laufzeiten im Vergleich zu allen anderen viel schlechter,
 wenn nicht die größe der Schlüssel den Algorithmus als Wahl für DNSSEC im vornherein ausschließt.
 CROSSRSDP128 und MQOM3GF16 liegen bei der Laufzeit für Verifikation stehen sogar noch schlechter als SLHDSASHA2128S da.
-Unter berücksichtigung der Schlüssel/Signatur- größen, der priorisierung von signaturerstellung und besonders der Signaturverfikation,
+Unter berücksichtigung der Schlüssel/Signatur- größen, der priorisierung von Signaturerstellung und besonders der Signaturverfikation,
 sind die Algorithmen, die noch in Frage kommen:
 \begin{itemize}
     \item ML-DSA44
@@ -131,7 +132,7 @@ sind die Algorithmen, die noch in Frage kommen:
 \end{table}
 
 Die Standartabweichung ist wichtig zu betrachten.
-Falls ein Algorithmus im Median effizient ist, aber dazu neigt stark auszuschlagen, kann das häufig Performance kosten verursachen.
+Falls ein Algorithmus im Median effizient ist, aber dazu neigt stark auszuschlagen, kann das häufig Performance Kosten verursachen.
 Das ist die einzige im PoC betrachtete Kategorie, in der SLHDSASHA2128S gute Messwerte zeigt, anhand der anderen Messwerte, ist dieser aber bereits als Kriterium ausgeschlossen.
 Die PQ-Signaturverfahren, die noch zu berücksichtigen sind, ML-DSA44, FALCON512, MAYO1 und SNOVAIK, haben folgende Ergebnisse.
 
@@ -172,7 +173,7 @@ Zusätzlich ist durch ML-DSA44 auch ein TCP-fallback notwendig, siehe Abbildung-
 
 Für MAYO1, FALCON512 und SNOVAIK, ist immer noch UDP möglich.
 
-Da NIST der Merkle-Tree-Ladder Modus empfiehlt, wäre es in diesem Modus nur notwendig, hin- und wieder die Ladder selbst zu signieren, ansonsten wird gezieltes hashen verwendet.
+Da NIST den Merkle-Tree-Ladder Modus empfiehlt, wäre es in diesem Modus nur notwendig, hin- und wieder die Ladder selbst zu signieren, ansonsten wird gezieltes hashen verwendet.
 Wenn nur hin- und wieder die teure PQC-Signatur eingesetzt werden muss, macht das insgesamt keinen großen Unterschied welcher Algorithmus verwendet wird.
 Nach diesem Prinzip könnte sogar der SHA-DSA eingesetzt werden, sollte ML-DSA kryptoanalytische Schwächen aufweisen sollte.
 
