@@ -7,22 +7,24 @@
 \label{section-Quantencomputer}
 
 Quantencomputer werden häufig missverstanden als eine Art von Supercomputern, die in der Lage sind
-alles was ein herkömmlicher Computer können zu machen, nur viel schneller.
+alles was ein herkömmlicher Computer kann, zu können, nur viel schneller.
 Ebenso hört man die auch, dass ein Quantencomputer im Gegensatz zu einem traditionellen Computer,
-nicht sequenziell rechnet, also alles nacheinander, aber sehr schnell, sondern alle berechnungen parallel auszuführen kann.
-Das ist schon eher korrekt, aber auch noch ungenau.
+nicht sequenziell rechnet (also alles nacheinander) aber sehr schnell, sondern alle Berechnungen parallel auszuführen kann.
+Diese Beschreibung ist schon eher korrekt, aber auch noch ungenau.\\
 
-Quantencomputer sind keine neuen schnelleren Supercomputer, sie können theoretisch manche Ressourcenlastingen Berechnungen effizienter ausführen, als es ein traditioneller Computer könnte, aber nicht weil sie \enquote{das gleiche machen, aber schneller}.
+Quantencomputer sind keine neuen schnelleren Supercomputer, im klassischen Sinne.
+Sie könnten zwar theoretisch manche Ressourcenlastingen Berechnungen effizienter ausführen, als ein traditioneller Computer es könnte, aber nicht weil sie, \enquote{das gleiche machen, aber schneller}.
 Sie sind in ihrer Architektur, fundamental neue Rechenmodelle.
-Ein gewöhnlicher Computer funktioniert mit Bits, die die Zustände Wahr (1) oder Falsch (0) annehmen können und Bitmanipulationen führen durch logische Gatter, wie AND, OR, NOT, NAND, NOR, XOR oder XNOR bitmanipulationen aus.
-Ein Quantencomputer basiert auf Qubits, welche Superpositionen zwischen den Zuständen $|0\rangle$ und $|1\rangle$ annehmen können und benutzt invertierbare Quantengatter wie das Hadamard-Gatter oder CNOT zur manipulation der Qubits.
+
+Ein gewöhnlicher Computer funktioniert mit Bits, welche die Zustände Wahr (1) oder Falsch (0) annehmen können und Bitmanipulationen führen durch logische Gatter, wie AND, OR, NOT, NAND, NOR, XOR oder XNOR, bitmanipulationen durch.
+Ein Quantencomputer basiert auf Qubits, welche Superpositionen zwischen den Zuständen $|0\rangle$ und $|1\rangle$ annehmen können und benutzt invertierbare Quantengatter wie das Hadamard-Gatter oder CNOT zur Manipulation der Qubits.
 Zudem geht ein Quantencomputer anderst vor, bei der Berechnung von Problemen und wird mit sogenannten Quantenalgorithmen programmiert.
 Quantencomputer sind nicht so weitflächig einsetzbar wie klassische Computer, die bessere Bezeichnung wäre eher Quantenprozessor oder Quantenchip.
 Allerdings hat sich der Begriff Quantencomputer durchgesetzt.
 
 Zur Zeit dieser Arbeit (November 2026), stecken Quantencomputer noch in ihren Kinderschuhen.
-Es gibt bereits Fortschritte (IBM quantum error-correction code in 2024 \cite{LandmarkIBMError,smalleyWasIstQuantencomputing2025}) aber noch ist ein allgemeiner praktischer Einsatz von Quantencomputern noch nicht in Sicht.
-Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day.\cite{schmehQuantencomputer2026}
+Es gibt bereits Fortschritte (wie IBM quantum error-correction code in 2024 \cite{LandmarkIBMError,smalleyWasIstQuantencomputing2025}) aber noch ist ein allgemeiner praktischer Einsatz von Quantencomputern nicht in Sicht.
+Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird als als Y2Q bezeichnet, der genaue Tag als Q-Day \cite{schmehQuantencomputer2026}.
 
 \newpage
 
@@ -33,7 +35,7 @@ Das Jahr in dem die ersten funktionsfähigen Quantencomputer geben wird, wird al
     \label{fig:quantencomputer}
 \end{figure}
 
-In Abbildung-\ref{fig:quantencomputer} ist ein analoger 10-qubit Quantencomputer für 8.5 Millionen € zu sehen, der durch die EU und Spanien finanziert wurde.
+In \ref{fig:quantencomputer} ist ein analoger 10-qubit Quantencomputer für 8.5 Millionen € zu sehen, der durch die EU und Spanien finanziert wurde.
 
 
 \section{Qubits}
@@ -50,7 +52,7 @@ Ein Qubit wird als linearkombination wie in \ref{eq:qubit} dargestellt, mit den 
 Die Wahrscheinlichkeit für eine null, ist hier der $P(0)\ =\ \probalpha$ und die Wahrscheinlichkeit auf eine eins, $P(1)\ =\ \probbeta$.
 
 Folgend, ein Beispiel um es zu verdeutlichen.
-Man stellt das Qubit als Vektor $\psi$ in Dirac Notation da. Nehmen wir an, wir haben für die Amplituden $\alpha, \beta \in \mathrm{C}$, mit deren Amplituden, $\alpha=\alphavalue$ und $\beta=\betavalue$.
+Man stellt das Qubit als Vektor $\psi$ in Dirac Notation da. Nehmen wir an, wir haben für die Amplituden $\alpha, \beta \in \mathbb{C}$, mit deren Amplituden, $\alpha=\alphavalue$ und $\beta=\betavalue$.
 
 Dann ist der entsprechende Zustand $|\psi\rangle$:
 \begin{align}
@@ -98,6 +100,7 @@ Durch Quantengatter lassen sich die Zustände manipulieren, dadurch ist es mögl
 Ein Quantengatter muss vollständig umkehrbar sein und die Summe aller quadrierten Amplituden muss wieder eins ergeben \cite{pospiechQuantencomputerCoGrundideen2021}.
 
 Eine bekannte Art ein Qubit grafisch darzustellen ist als Bloch-Kugel.
+
 Ein Qubit wie in \ref{eq:qubit} lässt sich auch in Polarkoordinatendarstellung, wie in \ref{eq:qubit-polarkoordinaten} darstellen.
 \begin{equation}
   |\psi\rangle =
@@ -106,8 +109,8 @@ Ein Qubit wie in \ref{eq:qubit} lässt sich auch in Polarkoordinatendarstellung,
 \end{equation}\cite{macchiavello210BlochSphere}
 
 Damit lässt sich ein Qubit, wie in \ref{fig:Bloch-Kugel}, grafisch als Kugel darstellen.
-Diese Darstellung hilft dabei, sich das abstrakte Konzept von Qubit bildlich vorstellen zu können,
-dadurch kann man auch ein etwas \enquote{intuitiveres} Gefühl vom Verhalten von Qubits erhalten.
+Diese Darstellung hilft dabei, sich das abstrakte Konzept von Qubit, bildlich vorstellen zu können.
+Dadurch lässt scih auch ein etwas \enquote{intuitiveres} Gefühl vom Verhalten von Qubits entwickeln.
 
 \begin{figure}[htbp]
     \centering
@@ -119,7 +122,7 @@ dadurch kann man auch ein etwas \enquote{intuitiveres} Gefühl vom Verhalten von
 Was in der grafischen Qubit Darstellung in \ref{fig:Bloch-Kugel} zu sehen ist, ist dass neben den Zuständen $|0\rangle$ und $|1\rangle$ mit dem Winkel $\theta$, auch noch eine weitere Achse mit dem Winkel $\varphi$ hinzukommt.
 Diese weitere Achse beschreibt die \textbf{Phase} des Qubit, sie ist wichtig für Interferenz und somit auch zur Entwicklung von Quantenalgorithmen.
 
-Wenn Quantengatter auf ein Qubit angewendet werden, lässt sich das als Rotation des Zustandsvektors auf der Bloch-Kugel zeigen.
+Wenn Quantengatter auf ein Qubit angewendet werden, lässt sich das als Rotation des Zustandsvektors auf der Bloch-Kugel interpretieren.
 Als Beispiel erfolgt durch die Anwendung eines Hadamard-Gatters $H$ auf den Zustand $|0\rangle$, $H|0\rangle=\frac{|0\rangle+|1\rangle}{\sqrt{2}}=|+\rangle$.
 Der Einsatz eines Quantengatters lässt sich einfach als Rotation interpretieren, der Zustand zeigt also in die Richtung des \enquote{$+$}-Zustands auf der x-Achse und liegt genau zwischen $|0\rangle$ und $|1\rangle$ auf.
 Wenn erneut das Hadamard-Gatter angewant wird, rotiert der Zustandsvektor genau in seinen ursprünglichen Zustand zurück.
@@ -135,33 +138,34 @@ Dabei sind die Wahrscheinlichkeiten der Zustände beide:
     P_{|+\rangle}(0) + P_{|+\rangle}(1) = |\alpha_0|^2+|\beta_0|^2 = |\frac{1}{\sqrt{2}}|^2+|\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1\\
     P_{|-\rangle}(0) + P_{|-\rangle}(1) = |\alpha_1|^2+|\beta_1|^2 = |\frac{1}{\sqrt{2}}|^2+|-\frac{1}{\sqrt{2}}|^2 =0.5+0.5=1
 \end{align}
-Sie haben beide die gleiche Wahrscheinlichkeit für die Zustände $|0\rangle$ oder $|1\rangle$ nach der Hadamard Transformation, aber mit unterscheiden sich in ihrer Phase.
+Sie haben beide die gleiche Wahrscheinlichkeit für die Zustände $|0\rangle$ oder $|1\rangle$ nach der Hadamard Transformation, aber sie unterscheiden sich in ihrer Phase.
 Deshalb auch die $|-\rangle$ und $|+\rangle$ Notation.
 
 \section{Quantencomputer Technik und Funktionsweise}
-Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition, Quantenverschränkung, Interferenz.
+Ein Quantencomputer macht sich die Gesetze der Quantenmechanik zu nutze, genauer gesagt Superposition, Quantenverschränkung und Interferenz.
 Um einen Quantencomputer zu betreiben, müssen für manche computer die Quantum Processing Units (QPU) bei Temperaturen nahe dem absoluten Nullpunkt gekühlt werden um zu funktionieren, andere könnten theoretisch bei Raumtemperatur betrieben werden.
 Sie bieten alle ihre Vorteile, aber auch schwierigkeiten.
 Der Prozessor, welcher das Herz des Computers ist, ist nur eine kleiner Chip, der Rest der Maschine ist vor allem dazu da, die richtigen Bedingungen zu gewährleisten.
 
 Es gibt verschieden Ansätze der Quantencomputer Technik.
 Die am weitesten entwickelte Technik, sind Qubits auf \textbf{Basis von Supraleitung}.
-Diese beruhen auf der Technik der Halbleiterherstellung und zeichnen sich aus durch, schnelle Gatterschaltung und initialisierung der Qubits und sind vielversprechend zu Fehlerkorrektur.
-Der große Nachteil ist, dass anfällig zu dekohärenz sind und diese bei nahezu Nulltemperaturen betrieben werden müssen, sie benötigen eine Temperatur zwischen 10-20 mK.
+Diese beruhen auf der Technik der Halbleiterherstellung und zeichnen sich aus durch, schnelle Gatterschaltung, initialisierung der Qubits und sind vielversprechend zu Fehlerkorrektur.
+Der große Nachteil ist, dass anfällig zu Dekohärenz sind und bei Temperaturen, nahe dem absoluten Nullpunkt betrieben werden müssen.
+Sie benötigen eine Betriebstemperatur zwischen 10-20 mK.
 
 Quantencomputer die auf der \textbf{Kernspinresonanz} basieren, sog. NMR-Quantencomputer, haben den Vorteil dass sie bei Zimmertemperaturen eingesetzt werden können und dass die Technik bereits bekannt ist.
-Das ist die selbe Technologie, die auch in MRT's in der Medizin eingesetzt wird.
+Es ist die selbe Technologie, die auch in MRT's in der Medizin eingesetzt wird.
 
-Basierend auf \textbf{Photonen} (Licht Teilchen) sind sie sehr beweglich und können gut informationen transportieren ebenso können die Photonen-Quantencomputer bei Raumtemperatur betrieben werden, sie können aber nicht ohne weitere Hilfsobjekte, verschränkt werden.
+\textbf{Photonen} (Licht Teilchen) sind sie sehr beweglich und können gut informationen transportieren, ebenso können Photonen-Quantencomputer bei Raumtemperatur betrieben werden, sie können aber nicht ohne weitere Hilfsobjekte, verschränkt werden.
 
-Bei der Technik von Ionen in \textbf{Ionenfallen}, wie z.B. der Firma IonQ, besteht auch die Hoffnung dass man diese Computer bei Zimmertemperaturen betreiben könnte.
-Es zeigen sich lange Dekohärenzzeiten, die bis in die Sekunden gehen, sie lassen sich für präzise Berechnungen einsetzen und sie lassen sich gut auf eine hohe Anzahl an Qubits hochskallieren.
+Bei der Technik von Ionen in \textbf{Ionenfallen}, wie z.B. Quantencomputer der Firma IonQ, besteht auch die Hoffnung dass man diese Computer bei Zimmertemperaturen betreiben könnte.
+Es zeigen sich lange Dekohärenzzeiten, die bis in die Sekunden gehen, sie lassen sich für präzise Berechnungen einsetzen und lassen sich gut auf eine hohe Anzahl an Qubits hochskallieren.
 Diese Technik hat das Problem, dass sie lange Zeiten für Gatteroperationen benötigen.
 
-\textbf{Topologische Qubits} sind robust gegen lokales Rauschen und könnten die notwendigkeit für Fehlerkorrektur reduzieren.
+\textbf{Topologische Qubits} sind robust gegen lokales Rauschen und könnten die Notwendigkeit für Fehlerkorrektur reduzieren.
 Sie gehören zu den vielversprechendsten in Betrach auf Fehlerkorrekur.
-Der wesentliche Nachteil ist, dass sie sehr reine Materialien zur Herstellung benötigen, zudem benötigen sie kontrolle auf der nano-Skala.
-\cite{pospiechQuantencomputerCoGrundideen2021,molfettaQuantumComputingNew2026}
+Der wesentliche Nachteil ist, dass sie sehr reine Materialien zur Herstellung benötigen, zudem benötigen sie Kontrolle auf der nano-Skala \cite{pospiechQuantencomputerCoGrundideen2021,molfettaQuantumComputingNew2026}.
+Quantencomputer auf der Basis von Topologischen Qubit werden derzeit von Microsoft entwickelt, wie Majorana 2 \cite{bolgarIntroducingMajorana2}.
 
 \subsection{Überlagerung/Superposition}
 Qubits befinden sich, solange man sie nicht observiert, in einer Superposition.
@@ -170,7 +174,7 @@ Dieses Phänomen der Physik wird als Überlagerung oder Superposition beschriebe
 Es macht es Quantencomputern möglich, mittels einer Anzahl $n$ an Qubits, $2^n$ Zustände abzubilden.
 
 Ein einzelnes Qubit wie in \ref{eq:einzelnes-qubit} kann $2^1$ Zustände ${0, 1}$ annehmen.
-Wenn sich dieses Qubit in der Superposition befindet, befindet es sich mit den Amplituden $\alpha, \beta \in \mathbb{C}$ und den dazugehörigen Wahrscheinlichkeiten $\probalpha$ für null und mit der Gegenwahrscheinlichkeit $\probbeta$ für eins.
+Wenn sich dieses Qubit in der Superposition befindet, hat es die Amplituden $\alpha, \beta \in \mathbb{C}$ und die dazugehörigen Wahrscheinlichkeiten $\probalpha$ für null und mit der Gegenwahrscheinlichkeit $\probbeta$ für eins.
 
 \begin{equation}
     \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
@@ -190,7 +194,7 @@ Ein n-Qubit Quantencomputer wie in \ref{eq:n-qubit} erzeugt Wellenfunktionen in 
 \subsection{Quantenverschränkung}
 Ein Qubit alleine genüg nicht um das volles Potenzial des Quantencomputing entfalten zu können.
 Um das volle Potenzial von Quantencomputing zu entfalten, sind mehrere Qubits nötig und dabei ist die Quantenverschränkung unerlässlich.
-Wenn zwei (oder mehrere) Qubits verschränkt sind, bedeutet dass die verschränken Qubits einen gemeinsamen Zustand besitzen.
+Wenn zwei (oder mehrere) Qubits verschränkt sind, bedeutet dass, das die verschränken Qubits einen gemeinsamen Zustand besitzen.
 
 Ein n-Qubit Quantencomputer wie durch \ref{eq:n-qubit} beschrieben, ist nur wirklich nützlich wenn die Amplituden auch einen gemeinsamen Zustand haben.
 Wenn sich die Amplitude (damit auch die Wahrscheinlichkeit) eines der n-Qubits ändert, beinflusst dies auch die Anderen.
@@ -199,25 +203,75 @@ Wenn sich die Amplitude (damit auch die Wahrscheinlichkeit) eines der n-Qubits �
 Im Zusammenspiel mit Superposition und Quantenverschränkung, macht dieses Prinzip Quantencomputer zu extrem Leistungsfähigen Rechenmaschinen.
 Die Rechenpfade die entstehen, lassen sich als komplexe Amplituden ausdrücken, die sich wie Wellen verhalten.
 Diese Amplituden können sich gegenseitig verstärken (konstruktive Interferenz) oder gegenseitig abschwächen (destruktive Interferenz).
-Damit können sich die Rechenpfade selbst auf den richtigen Weg lenken, die Wahrscheinlichkeit auf einen richtigen Rechenpfad wird verstärkt \cite{molfettaQuantumComputingNew2026}.
+Damit können sich die Rechenpfade selbst auf den richtigen Weg lenken, die Wahrscheinlichkeit für einen richtigen Rechenpfad wird verstärkt \cite{molfettaQuantumComputingNew2026}.
 
 \subsection{Dekohärenz}
 Qubits sind sehr instabil, sie zerfallen leicht aus einem Quantenzustand in einen Zustand, indem die Beziehungen der Teilchen nicht mehr wie gewünscht funktionieren.
 Dekohärenz ist der Prozess in dem ein System aus einem Quantenzustand in einen nicht-Quantenzustand zerfällt.
 Damit Quantencomputer richtig funktionieren, ist es wünschenswert, die Dekohärenz möglichst zu minimieren.
-Es kann aber auch beabsichtigt sein, z.B. wenn die Messung nach der Manipulation erfolgt, dadurch verfallen die Qubits in einen festen Zustand,
+Es kann aber auch beabsichtigt sein, z.B. wenn die Messung nach der Manipulation erfolgt, dadurch zerfallen die Qubits in einen festen Zustand,
 der aussagekräftig für die Berechnung ist \cite{aumassonSeriousCryptographyPractical2018}.
 
+\section{Entwicklungsstand Quantencomputer}
+Laut IBM soll die Quantencomputer-Branche bis 2035 schätzungsweise ein Volumen von 1,3 Billionen US-Dollar erreichen \cite{smalleyWasIstQuantencomputing2025}.
+Der berühmte Physiker Michio Kaku, bezeichnet das kommen der Quantencomputer als ein potentiell größeres historisches Ergeignis, als die Einführung der digitalen Computer \cite{bigthinkMichioKakuQuantum2023}.
+
+Der aktuelle Entwicklungsstand eines kryptografisch relevanten Quantencomputer ist nach BSI immer noch auf dem Stand des NISQ-Zeitalters.
+NISQ ist eine Komplexitätsklasse von Problemen, die auf einem Rauschbehafteten, Quantencomputer mit Zugang zu einem klassischen Computer, in polynomialzeit berechnet werden können \cite{chenComplexityNISQ2023}.
+Die Quantencomputer welche innerhalb dieser Klasse rechnen, besitzen eine mittlere Anzahl an Qubits, im hunderer Bereich, sie sind nicht fehler korrigierend.
+Längere Rechenzeiten führen zu fehlern in Berechnungen.
+Die Entwicklung von NISQ-Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in der Grafik von \ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
+
+\newpage
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics{bilder/Bewertungsmodell_Quantencomputer_Algorithmen.png}
+    \caption{Entwicklungsstand Quantencomputer nach BSI \cite{EntwicklungsstandQuantencomputer}}
+    \label{fig:EntwicklungsstandQuantencomputer}
+\end{figure}
+
+Zur Zeitspanne bis zu einem Kryptoanalytisch relevanten Quantencomputer schreibt das BSI, dass Zukunftsprognosen oft genau 20 Jahre vor Eintritt eines Durchbruchs, vorausgesagt werden und durch neue Entwicklungen im Bereich der Quantum Low-Density Parity-Check Codes (qLDPC-Codes) könnte sich der Bereich sogar noch weiter,
+bis auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
+Das Unternehmen Gartner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
+Das Mittel zwischen den breit gestreuten Zeitabschätzungen von 5-20 Jahren, wären danach 12.5 Jahre.
+
+Wenn im Mittel, von 12.5 Jahren bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
+Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte, sogenanntes \enquote{harvest now, decrypt later}.
+Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden, das wäre für Signaturen eher \enquote{collect now, forge later}.
+Für vertrauliche Nachrichten ist das ein größeres Problem, denn digitale Signaturen, wie bei DNSSEC haben nur kurze gültigkeitszeiten, von Stunden bis Tage.
+Dadurch ist die Gefahr von Signatur Fälschung ein geringeres Problem als das entschlüsseln von gelagerten Nachrichten oder Angriffe auf die Implementierungen.
+
+\newpage
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.9\textwidth}{!}{\qcTacho}
+\caption{Geschäftlicher Nutzen von Quantencomputing über die Zeit. Eigene Darstellung nach \cite{WhatCIOsNeed}.}
+\label{fig:qc-nutzen}
+\end{figure}
+
+In \ref{fig:qc-nutzen} werden die Schritte der Entwicklung von Quantencomputern (nach Gartner), bildlich dargestellt.
+Momentan haben Quantencomputer nur einen sehr eingeschränkten Nutzen.
+In nur wenigen, angepassten Fällen haben sie einen Vorteil gegenüber klassichen Computern, wobei sich das hinsichtlich Fortschritten in der Fehlerkorrektur bald ändern kann.
+
+Diese Prognosen sind sehr optimistisch hinsichtlich der Entwicklung.
+Kritiker hingegen sprechen auch davon, dass es wahrscheinlich ist, dass es nie große, fehlerkorrigierende Quantencomputer geben wird.
+Um einen Kryptoanalytisch relevanten Quantencomputer zu bauen, der tatsächlich in der Lage ist, Chiffren wie RSA oder ECC-Varianten zu knacken,
+wären bis zu millionen von (physischen) Qubits notwendig, ob es jemals einen Fehlerkorrigierenden Quantencomputer von dieser größe geben wird, ist noch höchst spekulativ \cite{aumassonSeriousCryptographyPractical2018}.
+
+
 \section{Komplexitätsklassen von Quantencomputern}
-Aus der Sicht der Theoretischen Informatik, bezeichnet man die Komplexitätsklasse der derzeitigen Quantencomputer als NISQ.
+Aus der Sicht der Theoretischen Informatik, lassen sich die derzeitigen Quantencomputer der Komplexitätsklasse NISQ zuordnen.
 NISQ beschreibt eine Komplexitätsklasse von Problemen, die von klassischen Computern, mit Zugang zu rauschbehafteten Quanten-schaltkreisen gelöst werden können.
+
 NISQ Computer sind z.B. in der Lage, angepasste Probleme von Simon's Problem zu lösen, sie sind aber nicht in der Lage, Beschleunigungen bei unstrukturierter Suche wie Grover's Algorithmus zu erreichen.
-Wenn man die Komplexitätsklassen vergleicht wie in \ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen.
+Wenn man die Komplexitätsklassen vergleicht wie in \ref{fig:bpp-nisq-bqp}, lässt sich sehen, dass NISQ durch den Zugang zu rauschbehafteten Quantencomputern, zusätzlich in der Lage ist, eine geringfügige Quantenbeschleunigung für manche Probleme zu erreichen, also zumindest etwas mächtiger ist, als nur die klassischen Computer.
 Man definiert drei Komplexitätsklassen:
 \begin{itemize}
     \item BPP (bounded error probabilistic polynomial time)\\
-    Die Klasse der Entscheidungsprobleme, für die es einen randomisierten Algorithmus gibt, der unter begrenzter Fehlerwahrscheinlichkeit, das Entscheidungsprobleme in polynomieller Zeit lösen kann.
-    Ein klassischer Computer mit Zufall kann diese Probleme lösen.
+    Die Klasse der Entscheidungsprobleme, für die es einen randomisierten Algorithmus gibt, der unter begrenzter Fehlerwahrscheinlichkeit, das Entscheidungsproblem in polynomieller Zeit lösen kann.
+    Ein klassischer Computer mit Zufall kann dieses Problem lösen.
     \item NISQ (noisy intermediate-scale quantum)\\
     Die Klasse der Entscheidungsprobleme, die mit klassichen Computern mit Zugriff auf einen rauschbehafteten Quantencomputern, in polynomieller Zeit, gelöst werden können.
     \item BQP (bounded error quantum polynomial time)\\
@@ -244,55 +298,8 @@ Man definiert drei Komplexitätsklassen:
 Es ist nicht bekannt, welche Probleme alle in NISQ liegen, es ist allerdings bekannt, dass nicht für alle Probleme eine Quantenbeschleunigung erreicht werden kann.
 Manche Probleme sind effizienter auf klassischen Computern zu lösen, als auf rauschbehafteten Quantencomputern.
 Keine der Fragestellungen von $\mathrm{BPP} \subsetneq \mathrm{NISQ}$, $\mathrm{NISQ} \subsetneq \mathrm{BQP}$ und $\mathrm{BPP} \subsetneq \mathrm{BQP}$ ist bewiesen.\\
-Bekannt ist, dass gilt $\mathrm{BPP} \subseteq \mathrm{NISQ}$, weil NISQ einen klassischen Computer vollständig beinhaltet und eine NISQ Schnittstelle hat.
-Ein Fehlerkorrigierender Quantencomputer muss auch in der Lage sein, einen rauschbehafteten Quantencomputer zu simulieren, deshalb, $\mathrm{NISQ} \subseteq \mathrm{BQP}$.
+Bekannt ist, dass gilt $\mathrm{BPP} \subseteq \mathrm{NISQ}$, weil NISQ einen klassischen Computer vollständig beinhaltet und eine Schnittstelle zu rauschbehafteten Quantencomputern hat.
+Ein Fehlerkorrigierender Quantencomputer muss auch in der Lage sein, einen rauschbehafteten Quantencomputer zu simulieren, deshalb gilt, $\mathrm{NISQ} \subseteq \mathrm{BQP}$.
 Nach der Definition von NISQ, als ein klassischer Computer mit Zugang zu rauschbehafteten Quantencomputern, haben wir: $\mathrm{BPP} \subseteq \mathrm{NISQ} \subseteq \mathrm{BQP}$, siehe \ref{fig:bpp-nisq-bqp}.
 
 Zudem ist bewiesen, dass NISQ Computer nicht eine quadratische Beschleunigung gegenüber klassischen Computern für unstrukturierte Suche, wie Grover's Algorithmus, erreichen können \cite{chenComplexityNISQ2023}.
-
-\section{Entwicklungsstand Quantencomputer}
-Laut IBM soll die Quantencomputer-Branche bis 2035 schätzungsweise ein Volumen von 1,3 Billionen US-Dollar erreichen \cite{smalleyWasIstQuantencomputing2025}.
-Der berühmte Physiker Michio Kaku, bezeichnet das kommen der Quantencomputer als ein potentiell größeres historisches Ergeignis als die Einführung der digitalen Computer \cite{bigthinkMichioKakuQuantum2023}.
-Der aktuelle Entwicklungsstand eines kryptografisch relevanten Quantencomputer ist nach BSI immer noch auf dem Stand des NISQ-Zeitalters.
-NISQ ist eine Komplexitätsklasse von Problemen, die auf einem Rauschbehafteten, Quantencomputer mit Zugang zu einem klassischen Computer, in polynomialzeit berechnet werden können \cite{chenComplexityNISQ2023}.
-Die Quantencomputer welche innerhalb dieser Klasse rechnen, besitzen eine mittlere Anzahl an Qubits, im hunderer Bereich, sie sind nicht fehler korrigierend.
-Längere Rechenzeiten führen zu fehlern in Berechnungen.
-Die Entwicklung von NISQ-Quantencomputer basiert derzeit mehr auf Heuristiken als auf mathematischen Auswertungen, wie in der Grafik von \ref{fig:EntwicklungsstandQuantencomputer} zu sehen ist.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics{bilder/Bewertungsmodell_Quantencomputer_Algorithmen.png}
-    \caption{Entwicklungsstand Quantencomputer nach BSI \cite{EntwicklungsstandQuantencomputer}}
-    \label{fig:EntwicklungsstandQuantencomputer}
-\end{figure}
-
-Zur Zeitspanne bis zu einem Kryptoanalytisch relevanten Quantencomputer schreibt das BSI, dass Zukunftsprognosen oft genau 20 Jahre vor Eintritt eines Durchbruchs, vorausgesagt werden und durch neue Entwicklungen im Bereich der Quantum Low-Density Parity-Check Codes (qLDPC-Codes) könnte sich der Bereich sogar noch weiter,
-bis auf etwa 10 Jahre verkürzen \cite{EntwicklungsstandQuantencomputer}.
-Das Unternehmen Gartner spricht sogar von einem Zeitraum von fünf bis zehn Jahren bis zu Fehlerkorrigierenden Quantencomputern.
-Das Mittel zwischen den breit gestreuten Zeitabschätzungen von 5-20 Jahren, sind 12.5 Jahre.
-
-
-Wenn im Mittel, von 12.5 Jahren bis zu einem Kryptoanalytisch relevanten Quantencomputer ausgegangen wird, ist die Notwendigkeit von PQC, bitter notwendig.
-Bereits in der Gegenwart ist das Sammeln von verschlüsselten Nachrichten relevant, da dies im Fall von Quantencomputern in einigen Jahren entschlüsselt werden könnte, sogenanntes \enquote{harvest now, decrypt later}.
-Für DNSSEC speziell, ist das nicht der Fall, da die Signaturen in geringeren Zeitabständen erneuert werden, das wäre für Signaturen eher \enquote{collect now, forge later}.
-Für vertrauliche Nachrichten ist das ein größeres Problem, denn digitale Signaturen, wie bei DNSSEC haben nur kurze gültigkeitszeiten, von Stunden bis Tage.
-Dadurch ist die Gefahr von Signatur Fälschung ein geringeres Problem als das entschlüsseln von gelagerten Nachrichten oder Angriffe auf die Implementierungen.
-
-\newpage
-
-\begin{figure}[htbp]
-\centering
-\resizebox{0.9\textwidth}{!}{\qcTacho}
-\caption{Geschäftlicher Nutzen von Quantencomputing über die Zeit. Eigene Darstellung nach \cite{WhatCIOsNeed}.}
-\label{fig:qc-nutzen}
-\end{figure}
-
-In \ref{fig:qc-nutzen} werden die Schritte der Entwicklung von Quantencomputern (nach Gartner), bildlich dargestellt.
-Momentan haben Quantencomputer nur einen sehr eingeschränkten Nutzen.
-In nur wenigen, angepassten Fällen haben sie einen Vorteil gegenüber klassichen Computern, wobei sich das hinsichtlich fortschritten in der Fehlerkorrektur bald ändern kann.
-
-
-Diese Prognosen sind sehr optimistisch hinsichtlich der Entwicklung.
-Kritiker hingegen sprechen auch davon, dass es wahrscheinlich ist, dass es nie große, fehlerkorrigierende Quantencomputer geben wird.
-Um einen Kryptoanalytisch relevanten Quantencomputer zu bauen, der tatsächlich in der Lage ist, Chiffren wie RSA oder ECC-Varianten zu knacken,
-wären bis zu millionen von (physischen) Qubits notwendig, ob es jemals einen Fehlerkorrigierenden Quantencomputer von dieser größe geben wird, ist noch höchst spekulativ \cite{aumassonSeriousCryptographyPractical2018}.
